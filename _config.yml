@@ -1,0 +1,91 @@
+#
+# Basic settings.
+#
+url: http://localhost:4000
+baseurl: ""
+#url: http://faq.arc4.org
+#baseurl: /arc42-faq-site
+title: arc42 FAQ
+description: Frequently asked questions about arc42.
+avatar: /assets/img/arc42logosquare.png
+# favicon: /favicon.ico
+favicon: /assets/img/arc42logosquare.png
+language: en
+
+#
+# Icons
+#
+icons:
+  rss: true
+  email:
+  github: gernotstarke
+  twitter: gernotstarke
+  google_plus:
+
+#
+# Prettify url.
+#
+permalink: pretty
+
+#
+# Scripts.
+#
+google_analytics: # e.g. UA-000000-01
+disqus:
+
+#
+# Localizations.
+#
+str_next: Next
+str_prev: Prev
+str_read_more: Read more...
+str_search: Search
+str_recent_posts: Recent answers
+str_show_all_posts: Show all questions/answers
+
+#
+# Recent posts.
+#
+recent_posts_num: 10
+
+#
+# Pagination.
+#
+paginate: 10
+paginate_path: page/:num
+
+
+#
+# Gems.
+#
+gems:
+  - jekyll-paginate
+  - jemoji
+
+#
+# Styles: see "_sass/base/_variables.scss"
+#
+
+#
+# !! Danger zone !!
+#
+
+include: ["_pages"]
+
+markdown: kramdown
+kramdown:
+  input: GFM
+  syntax_highlighter: rouge
+
+excerpt_separator: <!--more-->
+
+sass:
+  sass_dir: _sass
+  style: :compressed # or :expanded
+
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - LICENSE
+  - README.md
+  - vendor

@@ -1,0 +1,14 @@
+---
+layout: page
+title: Keywords
+permalink: /keywords/
+order: 2
+share: false
+---
+
+<ul class="inline">
+  {% assign sorted_tags = site.tags | sort %}
+    {% for tag in sorted_tags %}
+    <li><a href="{{ '/search/?t=' | prepend: site.baseurl }}{{ tag[0] }}">#{{ tag[0] }}</a></li>
+    {% endfor %}
+</ul>
