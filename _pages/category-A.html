@@ -1,15 +1,16 @@
 ---
 layout: page
-title: All questions
-permalink: /allquestions/
-order: 10
+title: A - General questions
+permalink: /category_a/
+order: 3
 ---
 
 <div id="search-results">
     <hr id="first-hr" class="with-no-margin"/>
 
-    {% assign sorted_posts = (site.posts | sort_by: 'title') | reverse %}
-    {% for post in sorted_posts  %}
+
+    {% assign selected_posts = (site.posts | where: "category", "general") | reverse %}
+    {% for post in selected_posts  %}
     <div class="article-wrapper">
         <article>
             {% include article-header.html page=post link=true share=false eye_catch=false %}
