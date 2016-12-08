@@ -1,0 +1,21 @@
+---
+layout: page
+title: C - Questions on arc42 sections
+permalink: /category_c/
+order: 5
+---
+
+<div id="search-results">
+    <hr id="first-hr" class="with-no-margin"/>
+
+
+    {% assign selected_posts = (site.posts | where: "category", "sections") | reverse %}
+    {% for post in selected_posts  %}
+    <div class="article-wrapper">
+        <article>
+            {% include article-header.html page=post link=true share=false eye_catch=false %}
+        </article>
+    </div>
+    <hr class="with-no-margin"/>
+    {% endfor %}
+</div>

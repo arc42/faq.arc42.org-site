@@ -1,0 +1,21 @@
+---
+layout: page
+title: B - Questions on methodology
+permalink: /category_b/
+order: 4
+---
+
+<div id="search-results">
+    <hr id="first-hr" class="with-no-margin"/>
+
+
+    {% assign selected_posts = (site.posts | where: "category", "method") | reverse %}
+    {% for post in selected_posts  %}
+    <div class="article-wrapper">
+        <article>
+            {% include article-header.html page=post link=true share=false eye_catch=false %}
+        </article>
+    </div>
+    <hr class="with-no-margin"/>
+    {% endfor %}
+</div>
