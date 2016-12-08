@@ -2,7 +2,7 @@
 layout: page
 title: arc42 examples
 permalink: /examples/
-order: 3
+order: 5
 share: false
 ---
 

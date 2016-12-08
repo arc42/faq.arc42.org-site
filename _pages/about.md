@@ -1,10 +1,11 @@
 ---
 layout: page
-title: About
+title: About arc42
 permalink: /about/
 order: 1
 share: false
 ---
+
 arc42 is a template for software architecture documentation and communication, answering
 the following two questions in a pragmatic way:
 
