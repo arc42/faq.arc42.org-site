@@ -16,7 +16,7 @@ language: en
 # Icons
 #
 icons:
-  rss: true
+  rss: false
   email:
   github: gernotstarke
   twitter: gernotstarke
@@ -27,11 +27,6 @@ icons:
 #
 permalink: pretty
 
-#
-# Scripts.
-#
-google_analytics: # e.g. UA-000000-01
-disqus:
 
 #
 # Localizations.
