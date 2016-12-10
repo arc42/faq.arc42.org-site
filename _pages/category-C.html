@@ -9,26 +9,26 @@ order: 5
 {% assign section3_posts = (site.posts | where: "category", "section-context") | reverse %}
 
 <ol>
-  <li>Requirements and Stakeholder ({{ section1_posts | size }})</li>
-  <li>Constraints ({{ section2_posts | size }})</li>
-  <li>Context ({{ section3_posts | size }})</li>
-  <li>Solution strategy ({{ section4_posts | size }})</li>
-  <li>Building block view ({{ section5_posts | size }})</li>
-  <li>Runtime view ({{ section6_posts | size }})</li>
-  <li>Deployment view ({{ section7_posts | size }})</li>
-  <li>Crosscutting concepts ({{ section8_posts | size }})</li>
-  <li>Architectural decisions ({{ section9_posts | size }})</li>
-  <li>Quality tree and -scenarios ({{ section10_posts | size }})</li>
-  <li>Risks and technical debt ({{ section11_posts | size }})</li>
-  <li>Glossary ({{ section12_posts | size }})</li>
+  <li><a href="#c-sec-1">Requirements and Stakeholder ({{ section1_posts | size }})</a></li>
+  <li><a href="#c-sec-2">Constraints ({{ section2_posts | size }})</a></li>
+  <li><a href="#c-sec-3">Context</a> ({{ section3_posts | size }})</li>
+  <li><a href="#c-sec-4">Solution strategy ({{ section4_posts | size }})</a></li>
+  <li><a href="#c-sec-5">Building block view ({{ section5_posts | size }})</a></li>
+  <li><a href="#c-sec-6">Runtime view ({{ section6_posts | size }})</a></li>
+  <li><a href="#c-sec-7">Deployment view ({{ section7_posts | size }})</a></li>
+  <li><a href="#c-sec-8">Crosscutting concepts ({{ section8_posts | size }})</a></li>
+  <li><a href="#c-sec-9">Architectural decisions ({{ section9_posts | size }})</a></li>
+  <li><a href="#c-sec-10">Quality tree and -scenarios ({{ section10_posts | size }})</a></li>
+  <li><a href="#c-sec-11">Risks and technical debt ({{ section11_posts | size }})</a></li>
+  <li><a href="#c-sec-12">Glossary ({{ section12_posts | size }})</a></li>
 </ol>
 
-<hr id="first-hr" class="with-no-margin"/>
+<hr class="with-no-margin"/>
 
 <div id="search-results">
 
 
-    <h2 id="sec1">arc42 Section 1: Requirements and Stakeholder </h2>
+    <h2 id="c-sec1">arc42 Section 1: Requirements and Stakeholder </h2>
     {% for post in section1_posts  %}
 
     <div class="article-wrapper">
@@ -38,8 +38,8 @@ order: 5
     </div>
     {% endfor %}
 
-    <hr id="first-hr" class="with-no-margin"/>
-    <h2>arc42 Section 2: Constraints</h2>
+    <hr class="with-no-margin"/>
+    <h2 id="c-sec2">arc42 Section 2: Constraints</h2>
     {% for post in section2_posts  %}
 
     <div class="article-wrapper">
@@ -50,7 +50,7 @@ order: 5
     {% endfor %}
 
     <hr id="first-hr" class="with-no-margin"/>
-    <h2>arc42 Section 3: Context</h2>
+    <h2 id="c-sec3">arc42 Section 3: Context</h2>
     {% for post in section3_posts  %}
 
     <div class="article-wrapper">
