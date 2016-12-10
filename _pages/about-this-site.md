@@ -6,8 +6,25 @@ order: 16
 share: false
 ---
 
+> This site does **NOT** use cookies or other means to track or analyze your visit.
+> In case you like what you read here, share your experience with colleagues and friends...
+
+### About Gernot Starke
+
+I'm:
+
+* happily married with two (nearly grown-up) kids and a few cats in Cologne, Germany,
+* fellow at innoQ,
+* quite busy coaching and consulting medium and large-scale enterprises on topics around software architecture and methodical software engineering,
+* co-founder and maintainer of <a href="http://arc42.de">arc42</a>, the template for pragmatic and systematic software architecture documentation,
+* founder of <a href="http://aim42.org">aim42</a>, the open source framework for systematic _software architecture improvement_,
+* active member and working group lead within the <a href="http://isaqb.org">iSAQB</a>,
+* regular presenter at IT-conferences,
+* author and co-author of more than a dozen books on software architecture, patterns, SOA, and the like. I'm really sorry - most of these books are written in German. Have a look at <a href="http://leanpub.com">Leanpub</a> for some of my English books.
+
+
 ### Content
-The content of this site is primarily based upon a Leanpub book on arc42, that contains an FAQ chapter. The questions in this book and on this website should be identical.
+The content of this site is primarily based upon a Leanpub book on arc42, that contains an FAQ chapter. The questions in this book and on this website are identical to a large extend.
 
 Both are written in Markdown, but not in a completely identical dialect, sigh... (see below for differences).
 
