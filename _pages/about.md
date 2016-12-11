@@ -1,6 +1,6 @@
 ---
 layout: page
-title: About
+title: About arc42
 permalink: /about/
 order: 1
 share: false
