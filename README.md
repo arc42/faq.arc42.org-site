@@ -1,54 +1,23 @@
-# jekyll-ttskch-theme
+# arc42 Frequently Asked Questions
 
-A simple and customizable theme for Jekyll.
+Here we collect answers to frequently asked questions on arc42.
 
-> This theme was renamed from _jekyll-**qck**-theme_ to _jekyll-**tch**-theme_ at 2016.06.02.  
-> And renamed again from _jekyll-**tch**-theme_ to _jekyll-**ttskch**-theme_ at 2016.09.23.
+This is supposed to be the reference source for such questions, all other FAQ
+(e.g. the [Leanpub arc42-FAQ]() or
+the [Leanpub "Communicating Software Architectures with arc42"]())
+might contain fewer questions or fixes as this site.
 
-## Screen shot
+It's powered by Jekyll and a modified TTSCK theme (see below).
 
-## Features
+## License
+As all of the arc42 content, this FAQ is free to use under a liberal Creative-Commons
+license:
 
-* A lot of Markdown features (also GitHub Flavored Markdown)
-* `:emoji:` ready :+1:
-* Easy color-scheme customization
-* Tags list page
-* Monthly Archives page
-* Search feature without any Jekyll plugins
-* `<!--more-->` tag feature
-* Anchor links for each headings
-* Sticky side nav
-* Responsive
-* OGP ready
-* Share buttons ready
+![](https://i.creativecommons.org/l/by-sa/4.0/88x31.png)
+This work is licensed under a
+[Creative Commons Attribution-ShareAlike 4.0 International License](http://creativecommons.org/licenses/by-sa/4.0/).
 
-## Getting started
 
-3. Modify `_config.yml`
-4. Modify `_sass/base/_variables.scss` if you need to change colors or font sizes
-5. Add new posts into `_posts/` :smiley:
+## Jekyll TTSCK Theme
 
-## Demo
-
-You can see live demo at below:
-
-* https://ttskch.github.io/jekyll-ttskch-theme/
-
-## Thanks for using :wink:
-
-* http://ttskch.github.io
-* http://sitaramshelke.github.io
-* http://jffourmond.github.io
-* http://vbflash8.github.io
-* http://luqitao.github.io
-* http://harusametime.github.io
-* http://gitzxon.github.io
-* http://hutsonlu.github.io
-* http://k0-1.github.io
-* http://anthonygore.github.io
-* http://getjsdojo.github.io
-* http://georgezhuo.github.io
-* http://neontapir.github.io
-* https://blog.guilhermegarnier.com
-
-Please PR if you want to add your blog.
+For documentation on this theme, see the [original documentation](https://ttskch.github.io/jekyll-ttskch-theme/).
