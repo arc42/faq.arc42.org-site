@@ -5,6 +5,9 @@ permalink: /category_f/
 order: 8
 ---
 
+{% capture my-include %}{% include tool-disclaimer.md %}{% endcapture %}
+{{ my-include | markdownify }}
+
 <div id="search-results">
     <hr id="first-hr" class="with-no-margin"/>
 
