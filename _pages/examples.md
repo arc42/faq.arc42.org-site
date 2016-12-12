@@ -10,8 +10,7 @@ share: false
 
 There's a [Leanpub book](https://leanpub.com/arc42byexample) available containing six arc42 examples, compiled by three different authors.
 
-![]({{ url }}/images/arc42ByExample-small.png)
-
+![]({{ url }}{{ '/images/arc42ByExample-small.png' | prepend: site.baseurl }})
 
 ### Online arc42 examples
 
