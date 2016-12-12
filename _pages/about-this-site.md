@@ -9,35 +9,25 @@ share: false
 > This site does **NOT** use cookies or other means to track or analyze your visit.
 > In case you like what you read here, share your experience with colleagues and friends...
 
-### About Gernot Starke
+## Support
 
-I'm:
+[innoQ](https://innoq.com) supports creation, maintenance and hosting of this site.
 
-* happily married with two (nearly grown-up) kids and a few cats in Cologne, Germany,
-* fellow at innoQ,
-* quite busy coaching and consulting medium and large-scale enterprises on topics around software architecture and methodical software engineering,
-* co-founder and maintainer of <a href="http://arc42.de">arc42</a>, the template for pragmatic and systematic software architecture documentation,
-* founder of <a href="http://aim42.org">aim42</a>, the open source framework for systematic _software architecture improvement_,
-* active member and working group lead within the <a href="http://isaqb.org">iSAQB</a>,
-* regular presenter at IT-conferences,
-* author and co-author of more than a dozen books on software architecture, patterns, SOA, and the like. I'm really sorry - most of these books are written in German. Have a look at <a href="http://leanpub.com">Leanpub</a> for some of my English books.
-
-
-### Content
+## Content
 The content of this site is primarily based upon a Leanpub book on arc42, that contains an FAQ chapter. The questions in this book and on this website are identical to a large extend.
 
 Both are written in Markdown, but not in a completely identical dialect, sigh... (see below for differences).
 
-### Tooling
+## Tooling
 This page is based upon [Jekyll](), a static website generator, using the [TtskchTheme](https://github.com/ttskch/jekyll-ttskch-theme) theme.
+It's maintained on [Github](https://github.com/arc42/faq/) and published via github-pages.
 
-It's maintained on Github - published via github-pages.
 
 ### Markdown and Jekyll
 
-Some issues occured during the migration of questions from the Leanpub markdown:
+Some issues occured during the migration of questions from Leanpub markdown (the dialect in which we originally authored the content...):
 
-#### Images size
+### Images size
 
 Use the standard markdown image tag, append Jekyll-specific with-attributes:
 
@@ -45,7 +35,7 @@ Use the standard markdown image tag, append Jekyll-specific with-attributes:
 ![](/images/faq/B-Method/whitebox-sample.png){:width="30%"}
 {% endhighlight %}
 
-#### Image location
+### Image location
 
 In contrast to the plain markdown (e.g. used at LeanPub), we have to prepend
 a ```/``` to the image path:
@@ -57,17 +47,15 @@ a ```/``` to the image path:
 The image directory is located in the root of the site, parallel to the Jekyll
 standard directories ```_posts``` etc.
 
-#### Crossreferences
+### Crossreferences
 
 I still have **NOT** found out how to crossreference questions...
 
 
-#### Source code
+### Source code
 
 The Liquid processor used by Jekyll to generate the site is peculiar with source
 code - making especially difficult to display Liquid code itself :-(
-
-
 
 
 ### Sorting questions
@@ -88,3 +76,23 @@ the collection with `reverse` in reverse order
 {% endhighlight %}
 
 Thanx to [Phlow](https://gist.github.com/Phlow/1f27dfafdf2bbcc5c48e)
+
+
+## The Team
+
+#### About Gernot Starke
+
+I'm:
+
+* happily married with two (nearly grown-up) kids and a few cats in Cologne, Germany,
+* fellow at innoQ,
+* quite busy coaching and consulting medium and large-scale enterprises on topics around software architecture and methodical software engineering,
+* co-founder and maintainer of <a href="http://arc42.de">arc42</a>, the template for pragmatic and systematic software architecture documentation,
+* founder of <a href="http://aim42.org">aim42</a>, the open source framework for systematic _software architecture improvement_,
+* active member and working group lead within the <a href="http://isaqb.org">iSAQB</a>,
+* regular presenter at IT-conferences,
+* author and co-author of more than a dozen books on software architecture, patterns, SOA, and the like. I'm really sorry - most of these books are written in German. Have a look at <a href="http://leanpub.com">Leanpub</a> for some of my English books.
+
+#### About RDM...
+
+todo

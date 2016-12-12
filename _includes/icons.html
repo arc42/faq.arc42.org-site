@@ -27,6 +27,15 @@
 {% endif %}
 
 
+{% if icons.stack_overflow %}
+<li>
+    <a href="{{ icons.stack_overflow }}">
+        <i class="fa fa-fw fa-stack-overflow"></i>
+    </a>
+</li>
+{% endif %}
+
+
 {% if icons.google_plus %}
 <li>
     <a href="https://plus.google.com/{{ icons.google_plus }}">
@@ -34,18 +43,3 @@
     </a>
 </li>
 {% endif %}
-
-
-{% if icons.stack_exchange %}
-<li>
-    <a href="{{ icons.stack_exchange }}">
-        <i class="fa fa-fw fa-stack-exchange"></i>
-    </a>
-</li>
-{% endif %}
-
-<li>
-    <a href="https://innoq.com">
-        <img src="/faq/assets/img/innoQ_logo_bw.png" width="50px" alt="innoQ">
-    </a>
-</li>

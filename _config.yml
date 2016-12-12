@@ -1,14 +1,31 @@
 #
-# Basic settings.
+# URL settings
 #
+# these need to be adjusted depending on target platform,
+# local Jekyll tests need different settings than github-pages :-(
+
+# local development
+# -----------------------------------------------------
 url: http://localhost:4000
-baseurl: ""
+baseurl: 
+
+# temporary deployment on arc42.github.io/faq
+# -----------------------------------------------------
+#url: http://arc42.github.io
+#baseurl: "/faq/"
+
+# "real" deployment with github-pages but custom domain
+# -----------------------------------------------------
 #url: http://faq.arc4.org
-#baseurl: /arc42-faq-site
+#baseurl: ""
+#######################################################
+
+#
+# basic settings
+#
 title: arc42 FAQ
 description: Frequently asked questions about arc42.
 avatar: /assets/img/arc42logosquare.png
-# favicon: /favicon.ico
 favicon: /assets/img/arc42logosquare.png
 language: en
 
@@ -17,10 +34,11 @@ language: en
 #
 icons:
   rss: false
-  email:
-  github: gernotstarke
+  email: false
+  github: arc42
   twitter: gernotstarke
-  google_plus:
+  google_plus: arc42
+  stack_overflow: arc42
 
 #
 # Prettify url.
