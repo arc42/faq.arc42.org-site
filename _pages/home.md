@@ -7,7 +7,7 @@ permalink: /home/
 
 {% assign categoryA_posts = (site.posts | where: "category", "general") %}
 {% assign categoryB_posts = (site.posts | where: "category", "method") %}
-{% assign categoryC_posts = (site.posts | where_exp: "category", "category contains 'section'") %}
+{% assign categoryC_posts = (site.posts | where_exp: "post", "post.category contains 'section'") %}
 {% assign categoryD_posts = (site.posts | where: "category", "modeling") %}
 {% assign categoryE_posts = (site.posts | where: "category", "agile") %}
 {% assign categoryF_posts = (site.posts | where: "category", "tools") %}
