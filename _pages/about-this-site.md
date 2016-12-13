@@ -32,7 +32,9 @@ Some issues occured during the migration of questions from Leanpub markdown (the
 Use the standard markdown image tag, append Jekyll-specific with-attributes:
 
 {% highlight markdown %}
+{% raw %}
 ![]({{ site.imageurl }}/images/faq/B-Method/whitebox-sample.png){:width="30%"}
+{% endraw %}
 {% endhighlight %}
 
 ### Image location
@@ -41,7 +43,9 @@ In contrast to the plain markdown (e.g. used at LeanPub), we have to prepend
 a ```/``` to the image path:
 
 {% highlight markdown %}
-![](/images/...)
+{% raw %}
+![]({{ site.imageurl }}/images/...)
+{% endraw %}
 {% endhighlight %}
 
 The image directory is located in the root of the site, parallel to the Jekyll
