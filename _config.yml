@@ -6,13 +6,13 @@
 
 # local development
 # -----------------------------------------------------
-url: http://localhost:4000
-baseurl:
+#url: http://localhost:4000
+#baseurl:
 
 # temporary deployment on arc42.github.io/faq
 # -----------------------------------------------------
-#url: http://arc42.github.io
-#baseurl: "/faq/"
+url: http://arc42.github.io
+baseurl: "/faq/"
 
 # "real" deployment with github-pages but custom domain
 # -----------------------------------------------------
@@ -22,8 +22,8 @@ baseurl:
 
 ## imageurl set to url + baseurl, easier than the complex
 ## {{ url }}{{ url }}{{ '<filename>' | prepend: site.baseurl }}
-imageurl: http://localhost:4000
-# imageurl: http://arc42.github.io/faq/
+#imageurl: http://localhost:4000
+imageurl: http://arc42.github.io/faq
 # imageurl: (for faq.arc42.org...)
 
 
