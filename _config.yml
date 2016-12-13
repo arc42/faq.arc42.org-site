@@ -12,7 +12,7 @@
 # temporary deployment on arc42.github.io/faq
 # -----------------------------------------------------
 url: http://arc42.github.io
-baseurl: "/faq/"
+baseurl: "/faq"
 
 # "real" deployment with github-pages but custom domain
 # -----------------------------------------------------
