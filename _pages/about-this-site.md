@@ -32,7 +32,7 @@ Some issues occured during the migration of questions from Leanpub markdown (the
 Use the standard markdown image tag, append Jekyll-specific with-attributes:
 
 {% highlight markdown %}
-![](/images/faq/B-Method/whitebox-sample.png){:width="30%"}
+![]({{ site.imageurl }}/images/faq/B-Method/whitebox-sample.png){:width="30%"}
 {% endhighlight %}
 
 ### Image location
