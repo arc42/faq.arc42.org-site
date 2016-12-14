@@ -68,7 +68,7 @@ See for example "category_F.html" for an example:
 {% highlight html %}
 {% raw  %}
 
-{% capture my-include %}{% include tool-disclaimer.md %}{% endcapture %}
+{% capture my-include %}{% include category_F_preface.md %}{% endcapture %}
 {{ my-include | markdownify }}
 
 {% endraw  %}
