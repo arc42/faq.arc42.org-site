@@ -43,6 +43,9 @@
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
     <script src="https://use.fontawesome.com/1f5f360d80.js"></script>
+    <script>
+      try { document.getElementsByTagName('html')[0].className += ' js'; } catch(e) { /* NO-JS */ }
+    </script>
     <link href="//fonts.googleapis.com/css?family=Source+Sans+Pro:400,700,700italic,400italic" rel="stylesheet">
 
     <link href="{{ '/assets/css/style.css' | prepend: site.baseurl }}" rel="stylesheet">
@@ -51,6 +54,7 @@
 
 <header class="site-header">
     <div class="inner clearfix">
+        <button class="fa fa-fw fa-bars nav-toggle" data-target=".site-aside"></button>
         {% if site.avatar %}
         <a href="{{ '/' | prepend: site.baseurl }}">
             <img class="avatar" src="{{ site.avatar | prepend: site.baseurl }}" alt=""/>
@@ -64,10 +68,6 @@
 </header>
 
 <div class="site-container">
-    <div class="site-content">
-        {{ content }}
-    </div>
-
     <aside class="site-aside">
         <div class="inner">
             <div class="block">
@@ -107,6 +107,10 @@
           -->
         </div>
     </aside>
+
+    <div class="site-content">
+        {{ content }}
+    </div>
 </div>
 
 <footer class="site-footer">

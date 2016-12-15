@@ -34,18 +34,21 @@ $side-padding: 10px;
 }
 
 .site-content {
-    width: 70%;
-    float: left;
-    @media screen and (max-width: $mobile-width) {
-        width: 100%;
-        padding: 0 $side-padding;
+    width: 100%;
+    padding: 0 $side-padding;
+
+    @media screen and (min-width: $mobile-width) {
+      width: 70%;
+      float: left;
+      padding-right: 0;
+      padding-left: 0;
     }
 }
 
 .site-aside {
     padding-left: 50px;
     width: 30%;
-    float: left;
+    float: right;
     @media screen and (max-width: $mobile-width) {
         width: 100%;
         padding: 0 $side-padding;

@@ -1,4 +1,16 @@
 $(function () {
+    // enable navigation toggle
+    $('.nav-toggle').on('click', function(e) {
+      e.preventDefault();
+      var toggle = $(e.target);
+      var target = $(toggle.data('target'));
+
+      if (target.length) {
+        toggle.toggleClass('active');
+        target.toggleClass('active');
+      }
+    });
+
     // focus on search input with '/' key.
     $("body").on("keyup", function (e) {
         e.stopPropagation();

@@ -4,7 +4,31 @@
     background-color: $brand-color;
     border-top: 3px solid rgba(#000, .5);
     @media screen and (max-width: $mobile-width) {
+        position: relative;
         text-align: center;
+    }
+
+    .nav-toggle {
+      display: none;
+
+      background-color: transparent;
+      border: 0;
+
+      @media screen and (max-width: $mobile-width) {
+        .js & {
+          display: inline;
+
+          position: absolute;
+          top: $side-padding;
+          right: $side-padding;
+
+          outline: none;
+
+          &.active {
+            color: #fff;
+          }
+        }
+      }
     }
 
     .avatar {
