@@ -5,6 +5,14 @@
 
     @media screen and (max-width: $mobile-width) {
         border-top: 3px solid $brand-color;
+
+        .js & {
+          display: none;
+
+          &.active {
+            display: block;
+          }
+        }
     }
 
     h1 {
