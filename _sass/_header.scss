@@ -21,6 +21,12 @@
           position: absolute;
           top: $side-padding;
           right: $side-padding;
+
+          outline: none;
+
+          &.active {
+            color: #fff;
+          }
         }
       }
     }
