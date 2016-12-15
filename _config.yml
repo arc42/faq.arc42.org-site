@@ -16,7 +16,7 @@
 
 # "real" deployment with github-pages but custom domain
 # -----------------------------------------------------
-url: http://faq.arc4.org
+url: http://faq.arc42.org
 baseurl: ""
 #######################################################
 
@@ -24,7 +24,7 @@ baseurl: ""
 ## {{ url }}{{ url }}{{ '<filename>' | prepend: site.baseurl }}
 imageurl: http://localhost:4000
 #imageurl: http://arc42.github.io/faq
-# imageurl: (for faq.arc42.org...)
+ imageurl: http://faq.arc42.org
 
 
 
