@@ -16,10 +16,11 @@ permalink: /home/
 {% assign categoryJ_posts = (site.posts | where: "category", "management") %}
 {% assign categoryK_posts = (site.posts | where: "category", "customizing") %}
 
-Here you find answers to (currently {{ site.posts | size }}) frequently asked questions
-on arc42, organized in the following categories:
 
-| Category         | Content                   |
+On this site you find answers to (currently {{ site.posts | size }}) questions
+regarding arc42, organized in the following categories:
+
+| Category         | Topics                   |
 |:-----------------|:----------------------------|
 | [**General questions**](/category_a/) ({{ categoryA_posts | size }}) | Cost, license, contributing |
 |-----------------|----------------------------|
@@ -43,5 +44,8 @@ on arc42, organized in the following categories:
 |-----------------|----------------------------|
 
 
+
+#### If you have additional questions...
+
 Just in case **your** question(s) regarding arc42 and its usage in
-practical situations are still missing - please let us know.
+practical situations are still missing ... please let us [**know here**](/contact/).

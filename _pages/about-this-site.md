@@ -2,7 +2,7 @@
 layout: page
 title: About this site
 permalink: /aboutthissite/
-order: 20
+order: 25
 share: false
 ---
 

@@ -3,6 +3,7 @@ layout: page
 title: About arc42
 permalink: /about/
 order: 1
+hide: true
 share: false
 ---
 
