@@ -39,9 +39,10 @@ favicon: /assets/img/arc42logosquare.png
 language: en
 
 #
-# want (disqus) comments?
+# want (disqus/muut) comments?
 #
-disqus: true
+# disqus:
+muut: true
 
 #
 # Icons
