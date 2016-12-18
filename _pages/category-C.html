@@ -131,6 +131,11 @@ order: 5
 
     <hr class="with-no-margin"/>
     <h2 id="c-sec-9">arc42 Section 9: Architectural Decisions</h2>
+
+    {% capture includeC9 %}{% include category_C-9_preface.md %}{% endcapture %}
+    {{ includeC9 | markdownify }}
+
+
     {% for post in section9_posts  %}
 
     <div class="article-wrapper">
