@@ -1,5 +1,5 @@
 .site-header {
-    font-size: 2em;
+    font-size: 2.7em;
     padding: 0.7em 0;
     background-color: $brand-color;
     border-top: 3px solid rgba(#000, .5);
@@ -65,7 +65,9 @@
             font-size: 0.6em;
             line-height: 1em;
             margin-top: 0.5em;
-            color: lighten($site-title-color, 20%);
+            /* original: color: lighten($site-title-color, 20%);
+            */
+            color: #d7ecf8;
         }
     }
 }
