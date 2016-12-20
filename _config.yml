@@ -40,9 +40,9 @@ language: en
 
 #
 # want (disqus/muut) comments?
-#
-# disqus:
-muut: true
+# 
+disqus: true
+muut: false
 
 #
 # Icons
