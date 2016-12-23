@@ -49,3 +49,13 @@ regarding arc42, organized in the following categories:
 
 Just in case **your** question(s) regarding arc42 and its usage in
 practical situations are still missing ... please let us [**know here**](/contact/).
+
+
+## <font color="#dd354b">We're offering architecture training!</font>
+
+The _dynamic duo_, always two trainers in parallel, practically applicable
+knowledge from Peter Hruschka and Gernot Starke. See [arc42.de](http://www.arc42.de/training.html) for details, and schedule.
+
+We've successfully trained more than 1000 developers in software architecture,
+many of them passed the [iSAQB CPSA-F](http://isaqb.org) certification.
+(sorry - public training currently German-only, English for inhouse trainings.)
