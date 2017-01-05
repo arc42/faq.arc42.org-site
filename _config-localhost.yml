@@ -1,14 +1,14 @@
 #
-# URL settings
+# URL settings for localhost!!
 #
 # these need to be adjusted depending on target platform,
 # local Jekyll tests need different settings than github-pages :-(
 
 # local development
 # -----------------------------------------------------
-#url: http://localhost:4000
-#baseurl:
-#imageurl: http://localhost:4000
+url: http://localhost:4000
+baseurl:
+imageurl: http://localhost:4000
 
 # temporary deployment on arc42.github.io/faq
 # -----------------------------------------------------
@@ -17,9 +17,9 @@
 
 # "real" deployment with github-pages but custom domain
 # -----------------------------------------------------
-url: http://faq.arc42.org
-imageurl: http://faq.arc42.org
-baseurl:
+#url: http://faq.arc42.org
+#imageurl: http://faq.arc42.org
+#baseurl:
 #######################################################
 
 ## imageurl set to url + baseurl, easier than the complex
