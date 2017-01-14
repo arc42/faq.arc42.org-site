@@ -39,10 +39,10 @@ favicon: /assets/img/arc42logosquare.png
 language: en
 
 #
-# want (disqus/muut) comments?
+# want disqus comments?
 #
 disqus: true
-muut: false
+
 
 #
 # Icons
@@ -54,7 +54,8 @@ icons:
   twitter: gernotstarke
   google_plus: 105917203908419102125
   stack_overflow: arc42
-
+  slack: arc42
+  
 #
 # Prettify url.
 #
