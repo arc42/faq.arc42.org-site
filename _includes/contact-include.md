@@ -9,4 +9,5 @@ Please let us know - we're listening:
   * [<i class="fa fa-fw fa-twitter"></i>@arc42Tipps](https://twitter.com/arc42Tipps)
   * [<i class="fa fa-fw fa-twitter"></i>@gernotstarke](https://twitter.com/gernotstarke)
 * on [<i class="fa fa-fw fa-stack-overflow"></i>Stackoverflow](http://stackoverflow.com/questions/tagged/arc42)
-* on [<i class="fa fa-fw fa-slack"></i>Slack](https://arc42.slack.com) - we're [currently working on](https://github.com/arc42/arc42.org-site/issues/3) a public slack channel.
+* on [<i class="fa fa-fw fa-slack"></i>Slack](https://arc42.slack.com)
+   * you can [self-register here - it's free](https://slackin-giwyfuegce.now.sh).
