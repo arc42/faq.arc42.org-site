@@ -43,6 +43,11 @@ language: en
 #
 disqus: true
 
+#
+# want subtle ads (on post-pages)
+#
+show-subtle-ads: true
+
 
 #
 # Icons
@@ -55,7 +60,7 @@ icons:
   google_plus: 105917203908419102125
   stack_overflow: arc42
   slack: arc42
-  
+
 #
 # Prettify url.
 #
