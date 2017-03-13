@@ -6,7 +6,13 @@ order: 25
 share: false
 ---
 
-> This site does **NOT** use cookies or other means to track or analyze your visit.
+## Imprint and Privacy
+
+Imprint and privacy information is contained on its own [page](/imprint-privacy/).
+ 
+
+## You like what you see?
+
 > In case you like what you read here, share your experience with colleagues and friends...
 
 ## Support
