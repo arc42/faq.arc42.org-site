@@ -41,9 +41,7 @@ show-subtle-ads: true
 
 # Analytics
 analytics: false
-  google:
-    tracking_id :
-
+  
 #
 # Icons
 #
