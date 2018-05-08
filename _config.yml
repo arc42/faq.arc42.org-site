@@ -4,16 +4,6 @@
 # these need to be adjusted depending on target platform,
 # local Jekyll tests need different settings than github-pages :-(
 
-# local development
-# -----------------------------------------------------
-#url: http://localhost:4000
-#baseurl:
-#imageurl: http://localhost:4000
-
-# temporary deployment on arc42.github.io/faq
-# -----------------------------------------------------
-#url: http://arc42.github.io
-#baseurl: "/faq"
 
 # "real" deployment with github-pages but custom domain
 # -----------------------------------------------------
@@ -41,7 +31,7 @@ language: en
 #
 # want disqus comments?
 #
-disqus: true
+disqus: false
 
 #
 # want subtle ads (on post-pages)
@@ -50,9 +40,9 @@ show-subtle-ads: true
 
 
 # Analytics
-analytics:
+analytics: false
   google:
-    tracking_id : 'UA-93746670-3'
+    tracking_id :
 
 #
 # Icons
@@ -64,7 +54,6 @@ icons:
   twitter: gernotstarke
   google_plus: 105917203908419102125
   stack_overflow: arc42
-  slack: arc42
 
 #
 # Prettify url.
