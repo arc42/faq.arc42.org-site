@@ -7,8 +7,8 @@
 
 # "real" deployment with github-pages but custom domain
 # -----------------------------------------------------
-url: http://faq.arc42.org
-imageurl: http://faq.arc42.org
+url: https://faq.arc42.org
+imageurl: https://faq.arc42.org
 baseurl:
 #######################################################
 
@@ -41,7 +41,7 @@ show-subtle-ads: true
 
 # Analytics
 analytics: false
-  
+
 #
 # Icons
 #
@@ -50,7 +50,7 @@ icons:
   email: false
   github: arc42
   twitter: gernotstarke
-  google_plus: 105917203908419102125
+  google_plus: 
   stack_overflow: arc42
 
 #
