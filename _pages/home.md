@@ -5,16 +5,18 @@ order: 0
 permalink: /home/
 ---
 
-{% assign categoryA_posts = (site.posts | where: "category", "general") %}
-{% assign categoryB_posts = (site.posts | where: "category", "method") %}
-{% assign categoryC_posts = (site.posts | where_exp: "post", "post.category contains 'section'") %}
-{% assign categoryD_posts = (site.posts | where: "category", "modeling") %}
-{% assign categoryE_posts = (site.posts | where: "category", "agile") %}
-{% assign categoryF_posts = (site.posts | where: "category", "tools") %}
-{% assign categoryG_posts = (site.posts | where: "category", "versions") %}
-{% assign categoryH_posts = (site.posts | where: "category", "traceability") %}
-{% assign categoryJ_posts = (site.posts | where: "category", "management") %}
-{% assign categoryK_posts = (site.posts | where: "category", "customizing") %}
+{% assign categoryA_posts = site.posts | where: "category", "general" %}
+{% assign zorg = categoryA_posts.size %}
+
+{% assign categoryB_posts = site.posts | where: "category", "method" %}
+{% assign categoryC_posts = site.posts | where_exp: "post", "post.category contains 'section'" %}
+{% assign categoryD_posts = site.posts | where: "category", "modeling" %}
+{% assign categoryE_posts = site.posts | where: "category", "agile" %}
+{% assign categoryF_posts = site.posts | where: "category", "tools" %}
+{% assign categoryG_posts = site.posts | where: "category", "versions" %}
+{% assign categoryH_posts = site.posts | where: "category", "traceability" %}
+{% assign categoryJ_posts = site.posts | where: "category", "management" %}
+{% assign categoryK_posts = site.posts | where: "category", "customizing" %}
 
 
 On this site you find answers to (currently {{ site.posts | size }}) questions
@@ -22,7 +24,7 @@ regarding arc42, organized in the following categories:
 
 | Category         | Topics                   |
 |:-----------------|:----------------------------|
-| [**General questions**](/category_a/) ({{ categoryA_posts | size }}) | Cost, license, contributing |
+| [**General questions**](/category_a/) ({{ zorg }}) | Cost, license, contributing |
 |-----------------|----------------------------|
 | [Questions on **methodology**](/category_b/) ({{ categoryB_posts | size }})  | Minimal amount of documentation, where-does-what-info-belong, notations, UML|
 |-----------------|----------------------------|

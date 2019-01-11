@@ -12,7 +12,7 @@ order: 7
     <hr id="first-hr" class="with-no-margin"/>
 
 
-    {% assign selected_posts = (site.posts | where: "category", "agile") | reverse %}
+    {% assign selected_posts = site.posts | where: "category", "agile" | reverse %}
     {% for post in selected_posts  %}
     <div class="article-wrapper">
         <article>

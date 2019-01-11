@@ -9,18 +9,18 @@ order: 5
    Header names and category names differ...
 {% endcomment %}
 
-{% assign section1_posts = (site.posts | where: "category", "section-requirements") | reverse %}
-{% assign section2_posts = (site.posts | where: "category", "section-constraints") | reverse %}
-{% assign section3_posts = (site.posts | where: "category", "section-context") | reverse %}
-{% assign section4_posts = (site.posts | where: "category", "section-solutionstrategy") | reverse %}
-{% assign section5_posts = (site.posts | where: "category", "section-buildingblock") | reverse %}
-{% assign section6_posts = (site.posts | where: "category", "section-runtime") | reverse %}
-{% assign section7_posts = (site.posts | where: "category", "section-deployment") | reverse %}
-{% assign section8_posts = (site.posts | where: "category", "section-concepts") | reverse %}
-{% assign section9_posts = (site.posts | where: "category", "section-decisions") | reverse %}
-{% assign section10_posts = (site.posts | where: "category", "section-quality") | reverse %}
-{% assign section11_posts = (site.posts | where: "category", "section-risks") | reverse %}
-{% assign section12_posts = (site.posts | where: "category", "section-glossary") | reverse %}
+{% assign section1_posts = site.posts | where: "category", "section-requirements" | reverse %}
+{% assign section2_posts = site.posts | where: "category", "section-constraints" | reverse %}
+{% assign section3_posts = site.posts | where: "category", "section-context" | reverse %}
+{% assign section4_posts = site.posts | where: "category", "section-solutionstrategy" | reverse %}
+{% assign section5_posts = site.posts | where: "category", "section-buildingblock" | reverse %}
+{% assign section6_posts = site.posts | where: "category", "section-runtime" | reverse %}
+{% assign section7_posts = site.posts | where: "category", "section-deployment" | reverse %}
+{% assign section8_posts = site.posts | where: "category", "section-concepts" | reverse %}
+{% assign section9_posts = site.posts | where: "category", "section-decisions" | reverse %}
+{% assign section10_posts = site.posts | where: "category", "section-quality" | reverse %}
+{% assign section11_posts = site.posts | where: "category", "section-risks" | reverse %}
+{% assign section12_posts = site.posts | where: "category", "section-glossary" | reverse %}
 
 <ol>
   <li><a href="#c-sec-1">Requirements and Stakeholder ({{ section1_posts | size }})</a></li>
