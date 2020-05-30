@@ -17,7 +17,7 @@ Imprint and privacy information is contained on its own [page](/imprint-privacy/
 
 ## Support
 
-[innoQ](https://innoq.com) supports creation, maintenance and hosting of this site.
+[INNOQ](https://innoq.com) supports creation and maintenance of this site.
 
 ## Content
 The content of this site is primarily based upon a Leanpub book on arc42, that contains an FAQ chapter. The questions in this book and on this website are identical to a large extend.
@@ -144,13 +144,13 @@ Thanx to [LanyonM](https://github.com/LanyonM/lanyonm.github.io/blob/master/tags
 I'm:
 
 * happily married with two (nearly grown-up) kids and a few cats in Cologne, Germany,
-* fellow at innoQ,
+* fellow at INNOQ,
 * quite busy coaching and consulting medium and large-scale enterprises on topics around software architecture and methodical software engineering,
-* co-founder and maintainer of <a href="http://arc42.de">arc42</a>, the template for pragmatic and systematic software architecture documentation,
-* founder of <a href="http://aim42.org">aim42</a>, the open source framework for systematic _software architecture improvement_,
-* active member and working group lead within the <a href="http://isaqb.org">iSAQB</a>,
+* co-founder and maintainer of <a href="https://arc42.de">arc42</a>, the template for pragmatic and systematic software architecture documentation,
+* founder of <a href="https://aim42.org">aim42</a>, the open source framework for systematic _software architecture improvement_,
+* active member and working group lead within the <a href="https://isaqb.org">iSAQB</a>,
 * regular presenter at IT-conferences,
-* author and co-author of more than a dozen books on software architecture, patterns, SOA, and the like. I'm really sorry - most of these books are written in German. Have a look at <a href="http://leanpub.com">Leanpub</a> for some of my English books.
+* author and co-author of more than a dozen books on software architecture, patterns, arc, and the like. I'm really sorry - most of these books are written in German. Have a look at <a href="https://leanpub.com">Leanpub</a> for some of my English books.
 
 #### About RDM...
 
