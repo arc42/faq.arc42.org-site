@@ -17,7 +17,7 @@ Imprint and privacy information is contained on its own [page](/imprint-privacy/
 
 ## Support
 
-[The Atlantic Systems Guild](https://systemsguild.com) and [Agile Experts] (https://agile-experts.ch) support creation and maintenance of this site.
+[INNOQ](https://innoq.com) supports creation and maintenance of this site.
 
 ## Content
 The content of this site is primarily based upon a Leanpub book on arc42, that contains an FAQ chapter. The questions in this book and on this website are identical to a large extend.
