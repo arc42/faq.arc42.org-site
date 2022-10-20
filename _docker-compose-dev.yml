@@ -5,7 +5,7 @@ version: '2'
 services:
   faq-arc42-jekyll:
     build: .
-    image: arc42-faq-site:latest
+    image: doc-arc42-site:latest
     command: jekyll serve --trace --host 0.0.0.0 --watch --incremental --config _config.yml,_config-dev.yml
     environment:
       - JEKYLL_ENV=development

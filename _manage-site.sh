@@ -26,9 +26,6 @@ echo "${GREEN}(b)build ${RESET} build the required docker image."
 echo
 echo "${GREEN}(r)emove ${RESET} the running docker container."
 echo
-echo "${RED}(p)production ${RESET} produces the site with production configuration,"
-echo "into ./zz-production-site directory."
-echo
 #echo "${GREEN}(u)pload ${RESET} the generated site to $server/$remotedir "
 #echo
 echo "=================================================="
