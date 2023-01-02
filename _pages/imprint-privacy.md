@@ -7,8 +7,7 @@ share: false
 hide: true
 ---
 
-The following text has to be included in sites provided from Germany by German citicens,
-due to our sometimes strange, inconsistent and user-unfriendly data privacy laws.
+The following text has to be included in sites provided from Germany by German citicens, due to our sometimes strange, inconsistent and user-unfriendly data privacy laws.
 
 ## Imprint
 
@@ -18,9 +17,8 @@ Dr. Gernot Starke, Willi-Lauf Allee 43, D-50858 Köln
 
 #### Kontakt
 
-Telefon: +49-177-728 2570<br>
-e-Mail: gs - at - gernotstarke - dot - de<br>
-Website: [gernotstarke.de](http://gernotstarke.de)
+e-Mail: gernotstarke - at - mailbox - dot - org<br>
+Website: [gernotstarke.de](https://www.gernotstarke.de)
 
 #### Verantwortlich nach § 6 Abs.2 MDStV
 
@@ -29,6 +27,10 @@ Dr. Gernot Starke, mit Unterstützung von Dr. Peter Hruschka (Aachen).
 
 
 ## Privacy Statement (Datenschutzerklärung)
+
+
+#### Web Analytics
+This page uses privacy-friendly web analytics from [plausible.io](https://plausible.io), but sets NO COOKIES.
 
 #### Geltungsbereich
 Diese Datenschutzerklärung klärt Nutzer über die Art, den Umfang und Zwecke der Erhebung und Verwendung personenbezogener Daten durch den verantwortlichen Anbieter Dr. Gernot Starke, Willi-Lauf Allee 43, D-50858 Köln, Deutschland, <a href="xmxaxixlxtxo:ixnxfxox@xaxrxcx4x2x.xdxe" onmouseover="this.href=this.href.replace(/x/g,'');">Email (gegen Spam gesichert)</a>, Tel.: +49 177 7282570 auf dieser Website (im folgenden “Angebot”) auf.<br />
