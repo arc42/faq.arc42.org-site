@@ -80,7 +80,7 @@ See for example "category_F.html" for an example:
 {% endraw  %}
 {% endhighlight %}
 
-Thanx to [Mono](http://wolfslittlestore.be/2013/10/rendering-markdown-in-jekyll/).
+Thanx to [Mono](https://wolfslittlestore.be/2013/10/rendering-markdown-in-jekyll/).
 
 
 ### Sorting questions

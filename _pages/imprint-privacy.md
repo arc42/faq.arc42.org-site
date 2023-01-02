@@ -61,4 +61,4 @@ Der Nutzer hat das Recht, auf Antrag unentgeltlich Auskunft zu erhalten über di
 
 #### Quelle
 Danke an Hr Rechtsanwalt Thomas Schwenke:<br>
-<a href="http://rechtsanwalt-schwenke.de/smmr-buch/datenschutz-muster-generator-fuer-webseiten-blogs-und-social-media/"><strong>Datenschutz-Muster von Rechtsanwalt Thomas Schwenke - I LAW it</strong></a>
+<a href="https://rechtsanwalt-schwenke.de/smmr-buch/datenschutz-muster-generator-fuer-webseiten-blogs-und-social-media/"><strong>Datenschutz-Muster von Rechtsanwalt Thomas Schwenke - I LAW it</strong></a>
