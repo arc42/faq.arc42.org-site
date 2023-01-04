@@ -72,10 +72,12 @@ str_show_all_posts: Show all questions/answers
 #
 # Gems.
 #
-gems:
-  - jekyll-paginate
+plugins:
+#  - jekyll-paginate
   - jemoji
-
+  - jekyll-github-metadata
+  - jekyll-sitemap
+  - jekyll-seo-tag
 #
 # Styles: see "_sass/base/_variables.scss"
 #
@@ -84,7 +86,7 @@ gems:
 # !! Danger zone !!
 #
 
-include: ["_pages"]
+include: ["_pages", "robots.txt"]
 
 markdown: kramdown
 kramdown:
@@ -100,6 +102,9 @@ sass:
 exclude:
   - Gemfile
   - Gemfile.lock
-  - LICENSE
+  - Dockerfile
+  - _manage-site.sh
+  - _docker*
   - README.md
-  - vendor
+  - originals/
+
