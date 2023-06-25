@@ -71,8 +71,6 @@ str_show_all_posts: Show all questions/answers
 plugins:
   - jekyll-sitemap
   - jekyll-seo-tag
-  - jemoji
-  - jekyll-paginate
   - jekyll-github-metadata
 
 #
