@@ -28,10 +28,6 @@ avatar: /assets/img/arc42logosquare.png
 favicon: /assets/img/arc42logosquare.png
 language: en
 
-#
-# want disqus comments?
-#
-disqus: false
 
 #
 # want subtle ads (on post-pages)
@@ -73,11 +69,12 @@ str_show_all_posts: Show all questions/answers
 # Gems.
 #
 plugins:
-#  - jekyll-paginate
-  - jemoji
-  - jekyll-github-metadata
   - jekyll-sitemap
   - jekyll-seo-tag
+  - jemoji
+  - jekyll-paginate
+  - jekyll-github-metadata
+
 #
 # Styles: see "_sass/base/_variables.scss"
 #
