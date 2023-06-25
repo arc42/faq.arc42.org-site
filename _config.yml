@@ -102,4 +102,5 @@ exclude:
   - _docker*
   - README.md
   - originals/
+  - vendor/bundle
 
