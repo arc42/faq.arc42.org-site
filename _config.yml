@@ -28,8 +28,7 @@ avatar: /assets/img/arc42logosquare.png
 favicon: /assets/img/arc42logosquare.png
 language: en
 
-environment: production
-JEKYLL_ENV: "production"
+
 
 #
 # want subtle ads (on post-pages)
