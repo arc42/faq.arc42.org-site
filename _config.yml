@@ -81,7 +81,6 @@ plugins:
 # !! Danger zone !!
 #
 
-include: ["_pages", "robots.txt"]
 
 markdown: kramdown
 kramdown:
@@ -93,6 +92,12 @@ excerpt_separator: <!--more-->
 sass:
   sass_dir: _sass
   style: :compressed # or :expanded
+
+include:
+  - _pages 
+  - _includes
+  - images
+  - robots.txt
 
 exclude:
   - Gemfile
