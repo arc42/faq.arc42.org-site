@@ -1,4 +1,7 @@
 source 'https://rubygems.org'
+
+gem "jekyll"
+
 gem "addressable", ">= 2.8.0"
 gem "commonmarker", ">= 0.23.4"
 
