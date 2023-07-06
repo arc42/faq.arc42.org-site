@@ -73,6 +73,7 @@ plugins:
   - jekyll-seo-tag
   - jekyll-github-metadata
 
+
 #
 # Styles: see "_sass/base/_variables.scss"
 #
@@ -95,8 +96,6 @@ sass:
 
 include:
   - _pages 
-  - _includes
-  - images
   - robots.txt
 
 exclude:

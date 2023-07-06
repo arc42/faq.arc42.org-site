@@ -5,3 +5,4 @@ Gemfile.lock
 .gradle
 .DS_Store
 
+.jekyll-cache
