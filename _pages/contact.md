@@ -26,7 +26,7 @@ Please let us know - we're listening:
 <li>  <i class="fab fa-fw fa-mastodon" aria-hidden="true"></i>
         <a href="https://innoq.social/@gernotstarke">Mastodon</a> </li>
 
-  
-#### Site statistics
+
+<h3> Site statistics </h3>
   
 This page was last built on {{ site.time | date: '%c' }}
