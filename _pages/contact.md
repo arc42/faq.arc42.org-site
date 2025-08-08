@@ -19,14 +19,7 @@ Please let us know - we're listening:
 <li><a href="https://stackoverflow.com/questions/tagged/arc42"> 
    <i class="fab fa-fw fa-stack-overflow" aria-hidden="true"></i>Stackoverflow</a></li>
 
- <li><a href="https://twitter.com/_gernotstarke">
-<i class="fab fa-fw fa-twitter" aria-hidden="true"></i>
-Twitter</a>
-      </li>
 
-<li><a href="https://innoq.social/@gernotstarke">
-<i class="fab fa-fw fa-mastodon" aria-hidden="true"></i>
-Mastodon</a> </li>
 
 
 <h3> Site statistics </h3>
