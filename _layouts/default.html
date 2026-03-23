@@ -75,9 +75,6 @@
                 {% endif %}
                 {% endfor %}
             </ul>
-            <ul class="icons">
-                {% include icons.html icons=site.icons %}
-            </ul>
             <hr class="with-no-margin margin-bottom"/>
         </div>
     </aside>
@@ -96,7 +93,9 @@
         <a href="{{ site.baseurl }}/imprint">
             Imprint + Privacy</a><i>&nbsp;&nbsp;</i>
         <i class="fa fa-fw fa-envelope" aria-hidden="true"></i>
-        <a href="{{ site.baseurl }}/contact">Contact</a></p>
+        <a href="{{ site.baseurl }}/contact">Contact</a>{% if site.icons.github %}<i>&nbsp;&nbsp;</i>
+        <i class="fab fa-fw fa-github" aria-hidden="true"></i>
+        <a href="https://github.com/{{ site.icons.github }}" target="_blank" rel="noopener noreferrer nofollow">GitHub</a>{% endif %}</p>
         <span>Maintained by <a target="_blank" rel="noopener noreferrer nofollow" href="https://gernotstarke.de">Gernot Starke</a>,
           supported by <a target="_blank" rel="noopener noreferrer nofollow" href="http://www.peterhruschka.eu/">Peter Hruschka</a> and
             <a target="_blank" rel="noopener noreferrer nofollow" href="https://perstarke-webdev.de">Per Starke Web Development</a>
