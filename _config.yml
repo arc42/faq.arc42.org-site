@@ -46,9 +46,9 @@ icons:
   rss: false
   email: false
   github: arc42
-  twitter: gernotstarke
+  twitter: false
   google_plus: 
-  stack_overflow: arc42
+  stack_overflow: false
 
 #
 # Prettify url.
