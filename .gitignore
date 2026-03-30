@@ -7,3 +7,6 @@ Gemfile.lock
 
 .jekyll-cache
 .jekyll-metadata
+
+# Crush local data
+.crush/
