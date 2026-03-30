@@ -108,4 +108,5 @@ exclude:
   - README.md
   - originals/
   - vendor/bundle
+  - "*.code-workspace"
 
