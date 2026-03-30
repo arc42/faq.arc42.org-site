@@ -1,108 +1,125 @@
 # Copilot Instructions for faq.arc42.org-site
 
-## Repository Overview
+## Project Overview
 
-This repository is the source for the [arc42 FAQ site](https://faq.arc42.org), a Jekyll-based static website that answers frequently asked questions about [arc42](https://arc42.org) — a practical, proven template for software architecture documentation.
+This repository contains the source for [faq.arc42.org](https://faq.arc42.org) — a FAQ site covering frequently asked questions about the [arc42](https://arc42.org) software architecture documentation template.
+
+The site is a static website built with **Jekyll** and hosted via **GitHub Pages** with a custom domain (`faq.arc42.org`).
 
 ## Tech Stack
 
 - **Static site generator**: [Jekyll](https://jekyllrb.com/)
-- **Hosting**: GitHub Pages with a custom domain (`faq.arc42.org`)
-- **Theme**: Modified [jekyll-ttskch-theme](https://github.com/ttskch/jekyll-ttskch-theme)
-- **Markdown**: kramdown with GFM input and Rouge syntax highlighting
-- **Templating**: Liquid (Jekyll's default)
-- **Key plugins**: `jekyll-sitemap`, `jekyll-seo-tag`, `jekyll-github-metadata`
+- **Theme**: Modified [TTSCK theme](https://ttskch.github.io/jekyll-ttskch-theme/)
+- **Markup**: Markdown (kramdown with GFM input) and HTML (Liquid templates)
+- **Syntax highlighting**: Rouge
+- **Plugins**: `jekyll-sitemap`, `jekyll-seo-tag`, `jekyll-github-metadata`
+- **CSS preprocessor**: Sass (compressed output)
+- **Local development**: Docker Compose (`docker-compose.yml` using `bretfisher/jekyll-serve`)
+- **License**: Creative Commons Attribution-ShareAlike 4.0 International (CC BY-SA 4.0)
 
-## Running Locally
+## Repository Structure
 
-Use Docker Compose to serve the site locally at `http://localhost:4000`:
+```
+.
+├── _config.yml          # Jekyll site configuration
+├── _includes/           # Reusable Liquid partials (article headers, navigation, etc.)
+├── _layouts/            # Page layout templates (default, page, post, index_default)
+├── _pages/              # Static pages and category listing pages
+├── _posts/              # FAQ entries, organised into category subdirectories
+│   ├── A-general/       # Category A: General questions
+│   ├── B-method/        # Category B: arc42 method questions
+│   ├── C-arc42/         # Category C: arc42 template questions
+│   ├── D-modeling/      # Category D: Modeling questions
+│   ├── E-agile/         # Category E: Agile questions
+│   ├── F-tools/         # Category F: Tooling questions
+│   ├── G-versioning/    # Category G: Versioning questions
+│   ├── H-traceability/  # Category H: Traceability questions
+│   ├── J-management/    # Category J: Management questions
+│   └── K-customizing/   # Category K: Customizing arc42 questions
+├── _sass/               # Sass source files
+├── assets/              # Static assets (CSS, JS, images)
+├── Gemfile              # Ruby gem dependencies
+├── docker-compose.yml   # Local development server
+└── index.html           # Site home page
+```
+
+## FAQ Categories
+
+| Category | Directory | Jekyll `category` value | Topic |
+|----------|-----------|------------------------|-------|
+| A | `_posts/A-general/` | `general` | General arc42 questions |
+| B | `_posts/B-method/` | `method` | arc42 method |
+| C | `_posts/C-arc42/` | `arc42` | arc42 template sections |
+| D | `_posts/D-modeling/` | `modeling` | UML & modeling |
+| E | `_posts/E-agile/` | `agile` | Agile & arc42 |
+| F | `_posts/F-tools/` | `tools` | Tools support |
+| G | `_posts/G-versioning/` | `versioning` | Versioning documentation |
+| H | `_posts/H-traceability/` | `traceability` | Requirements traceability |
+| J | `_posts/J-management/` | `management` | Management concerns |
+| K | `_posts/K-customizing/` | `customizing` | Customizing arc42 |
+
+## How to Add a New FAQ Entry
+
+Each FAQ entry is a Markdown file in the appropriate `_posts/<category>/` subdirectory. Follow this naming convention and front matter format:
+
+**File name**: `YYYY-MM-DD-q-<category-letter>-<number>.md`
+
+**Front matter template**:
+```yaml
+---
+layout: post
+title: "Question X-N: <Short question title>"
+category: <category-value>   # see table above
+tags: <space-separated tags>
+permalink: /questions/X-N/
+---
+```
+
+**Example** (`_posts/A-general/2015-01-01-q-a-1.md`):
+```yaml
+---
+layout: post
+title: "Question A-1: What does 42 mean?"
+tags: "42"
+category: general
+permalink: /questions/A-1/
+---
+```
+
+The question number (`X-N`) must be unique within its category and should follow the existing sequence.
+
+Use `<!--more-->` to define the excerpt boundary if the post is long.
+
+## How to Build and Run Locally
+
+### Using Docker (recommended)
 
 ```bash
 docker-compose up
 ```
 
-Or run Jekyll directly (requires Ruby/Bundler):
+The site will be served at `http://localhost:4000`.
+
+### Using Ruby/Bundler directly
 
 ```bash
 bundle install
 bundle exec jekyll serve
 ```
 
-## Content Structure
+The site will be served at `http://localhost:4000`.
 
-All FAQ posts live under `_posts/`, organized into subdirectories by category:
+## Configuration Notes
 
-| Directory        | Category slug            | Topic                               |
-|------------------|--------------------------|-------------------------------------|
-| `A-general/`     | `general`                | General questions (cost, license, contributing) |
-| `B-method/`      | `method`                 | Methodology questions               |
-| `C-arc42/`       | `section-<name>`         | arc42 sections (requirements, context, building blocks, etc.) |
-| `D-modeling/`    | `modeling`               | Modelling and notation questions    |
-| `E-agile/`       | `agile`                  | arc42 and agility                   |
-| `F-tools/`       | `tools`                  | Tools questions                     |
-| `G-versioning/`  | `versions`               | Versioning and variants             |
-| `H-traceability/`| `traceability`           | Traceability questions              |
-| `J-management/`  | `management`             | Managing documentation              |
-| `K-customizing/` | `customizing`            | Customizing arc42                   |
+- `_config.yml` contains environment-specific URL settings. The `url` and `baseurl` values differ between local development and GitHub Pages deployment.
+- Sass files live in `_sass/`; variables are in `_sass/base/_variables.scss`.
+- The `exclude` list in `_config.yml` prevents build/development files from being included in the generated site.
 
-The `C-arc42/` category is further divided into subdirectories matching arc42 template sections (e.g., `01-requirements/`, `03-context/`, `05-buildingblocks/`, etc.).
+## Content Guidelines
 
-## Post Conventions
-
-### File Naming
-
-Post files follow this pattern:
-
-```
-YYYY-MM-DD-q-{category-letter}-{number}.md
-```
-
-Examples:
-- `2015-01-01-q-a-1.md` → Question A-1
-- `2016-03-01-q-c-1-1.md` → Question C-1-1
-
-### Front Matter
-
-Every post requires this front matter:
-
-```yaml
----
-layout: post
-title: "Question {ID}: {Question text}"
-tags: {space-separated tags}
-category: {category-slug}
-permalink: /questions/{ID}/
----
-```
-
-Examples:
-- `category: general` for A questions
-- `category: method` for B questions
-- `category: section-requirements` for C-1 questions
-- `category: section-context` for C-3 questions
-
-### Content Format
-
-- Write content in Markdown (kramdown/GFM dialect)
-- Use `{{ site.imageurl }}/images/...` for images (not relative paths)
-- Resize images with `{:width="30%"}` after the image tag
-- Use `{% raw %}...{% endraw %}` when showing Liquid template code
-
-## Site Configuration
-
-`_config.yml` is the main configuration file. Key settings:
-- `url`: `https://faq.arc42.org`
-- `permalink: pretty`
-- `excerpt_separator: <!--more-->`
-
-## Pages
-
-Static pages live in `_pages/` and are written in Markdown or HTML with Jekyll front matter.
-
-## Adding a New FAQ Question
-
-1. Determine the appropriate category (A–K) and next available question number.
-2. Create the file in the corresponding `_posts/{Category}/` directory.
-3. Use the correct file naming convention and front matter (see above).
-4. Write the answer in Markdown.
-5. If the question belongs to a new arc42 sub-section (C category), create the subdirectory under `C-arc42/` first.
+- All content is in **English**.
+- Answers should be concise and practical, focusing on arc42 usage.
+- Use `**Short answer**` / `**Longer answer**` sections for complex topics (see existing posts for reference).
+- Markdown definition list syntax (`: answer text`) is used for short/longer answer blocks.
+- Prefer linking to official arc42 resources and authoritative external references.
+- Images should be placed in the `images/` directory and referenced with the `{{ site.imageurl }}` Liquid variable.
