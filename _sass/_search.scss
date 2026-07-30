@@ -1,0 +1,330 @@
+// ============================================================================
+// Search — the field, the incremental suggestion panel that drops out of it,
+// and the full result list on /search/.
+//
+// Ported from docs.arc42.org's _search.scss (the panel, the results page) with
+// quality.arc42.org's field affordances (the kbd hint, the footer hint row)
+// grafted on. faq has a single content type, so docs' type badges and
+// quality's coloured category rails are deliberately absent — a badge that
+// reads "Question" on all 136 rows is noise.
+//
+// COLOUR: every colour here is a WP-B token. No hex values, no SCSS colour
+// variables — the interim `var(--token, <system colour>)` fallbacks only keep
+// the widget legible on branches where _tokens.scss has not landed yet, and
+// lose to any real token the moment WP-B defines one. Tokens consumed:
+//   --paper --ink --muted --signal --deep --tint --surface-1 --surface-hover
+//   --hairline --hairline-2 --radius --s1…--s5 --sans --mono
+//
+// MARKUP CONTRACT — set by _includes/search.html and assets/js/search.js:
+//   [data-faq-search].faq-search        positioned ancestor of the panel
+//     form > label.faq-search__field    > svg.faq-search__icon
+//                                       + input#search.faq-search__input
+//                                       + kbd.faq-search__hint
+//     #faq-search-panel.faq-search__panel  role=listbox, injected content:
+//        .faq-search__scroll > ul.faq-search__list > li.faq-search__item
+//            ( > .faq-search__item-title [+ .faq-search__item-meta] )
+//        li.faq-search__item--all       the "Show all N results" row
+//        .faq-search__empty  .faq-search__footer
+//     li.is-active                      the keyboard-highlighted option
+//   #search-page-results > .search-count + .search-hits > .search-hit
+//        ( > h2 > a, .search-excerpt, .search-meta > .search-category
+//          + a.search-tag )
+// ============================================================================
+
+// Screen-reader-only text (the hint description and the aria-live count).
+// Local to the search include so it stays droppable; if WP-B introduces a
+// site-wide .sr-only, this can collapse into it.
+.faq-search__sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+// ---- The field --------------------------------------------------------------
+
+.faq-search {
+  position: relative;   // the panel hangs off this, not off the host markup
+}
+
+.faq-search__form {
+  margin: 0;
+}
+
+.faq-search__field {
+  display: flex;
+  align-items: center;
+  gap: var(--s2, 8px);
+  position: relative;
+  padding: var(--s2, 8px) var(--s3, 12px);
+  background: var(--paper, Canvas);
+  border: 1px solid var(--hairline-2, ButtonBorder);
+  border-radius: var(--radius, 4px);
+  cursor: text;
+}
+
+.faq-search__icon {
+  flex: none;
+  color: var(--muted, GrayText);
+}
+
+.faq-search__input {
+  width: 100%;
+  min-width: 0;
+  padding: 0;
+  padding-right: 2.2rem;   // room for the kbd hint
+  border: 0;
+  background: transparent;
+  font-family: var(--sans, inherit);
+  font-size: 0.95rem;
+  color: var(--ink, CanvasText);
+
+  // The focus ring belongs to the whole field (see :focus-within below), not to
+  // the bare input inside it. Removing one only to add the other back is
+  // deliberate, not a stripped indicator.
+  &:focus {
+    outline: 0;
+  }
+
+  &::placeholder {
+    color: var(--muted, GrayText);
+    opacity: 1;   // Firefox dims placeholders; --muted is already the dimmed value
+  }
+
+  // Safari's native search decorations fight the custom icon and hint.
+  &::-webkit-search-decoration,
+  &::-webkit-search-cancel-button {
+    -webkit-appearance: none;
+  }
+}
+
+.faq-search__field:focus-within {
+  border-color: var(--signal, currentColor);
+  box-shadow: 0 0 0 3px var(--surface-hover, Highlight);
+}
+
+// The platform-aware ⌘K / / affordance. JS fills the text, so it never
+// advertises a shortcut that is not bound.
+.faq-search__hint {
+  position: absolute;
+  right: var(--s2, 8px);
+  top: 50%;
+  transform: translateY(-50%);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1.5rem;
+  height: 1.25rem;
+  padding: 0 0.35rem;
+  border: 1px solid var(--hairline-2, ButtonBorder);
+  border-radius: var(--radius, 4px);
+  background: var(--surface-1, Canvas);
+  color: var(--muted, GrayText);
+  font-family: var(--mono, monospace);
+  font-size: 0.68rem;
+  font-weight: 600;
+  line-height: 1;
+  pointer-events: none;
+  transition: opacity 0.15s ease;
+
+  // Useless on touch, and it steals room from the placeholder.
+  @media (hover: none) {
+    display: none;
+  }
+}
+
+.faq-search__input:focus ~ .faq-search__hint,
+.faq-search__input:not(:placeholder-shown) ~ .faq-search__hint {
+  opacity: 0;
+}
+
+// ---- The incremental panel --------------------------------------------------
+
+.faq-search__panel {
+  position: absolute;
+  top: calc(100% + var(--s1, 4px));
+  left: 0;
+  right: 0;
+  z-index: 40;
+  display: flex;
+  flex-direction: column;
+  // Plain vh, not min(): the pinned github-pages stack still compiles SCSS with
+  // libsass, which evaluates min() itself and chokes on mixed units.
+  max-height: 70vh;
+  min-width: 18rem;
+  overflow: hidden;
+
+  background: var(--paper, Canvas);
+  border: 1px solid var(--hairline-2, ButtonBorder);
+  border-radius: var(--radius, 4px);
+  // The family's signature hard offset in the band's own colour — the panel
+  // reads as something the site dropped, not as a floating card.
+  box-shadow: 3px 3px 0 0 var(--deep, ButtonBorder);
+  font-size: 0.95rem;
+  line-height: 1.35;
+
+  &[hidden] {
+    display: none;   // beats the flex display above
+  }
+}
+
+.faq-search__scroll {
+  flex: 1 1 auto;
+  min-height: 0;      // let the flex child shrink so it can scroll
+  overflow-y: auto;
+  position: relative; // offsetParent for the active-row auto-scroll maths
+}
+
+.faq-search__list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.faq-search__list--all {
+  border-top: 1px solid var(--hairline, ButtonBorder);
+}
+
+.faq-search__item {
+  display: flex;
+  align-items: baseline;
+  gap: var(--s2, 8px);
+  padding: var(--s2, 8px) var(--s3, 12px);
+  color: var(--ink, CanvasText);
+  cursor: pointer;
+
+  & + & {
+    border-top: 1px solid var(--hairline, ButtonBorder);
+  }
+
+  // Pointer hover and keyboard highlight are the same state and must look
+  // identical — the script drives .is-active with the arrow keys.
+  &.is-active,
+  &:hover {
+    background: var(--surface-hover, Highlight);
+  }
+}
+
+.faq-search__item-title {
+  min-width: 0;
+  flex: 1 1 auto;
+
+  mark {
+    background: transparent;
+    color: inherit;
+    font-weight: 700;
+  }
+}
+
+// The question id (A-1, C-9…) as the row's quiet right-hand anchor.
+.faq-search__item-meta {
+  flex: none;
+  color: var(--muted, GrayText);
+  font-family: var(--mono, monospace);
+  font-size: 0.8rem;
+}
+
+.faq-search__item--all {
+  font-weight: 700;
+  color: var(--signal, LinkText);
+}
+
+.faq-search__empty {
+  margin: 0;
+  padding: var(--s3, 12px);
+  color: var(--muted, GrayText);
+}
+
+.faq-search__footer {
+  flex: none;
+  padding: var(--s1, 4px) var(--s3, 12px);
+  border-top: 1px solid var(--hairline, ButtonBorder);
+  background: var(--surface-1, Canvas);
+  color: var(--muted, GrayText);
+  font-size: 0.75rem;
+
+  kbd {
+    font-family: var(--mono, monospace);
+    font-size: 0.72rem;
+  }
+
+  @media (hover: none) {
+    display: none;   // the hints describe keys a touch device does not have
+  }
+}
+
+// ---- The /search/ results page ----------------------------------------------
+
+#search-page-results {
+  .search-count {
+    margin: var(--s2, 8px) 0 var(--s5, 24px);
+    color: var(--muted, GrayText);
+  }
+
+  .search-empty {
+    color: var(--muted, GrayText);
+  }
+
+  .search-hit {
+    margin: 0 0 var(--s5, 24px);
+    padding-bottom: var(--s4, 16px);
+    border-bottom: 1px solid var(--hairline, ButtonBorder);
+
+    &:last-child {
+      border-bottom: 0;
+    }
+
+    h2 {
+      margin: 0 0 var(--s1, 4px);
+      font-size: 1.15rem;
+    }
+
+    mark {
+      background: transparent;
+      color: inherit;
+      font-weight: 700;
+    }
+  }
+
+  .search-excerpt {
+    margin: 0;
+    font-size: 0.95rem;
+    color: var(--muted, GrayText);
+  }
+
+  .search-meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--s2, 8px);
+    margin: var(--s2, 8px) 0 0;
+    font-size: 0.85rem;
+  }
+
+  .search-category {
+    color: var(--muted, GrayText);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-size: 0.75rem;
+  }
+
+  // Tag pills route back into the tag mode of this same page.
+  .search-tag {
+    padding: 0.1em 0.6em;
+    border-radius: 999px;
+    background: var(--tint, Canvas);
+    color: var(--deep, LinkText);
+    text-decoration: none;
+
+    &:hover,
+    &:focus-visible {
+      background: var(--surface-hover, Highlight);
+    }
+  }
+}

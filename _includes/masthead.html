@@ -22,22 +22,18 @@
 <div class="masthead-search">
   {%- comment -%}
     ============================================================================
-    SEARCH SLOT — owned by WP-C (lunr search), which merges after WP-B.
+    SEARCH SLOT — filled by WP-C's lunr widget.
 
-    WP-C replaces everything between these two markers with its own
-    {% include search.html %} (input + combobox + Cmd-K hint). Until then this
-    is the site's existing plain GET form, so search keeps working: it posts
-    `q` to /search/, where assets/js/search.js reads it.
+    .masthead-search is only the layout box in the masthead grid; the widget
+    supplies its own `position: relative` (.faq-search), its own markup contract
+    with assets/js/search.js, and its own <script>. Moving search elsewhere is
+    moving this one include line.
 
-    Contract WP-C should keep: the field carries id="search" (assets/js/script.js
-    focuses it on "/") and lives inside .masthead-search, which is the
-    positioned ancestor a dropdown panel can hang from.
+    The `/` hotkey no longer lives in assets/js/script.js — the widget owns both
+    `/` and Cmd/Ctrl-K, and suppresses `/` while the caret is in a field.
     ============================================================================
   {%- endcomment -%}
-  <form action="{{ site.baseurl }}/search/" data-baseurl="{{ site.baseurl }}" role="search">
-    <label class="visually-hidden" for="search">{{ site.str_search }}</label>
-    <input type="search" id="search" name="q" placeholder="{{ site.str_search }}" aria-label="{{ site.str_search }}">
-  </form>
+  {% include search.html %}
   {%- comment -%} END SEARCH SLOT {%- endcomment -%}
 </div>
 {%- endcapture -%}

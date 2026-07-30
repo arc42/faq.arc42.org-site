@@ -107,13 +107,9 @@
 <script src="{{ '/assets/js/header-link.js' | prepend: site.baseurl }}"></script>
 {% endif %}
 
-{%- comment -%} WP-C owns this file and the /search/ page; both are being replaced
-  by the lunr build. assets/js/search.js is still the old jQuery one and is
-  therefore inert until then — deliberately left alone so C's merge is clean.
-  /search/ is disallowed in robots.txt. {%- endcomment -%}
-{% if page.permalink == '/search/' %}
-<script src="{{ '/assets/js/search.js' | prepend: site.baseurl }}"></script>
-{% endif %}
+{%- comment -%} search.js is no longer loaded here: it ships with
+  _includes/search.html so the widget stays droppable, and it is needed on every
+  page now (Cmd-K / "/" work site-wide), not only on /search/. {%- endcomment -%}
 
 
 </body>
