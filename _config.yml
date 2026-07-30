@@ -47,7 +47,6 @@ icons:
   email: false
   github: arc42
   twitter: gernotstarke
-  google_plus: 
   stack_overflow: arc42
 
 #
@@ -102,10 +101,11 @@ include:
 exclude:
   - Gemfile
   - Gemfile.lock
-  - Dockerfile
-  - _manage-site.sh
-  - _docker*
   - README.md
+  - LICENSE
   - originals/
   - vendor/bundle
+  - docker-compose.yml
+  - faq.arc42.org-site.code-workspace
+  - .vscode/
 
