@@ -27,6 +27,19 @@ a.btn:hover {
     opacity: 0.7;
 }
 
+// sprite icon, emitted by {% include icon.html name="…" %}.
+// Sized in em so an icon always matches the type it sits next to, and coloured
+// by currentColor so it inherits from its link or heading without a
+// per-context override — which is also why the sprite carries no colour value
+// of its own. Copied from docs.arc42.org-site/_sass/_utilities.scss.
+.icon {
+    width: 1em;
+    height: 1em;
+    fill: currentColor;
+    vertical-align: -0.125em;
+    flex: none;
+}
+
 // clearfix.
 .clearfix {
     &:before, &:after {

@@ -9,11 +9,22 @@
         text-align: center;
     }
 
+    // WP-D: the button used to carry `class="fa fa-fw fa-bars"`, so FontAwesome
+    // supplied the glyph AND the button's box (inline-block, 1.25em wide,
+    // centred). It now holds an <svg class="icon"> sized 1em against the
+    // inherited 2.7em masthead type — same rendered size as the old glyph — so
+    // the four declarations FontAwesome used to contribute are spelled out here.
+    // `outline: none` below is pre-existing and stays WP-B's to fix with the
+    // family :focus-visible pair.
     .nav-toggle {
       display: none;
 
       background-color: transparent;
       border: 0;
+      padding: 0;
+      line-height: 1;
+      color: inherit;
+      cursor: pointer;
 
       @media screen and (max-width: $mobile-width) {
         .js & {

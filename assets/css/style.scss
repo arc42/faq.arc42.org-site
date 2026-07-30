@@ -13,4 +13,6 @@
 @import '_content';
 @import 'arc42-doc.css';
 @import 'ukraine.css';
-@import 'all.css'; // fontawesome
+// WP-D: `@import 'all.css'` (72 KB of FontAwesome 5, plus 2.5 MB of
+// assets/webfonts/) is gone. Icons come from assets/icons/ui.svg — see
+// `.icon` in base/_utilities.scss and _includes/icon.html.

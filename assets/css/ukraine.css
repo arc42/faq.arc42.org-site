@@ -12,9 +12,9 @@
     color: #fed401
 }
 
-.heart {
-    --fa-beat-scale: 1.2
-}
+/* WP-D: `.heart { --fa-beat-scale: 1.2 }` removed. It configured FontAwesome's
+   `beat` animation utility, which left with all.css; the hearts are sprite
+   SVGs now and the class had nothing left to configure. */
 
 div.ua-background {
     background-color: #e7ddd8;

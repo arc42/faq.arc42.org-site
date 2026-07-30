@@ -5,3 +5,23 @@
     text-align: center;
     font-size: 0.9em;
 }
+
+// WP-D: the footer link row. The FontAwesome glyph in front of each label is
+// gone (same treatment as arc42.org, docs and quality — at this size the label
+// carries all the meaning), and so is the `<i>&nbsp;&nbsp;</i>` that used to
+// hold the links apart.
+//
+// Separator is a CSS ::before middot, exactly as in
+// docs.arc42.org-site/_sass/_footer.scss: it inherits the footer's own colour
+// so it introduces no hex value, and screen readers skip generated content.
+// The left-hand gap is the source whitespace between the <a> elements; only
+// the right-hand one has to be drawn. Deliberately no token references here —
+// WP-B owns the token file and will restyle this row with the rest.
+.footer-links {
+    margin-bottom: 0.4em;
+
+    a + a::before {
+        content: "\00B7";
+        margin-right: 0.4em;
+    }
+}
