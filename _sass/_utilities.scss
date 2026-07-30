@@ -267,3 +267,18 @@ p.footer-icons {
     padding: var(--s4) var(--s5);
   }
 }
+
+// Sprite icon, emitted by {% include icon.html name="…" %} (WP-D).
+//
+// Sized in em so an icon always matches the type it sits next to, and coloured
+// by currentColor so it inherits from its link or heading without a
+// per-context override — which is also why the sprite carries no colour value
+// of its own, and so no palette token. Copied from
+// docs.arc42.org-site/_sass/_utilities.scss.
+.icon {
+  width: 1em;
+  height: 1em;
+  fill: currentColor;
+  vertical-align: -0.125em;
+  flex: none;
+}

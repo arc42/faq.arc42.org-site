@@ -96,18 +96,21 @@
 
 {% include site-footer.html %}
 
-{%- comment -%}
-  jQuery 3.7.1 and the FontAwesome webfonts are still here on purpose: their
-  removal is WP-D's package. assets/js/script.js owns the rail toggle, whose
-  contract with _includes/rail.html is `.nav-toggle[data-target]` ⇄ `.active`.
+{%- comment -%} jQuery 3.7.1 (87 KB) is gone (WP-D); script.js and
+  header-link.js are plain ES5 and run at end of body, so the DOM above them is
+  already parsed. script.js owns the rail toggle, whose contract with
+  _includes/rail.html is `.nav-toggle[data-target]` ⇄ `.active`.
 {%- endcomment -%}
-<script src="/assets/jquery/jquery-3.7.1-min.js"></script>
 <script src="{{ '/assets/js/script.js' | prepend: site.baseurl }}"></script>
 
 {% if page.id %}
 <script src="{{ '/assets/js/header-link.js' | prepend: site.baseurl }}"></script>
 {% endif %}
 
+{%- comment -%} WP-C owns this file and the /search/ page; both are being replaced
+  by the lunr build. assets/js/search.js is still the old jQuery one and is
+  therefore inert until then — deliberately left alone so C's merge is clean.
+  /search/ is disallowed in robots.txt. {%- endcomment -%}
 {% if page.permalink == '/search/' %}
 <script src="{{ '/assets/js/search.js' | prepend: site.baseurl }}"></script>
 {% endif %}

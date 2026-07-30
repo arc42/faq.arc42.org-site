@@ -51,8 +51,11 @@ Sanity after building: `ls _site/questions | wc -l` → **136**.
   content-model change must keep them byte-identical (ADR-0013/0014).
 - `robots.txt` disallows `/search/` on purpose.
 - `_layouts/post.html` is a passthrough to `page.html` — edit `page.html`.
-- The site still uses jQuery + vendored FontAwesome; both are scheduled for
-  removal (WP-D) — don't add new usages of either.
+- **No jQuery, no FontAwesome** (removed in WP-D). Site JS is plain ES5 in
+  `assets/js/`. Icons come from the family sprite `assets/icons/ui.svg` via
+  `{% include icon.html name="…" %}` — the sprite is copied verbatim from
+  `docs.arc42.org-site`; add a glyph there first, then re-copy. Never fork it
+  here, and never re-introduce an icon font.
 - Family colour rules: no new hex values outside the token file once WP-B
   lands; `#1675b9`, `#aee3f8`, `#397ab2`, `#5bbad5`, `#fe5a83` are on the
   deny-list (docs collisions / retired).

@@ -8,7 +8,8 @@ hero: full
 <!-- The Ukraine solidarity statement used to open this file as a blockquote on
      a #e7ddd8 fill with two FontAwesome hearts. It is now _includes/solidarity.html,
      rendered by the layout as a band between the masthead and the content —
-     see that file for why. -->
+     see that file for why. The hearts went with it: the band is a shape-and-type
+     treatment now, so WP-D's sprite hearts had nothing left to replace. -->
 
 {% assign categoryA_posts = site.posts | where: "category", "general" %}
 {% assign zorg = categoryA_posts.size %}

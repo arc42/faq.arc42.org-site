@@ -14,17 +14,16 @@
 //   6. syntax    — highlighter theme, scoped to .highlight
 //   7. utilities — small single-purpose classes; last so they can win
 //
-// Two plain .css files used to be @imported here and are gone: arc42-doc.css
-// (its .arc42-help went to _callouts.scss, the rest to _utilities.scss) and
-// ukraine.css (rebuilt as the solidarity band in _utilities.scss). Being plain
-// CSS they were inlined verbatim, which is how five hard-coded palette escapes
-// survived a variables file existing.
+// Three plain .css files used to be @imported here and are all gone:
+// arc42-doc.css (its .arc42-help went to _callouts.scss, the rest to
+// _utilities.scss), ukraine.css (rebuilt as the solidarity band in
+// _utilities.scss), and all.css (FontAwesome, 4634 lines plus ~2.5 MB of
+// webfonts, deleted in WP-D — icons now come from the sprite via
+// {% include icon.html %}, styled by .icon in _utilities.scss).
 //
-// all.css (FontAwesome, 4634 lines plus ~2.5 MB of webfonts) is still imported:
-// removing it is WP-D's package, not this one. WP-B removed its footer and
-// solidarity usages; what remains is the glyphs in
-// _includes/article-header.html, _includes/icons.html,
-// assets/js/header-link.js and _pages/contact.md.
+// Being plain CSS the first two were inlined verbatim, which is how five
+// hard-coded palette escapes survived a variables file existing. Nothing here
+// is plain CSS any more: every value routes through a token.
 // ============================================================================
 
 @import 'tokens';
@@ -40,5 +39,3 @@
 
 @import 'syntax';
 @import 'utilities';
-
-@import 'all.css'; // FontAwesome — WP-D removes this

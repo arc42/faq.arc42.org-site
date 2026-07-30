@@ -78,3 +78,8 @@
     gap: var(--s4);
   }
 }
+
+// The FontAwesome glyph that used to lead each footer label is gone, along with
+// the `<i>&nbsp;&nbsp;</i>` spacer that held the links apart (WP-D). WP-B's
+// .footer-links block above is the tokenised replacement, and carries the
+// middot rule — this is deliberately not restated here.
