@@ -1,16 +1,44 @@
 ---
 ---
 
-@import 'base/_reset';
-@import 'base/_syntax';
-@import 'base/_variables';
-@import 'base/_layout';
-@import 'base/_utilities';
-@import '_common';
-@import '_header';
-@import '_footer';
-@import '_aside';
-@import '_content';
-@import 'arc42-doc.css';
-@import 'ukraine.css';
-@import 'all.css'; // fontawesome
+// ============================================================================
+// The single stylesheet entry point. Jekyll compiles this file (and only this
+// file) from _sass/; everything else is a partial imported below.
+//
+// Order matters and is deliberate — it is docs.arc42.org's order:
+//   1. tokens    — custom properties every later partial reads
+//   2. fonts     — @font-face, self-hosted
+//   3. reset     — the modern, ~30-line floor
+//   4. base      — element defaults: body type, links, focus, motion
+//   5. components, roughly in the order a reader meets them on the page
+//   6. syntax    — highlighter theme, scoped to .highlight
+//   7. utilities — small single-purpose classes; last so they can win
+//
+// Two plain .css files used to be @imported here and are gone: arc42-doc.css
+// (its .arc42-help went to _callouts.scss, the rest to _utilities.scss) and
+// ukraine.css (rebuilt as the solidarity band in _utilities.scss). Being plain
+// CSS they were inlined verbatim, which is how five hard-coded palette escapes
+// survived a variables file existing.
+//
+// all.css (FontAwesome, 4634 lines plus ~2.5 MB of webfonts) is still imported:
+// removing it is WP-D's package, not this one. WP-B removed its footer and
+// solidarity usages; what remains is the glyphs in
+// _includes/article-header.html, _includes/icons.html,
+// assets/js/header-link.js and _pages/contact.md.
+// ============================================================================
+
+@import 'tokens';
+@import 'fonts';
+@import 'reset';
+@import 'base';
+
+@import 'masthead';
+@import 'rail';
+@import 'content';
+@import 'callouts';
+@import 'footer';
+
+@import 'syntax';
+@import 'utilities';
+
+@import 'all.css'; // FontAwesome — WP-D removes this

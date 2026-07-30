@@ -1,0 +1,269 @@
+// ============================================================================
+// Utilities — small, single-purpose classes, plus the handful of standalone
+// blocks that have no component of their own.
+//
+// Imported last so a utility can win a specificity tie against a component.
+//
+// This file is where three deleted stylesheets landed:
+//   · _sass/_common.scss        → .tag-box
+//   · assets/css/arc42-doc.css  → .subtle-ad*, .supported-by-innoq, p.footer-icons
+//   · assets/css/ukraine.css    → the solidarity band (rebuilt, see below)
+// The .arc42-help shape from arc42-doc.css went to _callouts.scss instead.
+//
+// Dropped in the move, because nothing in the repo references them (grepped
+// across _includes, _layouts, _pages, _posts, assets/js):
+//   .margin, .margin-top, .margin-bottom — the old 50px $margin helpers
+//   .btn                                  — the only mention was /archives/,
+//                                           which WP-E retires with the
+//                                           fabricated dates; the link works
+//                                           unstyled meanwhile
+//   .disabled                             — never applied
+//   .ua-text, .ua-size, .heart,           — the FontAwesome heart glyphs the
+//   .parent, .children                      solidarity band no longer needs
+// ============================================================================
+
+// ---- Clearfix ---------------------------------------------------------------
+// Still referenced by _includes/article-header.html. Kept until that template
+// is rewritten; it costs four declarations.
+
+.clearfix {
+  &::before,
+  &::after {
+    content: " ";
+    display: table;
+  }
+
+  &::after {
+    clear: both;
+  }
+}
+
+// ============================================================================
+// TAG BOXES — used by _pages/keywords.html
+// thx to https://github.com/lanyonm/lanyonm.github.io
+// ============================================================================
+
+.tag-box {
+  list-style: none;
+  margin: 0;
+  padding: var(--s1) 0;
+  overflow: hidden;
+
+  &::before,
+  &::after {
+    display: table;
+    content: "";
+    line-height: 0;
+  }
+
+  &::after {
+    clear: both;
+  }
+
+  &.inline li {
+    float: left;
+    font-size: 0.875rem;
+    line-height: 2.5;
+    // The measure cap from _content.scss would otherwise apply to these <li>
+    // and break the chip grid into a narrow column.
+    max-width: none;
+    margin-bottom: 0;
+  }
+
+  // The old pairing was docs' Tag Cyan under docs' Signal Blue — faq wearing
+  // another site's signature twice over (ADR-0013), at a measured 3.54:1.
+  // --pill-ink on --pill-bg is 5.57:1.
+  a {
+    padding: var(--s1) 6px;
+    margin: 2px;
+    background-color: var(--pill-bg);
+    color: var(--pill-ink);
+    border-radius: var(--radius);
+    text-decoration: none;
+  }
+
+  a:hover {
+    background-color: var(--pill-bg-hover);   // --pill-ink on it 4.92:1
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  a span {
+    vertical-align: super;
+    font-size: 0.625rem;
+  }
+}
+
+// ============================================================================
+// SUBTLE ADS — a quiet, honest note from the arc42 maintainers about their
+// training. Maroon is the family's quarantined sponsor colour (never editorial),
+// and the hard offset shadow (ADR-0002) marks this as an aside attached to the
+// page rather than part of an answer.
+//
+// The old rules painted this box in `rgba(254,228,228,.3)` with a `#800000`
+// border, a blurred `rgba(156,61,75,1)` shadow, links in `#ff796a`, body text
+// in `#032f7f`, an 80px exclamation-mark icon floated into the text, and
+// Palatino — six colours from no arc42 palette and a seventh typeface.
+//
+// The markup is _layouts/page.html's: a `.subtle-ads` <section> holding a
+// `#subtle-ads` fallback block, which htmx swaps for whatever the backend
+// returns. Both the fallback and a returned `.subtle-ad` get the same box.
+// ============================================================================
+
+.subtle-ads {
+  margin-top: var(--s7);
+}
+
+.subtle-ads > div,
+.subtle-ad {
+  max-width: 34em;
+  padding: 1em 1.25em;
+
+  background-color: var(--maroon-bg);
+  border: 1px solid var(--maroon);
+  border-radius: var(--radius);
+  box-shadow: 3px 3px 0 0 var(--maroon);
+
+  font-family: var(--sans);
+  color: var(--ink);
+  line-height: 1.5;
+
+  // Honest labelling: a small kicker naming who is behind the note reads as
+  // trustworthy, not as a hidden ad.
+  &::before {
+    display: block;
+    margin-bottom: 0.4em;
+
+    content: "from the arc42 team";
+    font-size: 0.72em;
+    font-weight: 700;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    color: var(--maroon);   // 7.46:1 on --maroon-bg
+  }
+
+  h4 {
+    margin: 0 0 0.3em;
+    font-size: 1.1em;
+    line-height: 1.3;
+    color: var(--maroon);
+  }
+
+  p {
+    margin: 0.3em 0;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  a {
+    color: var(--maroon);
+    font-weight: 600;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+  }
+}
+
+// htmx's placeholder div is empty until the request lands; an empty maroon box
+// with a kicker and nothing under it is worse than nothing.
+.subtle-ads > div:empty {
+  display: none;
+}
+
+// ---- Sponsor mark in the footer ---------------------------------------------
+
+.supported-by-innoq {
+  margin-bottom: 13px;
+  width: 110px;
+  height: auto;
+
+  &:hover {
+    opacity: 0.8;
+  }
+}
+
+@media (max-width: 900px) {
+  .supported-by-innoq {
+    width: 100px;
+  }
+}
+
+@media (max-width: 600px) {
+  .supported-by-innoq {
+    width: 90px;
+  }
+}
+
+p.footer-icons {
+  margin: 0;
+}
+
+// ============================================================================
+// UKRAINE SOLIDARITY NOTE
+// Rebuilt from assets/css/ukraine.css, on docs' pattern.
+//
+// The two colours here are the Ukrainian flag's, not arc42's: they are an
+// annotated QUOTATION, deliberately outside the palette, and must never be
+// reached for by anything else (ADR-0007 permits exactly this, and only this).
+// That is why they are literals rather than tokens.
+// ============================================================================
+
+// The band sits between the deep-teal masthead and the content on /home/ only.
+// It has to read as the site speaking rather than as an article, and it must not
+// compete with the masthead directly above it — so: no fill of its own, a single
+// hairline to close the masthead off, and the flag carried by a small shape
+// rather than by a coloured background. The old block tinted the whole
+// statement's background `#e7ddd8`, which is a beige that appears nowhere else.
+.solidarity {
+  border-bottom: 1px solid var(--hairline);
+  background: var(--paper);
+}
+
+.solidarity-inner {
+  max-width: var(--shell-max);
+  margin: 0 auto;
+  // --s6 matches .masthead-inner's horizontal padding: the band sits directly
+  // beneath it and the two are both site chrome, so they must share a left edge.
+  padding: var(--s4) var(--s6);
+  display: flex;
+  align-items: flex-start;
+  gap: var(--s4);
+
+  p {
+    margin: 0;
+    max-width: var(--measure);
+    font-size: 0.94rem;
+    line-height: 1.5;
+    color: var(--muted);   // 5.58:1 on --paper
+  }
+
+  strong {
+    color: var(--ink);
+  }
+}
+
+// The flag, as a shape rather than a fill. 24x16 is its real 3:2 proportion.
+//
+// The hairline matters more than it looks: the lower band is #fed401 on
+// near-white paper, about 1.6:1, so without an edge the flag appears to be a
+// blue rectangle floating above nothing.
+.solidarity-flag {
+  flex: none;
+  width: 24px;
+  height: 16px;
+  margin-top: 0.2em;   // optically centres on the first line of the statement
+  border: 1px solid var(--hairline-2);
+  border-radius: 2px;
+  background: linear-gradient(to bottom, #005bbb 0 50%, #fed401 50% 100%);
+}
+
+@media (max-width: 1024px) {
+  .solidarity-inner {
+    padding: var(--s4) var(--s5);
+  }
+}

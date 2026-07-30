@@ -1,0 +1,204 @@
+// ============================================================================
+// Masthead — the deep-teal hero band, and the condensed bar on inner pages.
+//
+// docs.arc42.org's component, cloned: two variants of one thing, keyed off
+// `hero: full` in front matter.
+//
+//   .masthead--hero   /home/ only. Logo, wordmark, tagline, live count.
+//   .masthead--bar    everywhere else. --bar-h tall, sticky.
+//
+// What this replaces: a 2.7em <h1> band in the old faq blue, framed top and
+// bottom by 3px rules in a pale blue tint, with a 3em circular avatar and the
+// question count set in a stray coral <font color=...>. All four colours were
+// on the family deny-list (ADR-0013) and are named rather than quoted here, so
+// that CI's grep stays meaningful; the <font> element has not been in HTML
+// since 1999.
+//
+// Because the bar is sticky, everything that scrolls under it takes its offset
+// from --bar-h: the rail's `top`, and heading scroll-margin (_content.scss).
+//
+// Colour pairs used here, all measured (ADR-0005):
+//   --tint      on --deep   7.67:1
+//   --tint-soft on --deep   6.51:1
+//   --paper     on --deep   8.32:1   (wordmark hover only)
+// No rule under the band: docs measured its mockup's darker border at 1.16:1
+// against --deep — an invisible line costing a paint. The band ends at the band.
+// ============================================================================
+
+.masthead {
+  background: var(--deep);
+  color: var(--tint);
+}
+
+.masthead-inner {
+  max-width: var(--shell-max);
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--s3) var(--s5);
+}
+
+// ---- Shared parts -----------------------------------------------------------
+
+// The 2025 arc42 logo, white, on the deep-teal band. A horizontal wordmark
+// (450x126) rather than the old square avatar: the square sat in a white
+// circle on the band, which read as a sticker rather than as a masthead.
+.masthead-logo {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+
+  img {
+    width: auto;
+    display: block;
+  }
+}
+
+.masthead-title {
+  margin: 0;
+  font-family: var(--serif);
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: 0.2px;
+
+  a {
+    color: var(--tint);   // 7.67:1 on --deep
+    text-decoration: none;
+  }
+
+  // Near-white, and only on hover — the resting state stays at the measured
+  // 7.67:1 tint so the wordmark never relies on a hover to be legible.
+  a:hover {
+    color: var(--paper);   // 8.32:1 on --deep
+  }
+}
+
+// Search is anchored here rather than in the rail: the rail is suppressed on
+// /home/. position: relative is the hook a result panel hangs from — WP-C
+// needs it, so it is declared now rather than later.
+.masthead-search {
+  position: relative;
+  flex: 1 1 15rem;
+  min-width: 0;
+  max-width: 26rem;
+  margin-left: auto;
+
+  input[type="search"] {
+    width: 100%;
+    // The field sits ON the band, so its own border must be read against
+    // --deep, not against --paper — and the base rule's --muted border
+    // measures 1.10:1 there, i.e. invisible. Measured: --tint mixed 45% into
+    // the band gives 2.79:1 and still fails the 3:1 non-text floor; 60% is
+    // the first step that clears it.
+    border: 1px solid color-mix(in oklab, var(--deep), var(--tint) 60%);   // 3.77:1 on --deep
+  }
+}
+
+// ---- Hero variant -----------------------------------------------------------
+
+.masthead--hero {
+  .masthead-inner {
+    padding: clamp(28px, 4vw, 44px) var(--s6);
+    gap: var(--s5);
+  }
+
+  .masthead-logo {
+    // The row centres items vertically, which floats the logo in the middle of
+    // the three-line text block — reads as a lost element, not a wordmark. Pin
+    // it to the top, nudged onto the title's cap height. (The bar variant needs
+    // no such fix: one line tall, centre IS top.)
+    align-self: flex-start;
+    margin-top: 0.4rem;
+  }
+
+  .masthead-logo img {
+    height: 44px;
+  }
+
+  .masthead-text {
+    flex: 1 1 16rem;
+    min-width: 0;
+  }
+
+  .masthead-title {
+    // calc() around the middle term is not decoration: jekyll-sass-converter
+    // 1.5.2 runs Ruby Sass 3.7, which evaluates `1.2rem + 2.2vw` itself and
+    // aborts the build with "Incompatible units: 'vw' and 'rem'". Inside calc()
+    // the expression is passed through to the browser untouched.
+    font-size: clamp(1.8rem, calc(1.2rem + 2.2vw), 2.6rem);
+  }
+}
+
+.masthead-tagline {
+  margin: var(--s2) 0 0;
+  color: var(--tint-soft);   // 6.51:1 on --deep
+  font-size: 1.05rem;
+}
+
+// The live count. It is the one number on the page a reader actually reads, so
+// it stays in --tint rather than in any accent.
+.masthead-stats {
+  margin: var(--s3) 0 0;
+  color: var(--tint);   // 7.67:1 on --deep
+  font-size: 0.95rem;
+  letter-spacing: 0.2px;
+
+  b {
+    font-weight: 700;
+  }
+}
+
+// ---- Condensed bar variant --------------------------------------------------
+
+.masthead--bar {
+  position: sticky;
+  top: 0;
+  // Above the sticky rail, which also creates a stacking context.
+  z-index: 30;
+
+  .masthead-inner {
+    min-height: var(--bar-h);
+    padding: var(--s2) var(--s5);
+    gap: var(--s3);
+  }
+
+  .masthead-logo img {
+    height: 26px;
+  }
+
+  .masthead-title {
+    font-size: 1.05rem;
+    // Never let the wordmark push the search field off the bar.
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}
+
+// ---- Narrow ------------------------------------------------------------------
+
+@media (max-width: 800px) {
+  .masthead--hero .masthead-inner {
+    padding: var(--s5);
+    gap: var(--s4);
+  }
+}
+
+// Below this the bar cannot hold wordmark and field on one line without
+// squeezing the field to uselessness, so the field takes its own row and the
+// bar grows past --bar-h. min-height, not height, is why that works.
+@media (max-width: 560px) {
+  .masthead--bar {
+    .masthead-inner {
+      padding: var(--s2) var(--s4) var(--s3);
+    }
+
+    .masthead-search {
+      flex-basis: 100%;
+      max-width: none;
+      margin-left: 0;
+    }
+  }
+}

@@ -3,15 +3,12 @@ layout: default
 title: Home
 order: 0
 permalink: /home/
+hero: full
 ---
-<div class="ua-background" markdown="1">
-
->### We stand with the people of Ukraine <span class="parent"><span class="ua-text"><i class="fas fa-heart children"></i></span><span class="ua-size children"><i class="fas fa-heart beat heart children"></i></span></span>
->
->Please assist humanitarian efforts for the Ukrainian people and those affected by the military invasion of Ukraine by supporting international aid organizations, including the [International Committee of the Red Cross](https://www.icrc.org/en).
-
-</div>
-
+<!-- The Ukraine solidarity statement used to open this file as a blockquote on
+     a #e7ddd8 fill with two FontAwesome hearts. It is now _includes/solidarity.html,
+     rendered by the layout as a band between the masthead and the content —
+     see that file for why. -->
 
 {% assign categoryA_posts = site.posts | where: "category", "general" %}
 {% assign zorg = categoryA_posts.size %}
@@ -61,7 +58,7 @@ Just in case **your** question(s) regarding arc42 and its usage in
 practical situations are still missing ... please let us [**know here**](/contact/).
 
 
-## <font color="#dd354b">We're offering architecture training!</font>
+## We're offering architecture training!
 
 The _dynamic duo_, always two trainers in parallel, practically applicable
 knowledge from Peter Hruschka and Gernot Starke. See [arc42.de](https://www.arc42.de/termine) for details, and schedule.

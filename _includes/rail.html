@@ -1,0 +1,71 @@
+{%- comment -%}
+  The left navigation rail — docs.arc42.org's pattern, with faq's A..K
+  categories in place of docs' twelve template sections.
+
+  Both groups are derived from the pages themselves, so nothing here needs
+  editing when a category or a meta page is added:
+
+    Categories  every page whose permalink starts with /category_, in `order`.
+                The rail label is split out of the page title ("A - General
+                questions" → "A" + "General questions") so the letter can sit in
+                its own column and the labels line up. WP-E replaces the ten
+                hand-written category pages with generated ones driven by
+                _data/categories.yml; when it does, this loop should read that
+                file instead — the markup below does not have to change.
+
+    More        every other listed page (`hide: true` opts out), in `order`.
+
+  Home is intentionally absent: the masthead logo and wordmark are the link home
+  on every page.
+
+  The rail is NOT rendered on /home/ — see _layouts/default.html.
+
+  Mobile: the markup for the toggle is here, the behaviour is still the jQuery
+  handler in assets/js/script.js, whose contract is exactly
+    .nav-toggle[data-target]  toggles  .active  on itself and on the target.
+  WP-D rewrites that file vanilla; keeping the contract unchanged here means
+  WP-D can do so without touching this include.
+{%- endcomment -%}
+
+<aside class="rail">
+  <button class="nav-toggle rail-toggle" type="button" data-target="#rail-body" aria-expanded="false" aria-controls="rail-body">
+    <span class="rail-toggle-label">Categories</span>
+    <svg class="chev" width="16" height="16" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </button>
+
+  <div class="rail-body" id="rail-body">
+    {%- assign all_pages = site.pages | sort: 'order' -%}
+
+    <nav aria-labelledby="rail-heading-categories">
+      <p class="rail-heading" id="rail-heading-categories">Categories</p>
+      <ul class="rail-nav">
+        {%- for p in all_pages -%}
+        {%- if p.permalink contains '/category_' -%}
+        {%- assign parts = p.title | split: ' - ' -%}
+        <li>
+          <a href="{{ p.url | relative_url }}"{% if page.url == p.url %} aria-current="page"{% endif %}>
+            <span class="num">{{ parts[0] | strip }}</span>
+            <span class="label">{{ parts[1] | strip }}</span>
+          </a>
+        </li>
+        {%- endif -%}
+        {%- endfor %}
+      </ul>
+    </nav>
+
+    <nav aria-labelledby="rail-heading-more">
+      <p class="rail-heading" id="rail-heading-more">More</p>
+      <ul class="rail-nav rail-meta">
+        {%- for p in all_pages -%}
+        {%- unless p.title == nil or p.hide == true or p.url == '/home/' or p.permalink contains '/category_' -%}
+        <li>
+          <a href="{{ p.url | relative_url }}"{% if page.url == p.url %} aria-current="page"{% endif %}>
+            <span class="label">{{ p.title }}</span>
+          </a>
+        </li>
+        {%- endunless -%}
+        {%- endfor %}
+      </ul>
+    </nav>
+  </div>
+</aside>

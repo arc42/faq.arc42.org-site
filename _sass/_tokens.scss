@@ -1,0 +1,195 @@
+// ============================================================================
+// Design tokens — the single source of truth for colour, type, and metrics.
+//
+// Cloned from docs.arc42.org-site/_sass/_tokens.scss: same file, same token
+// NAMES, same jobs — faq's deep-teal values substituted (ADR-0013's signature
+// hue registry). Consistency beats local invention; a reader crossing from
+// docs to faq should meet the same system wearing a different hue, and a
+// maintainer should find the same token under the same name.
+//
+// Before this file the same values lived in _sass/base/_variables.scss as SCSS
+// `$` variables plus five hard-coded escapes (_common.scss:80, _header.scss:71,
+// default.html ×2, home.md). Everything is a CSS custom property here, per
+// ADR-0007: use var(--token); do not introduce a new hex value. If a value is
+// missing, add it here and to the family docs together.
+//
+// CONTRAST (ADR-0005): every pair that carries text records its MEASURED WCAG
+// 2.2 ratio in a comment at the declaration site. The numbers below were
+// computed from relative luminance, not estimated. AA floors: 4.5:1 text,
+// 3:1 non-text.
+// ============================================================================
+
+:root {
+  // ---- Family tokens -------------------------------------------------------
+  // Identical hex on every arc42 site (meta.arc42.org/BRAND.md). --arc42-teal
+  // is the hue faq's whole ramp derives from, and it has a visible job here
+  // (ADR-0003): it is the hue every wash on this site is mixed from, below.
+  --arc42-teal: #5fb49c;
+
+  // Deliberately NOT declared on faq: --arc42-amber. ADR-0003 says a shared
+  // token must have a visible, named job on the site that carries it, and faq
+  // has no tip component to give it — declaring it unused is precisely docs'
+  // documented sin. The moment faq grows a tip callout, amber (#ffc95c with
+  // ink #4a3a0a, 7.24:1) is the colour it wears. See the WP-B report.
+  //
+  // Deliberately NOT declared: --coral / --coral-deep. The coral family is
+  // trainings.arc42.org's signature hue (ADR-0013) and docs' masthead spark;
+  // faq's band carries no spark.
+
+  // ---- Surfaces & text -----------------------------------------------------
+  --paper: #fbfdfc;   // near-white with the faintest teal tint, never #fff
+  --ink:   #232b29;   // soft near-black, teal-tinted — 14.19:1 on --paper
+  --muted: #5a6a65;   // de-emphasized meta — 5.58:1 on --paper,
+                      //                      5.23:1 on --surface-1
+
+  // Hairlines are alpha over whatever is beneath them, not palette members, so
+  // they stay rgba() exactly as on docs — teal-tinted rather than blue-tinted.
+  --hairline:   rgba(20, 60, 50, 0.12);   // table borders, nav dividers
+  --hairline-2: rgba(20, 60, 50, 0.16);   // borders that must actually be seen
+
+  // The one sanctioned thick left rule: a conventional quotation mark, never a
+  // brand-coloured accent stripe. It stays grey (1.55:1 on --paper — a rule,
+  // not text).
+  --rule: #c7cfcc;
+
+  // ---- Structure teals -----------------------------------------------------
+  // One Teal Rule, transplanted from docs' One Blue Rule: --signal is the
+  // single editorial teal. The others are its darker/lighter family relatives,
+  // reserved for chrome.
+  --signal: #1f7a64;   // links, h2 subheads, structure, active nav
+                       // 5.11:1 on --paper
+                       // 4.79:1 on --surface-1
+                       // 4.58:1 on --surface-hover
+
+  // MEASURED, NOT CHOSEN. meta's BRAND.md and ADR-0013 register faq's masthead
+  // as "≈#2a6f5f, measure before fixing" — so it was measured, and it does not
+  // survive: #2a6f5f is light enough that even pure white on it tops out at
+  // 5.94:1, and no --tint can reach the 7:1 this band is required to carry.
+  // #1b5648 is the same hue one step down the ramp and clears it with room.
+  --deep: #1b5648;   // masthead band, footer rule, pinned-note shadow
+                     // --tint      on it  7.67:1
+                     // --tint-soft on it  6.51:1
+                     // --paper     on it  8.32:1
+
+  --tint:      #eaf6f2;   // text/logo/wordmark ON the deep-teal band — 7.67:1
+  --tint-soft: #cde7de;   // secondary text on the band (tagline)     — 6.51:1
+
+  // There is deliberately NO darker-than---deep token, and no border under the
+  // band: docs measured its mockup's `border-bottom` at 1.16:1 against --deep —
+  // an invisible rule costing a paint. The band ends at the band.
+
+  // --signal-dk is --signal darkened to clear AA where --signal cannot. It is a
+  // documented member of the ramp, not an accent: hover states, and any small
+  // or pilled text that would otherwise land in the 3.5-4.5:1 band.
+  --signal-dk: #125f4d;   // 7.42:1 on --paper
+                          // 6.96:1 on --surface-1
+                          // 6.65:1 on --surface-hover
+                          // 6.08:1 on --sky
+                          // 5.57:1 on --pill-bg
+
+  // ---- The wash ladder (ADR-0006) ------------------------------------------
+  // Three named steps, no values in between, all mixed from --arc42-teal into
+  // --paper in oklab. faq's old stylesheet had none of this: its tints were
+  // rgba($brand-color, .2) call sites scattered across four partials.
+  //
+  // Mixed from the LIGHT family teal rather than from --deep on purpose: 8% of
+  // --deep already lands at #e8efec, a wash you notice. 8% of --arc42-teal is
+  // #eff7f4, which is the whisper ADR-0006 describes.
+  --wash-calm:   8%;
+  --wash-active: 14%;
+  --wash-hover:  25%;
+  --wash-edge:   35%;   // borders and chips at rest
+  --wash-edge-2: 50%;   // borders on hover
+
+  // ---- Chrome surfaces -----------------------------------------------------
+  // THREE tinted surfaces, one job each, one wash step each (ADR-0006's cap).
+  // docs' fourth near-white (--surface-2, #f7fafd, "faintest wash: table
+  // headers, zebra rows") is deliberately absent here: it and --surface-1 sit
+  // 0.03 apart in lightness and nobody could tell which to reach for, which is
+  // the exact disease ADR-0006 exists to stop. Table headers and zebra rows
+  // use --surface-1.
+  --surface-1:     color-mix(in oklab, var(--paper), var(--arc42-teal) var(--wash-calm));    // #eff7f4 — tinted chrome panels: rail, footer
+  --surface-hover: color-mix(in oklab, var(--paper), var(--arc42-teal) var(--wash-active));  // #e6f3ee — every interactive hover fill
+  --sky:           color-mix(in oklab, var(--paper), var(--arc42-teal) var(--wash-hover));   // #d6ebe3 — the calm "you are here" tint
+
+  // Active nav row. Deliberately NOT --help-bg: on docs those were once the
+  // same hex under two names, so one colour meant "arc42's guidance", "you are
+  // here" and "navigate by keyword" at once.
+  --row-active: var(--sky);
+
+  // The one code wash. Neutral, not teal: a code block is not a tinted surface,
+  // it is a change of voice.
+  --code-bg: #f5f7f7;   // --ink on it 13.48:1
+
+  // ---- Callouts ------------------------------------------------------------
+  // .arc42-* classes are FAMILY COMPONENTS (ADR-0004): same name ⇒ same design
+  // on every site. These two values are docs' verbatim, not retinted — cool
+  // guidance vs warm example is the temperature pairing a reader separates
+  // advice from illustration by, and it does not follow the site's hue. What
+  // IS hue-substituted is the pinned-note shadow (ADR-0002), which takes
+  // --deep and is therefore teal on faq.
+  --help-bg:  #e3f2fe;   // COOL guidance — reserved, means only this
+  --help-ink: #0c3d66;   // 9.81:1 on --help-bg
+
+  // The warm example palette (--ex-bg #fdebe7 / --ex-ink #9a3b2e, 5.99:1 /
+  // --ex-ink-dk #7d2f24 / --ex-icon #c8654f) is deliberately NOT declared:
+  // .arc42-example appears nowhere in this repository, and four colour tokens
+  // nothing paints is the offence ADR-0003 names. If faq grows worked
+  // examples, copy the block and the component from docs together.
+
+  // ---- Bits ----------------------------------------------------------------
+  // Tag pills. The old pair was docs' Tag Cyan under docs' Signal Blue — faq
+  // wearing another site's signature twice over (ADR-0013), at 3.54:1. (The
+  // retired hexes are named, not quoted: CI's deny-list is a plain grep over
+  // this tree, and a comment that spells them out defeats it.)
+  // The chip is now the ladder's edge step, which is the strongest wash faq
+  // has and reads as a chip rather than as a surface.
+  --pill-bg:       color-mix(in oklab, var(--paper), var(--arc42-teal) var(--wash-edge));     // #c7e3d9
+  --pill-bg-hover: color-mix(in oklab, var(--paper), var(--arc42-teal) var(--wash-edge-2));   // #b0d9cb
+  --pill-ink:      var(--signal-dk);   // 5.57:1 on --pill-bg
+                                       // 4.92:1 on --pill-bg-hover
+
+  --maroon:    #8a2e2e;   // sponsor/training blocks only, never editorial
+                          // 8.19:1 on --paper, 7.46:1 on --maroon-bg
+  --maroon-bg: #fcefef;
+
+  // ---- Type ----------------------------------------------------------------
+  // Family constant #1, the Two Voices Rule: Libre Caslon Text for headings,
+  // Atkinson Hyperlegible Next for body and UI. Self-hosted, see _fonts.scss.
+  // "Next" is the current Braille Institute release; plain Atkinson
+  // Hyperlegible is kept as a fallback so the stack degrades to the right
+  // shapes rather than to system-ui.
+  --serif: "Libre Caslon Text", Georgia, "Times New Roman", serif;
+  --sans:  "Atkinson Hyperlegible Next", "Atkinson Hyperlegible", system-ui,
+           -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --mono:  ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas,
+           "Liberation Mono", monospace;
+
+  // ---- Spacing scale -------------------------------------------------------
+  --s1: 4px;  --s2: 8px;  --s3: 12px; --s4: 16px;
+  --s5: 24px; --s6: 32px; --s7: 48px; --s8: 64px;
+
+  // ---- Metrics -------------------------------------------------------------
+  --shell-max: 1400px;
+
+  // Fluid rail — it gives way before the prose does.
+  --rail-w: clamp(220px, 20vw, 280px);
+
+  // ADR-0012: body prose is capped at 65-75ch on every family site. faq's
+  // content ran `width: 100%` inside a 70%-wide float, i.e. uncapped.
+  --measure: 68ch;
+
+  // The ceiling for scannable, non-prose blocks — the category tables on
+  // /home/, wide question listings. Reading measure does not apply to a
+  // two-column index, but *some* ceiling must, or it runs the full shell on a
+  // 1920 screen.
+  --measure-wide: calc(var(--measure) * 1.7);   // ~116ch
+
+  // Height of the masthead bar. Anchors need to clear it, so headings take
+  // their scroll-margin from this, and the rail takes its sticky `top`.
+  --bar-h: 56px;
+
+  // No --radius-pill: docs needs one for its keyword chips; nothing on faq is
+  // pill-shaped, and an unused metric is one more thing to keep in sync.
+  --radius: 4px;
+}

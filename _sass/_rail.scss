@@ -1,0 +1,245 @@
+// ============================================================================
+// The shell grid, and the tinted left navigation rail that defines its first
+// column. Cloned from docs.arc42.org-site/_sass/_rail.scss.
+//
+// The grid lives here rather than in its own partial because the rail owns the
+// first column and the breakpoint that collapses that column is the same
+// breakpoint that collapses the rail into its toggle.
+//
+// What this replaces: a 70%/30% float pair where the nav was on the RIGHT
+// (`.site-aside { float: right }`) below a full-width header, and the content
+// column ran `width: 100%` with no measure at all.
+//
+// Contract for the other partials:
+//   .layout          rail + content   (page.html, post.html)
+//   .layout--home    content only     (/home/)
+// ============================================================================
+
+.layout {
+  max-width: var(--shell-max);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: var(--rail-w) minmax(0, 1fr);
+  align-items: start;
+}
+
+// /home/ carries its own category directory with a live count per category. A
+// rail beside it would be the same ten, worse.
+.layout--home {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+// The centre column's own box. Everything *inside* it belongs to _content.scss;
+// what is declared here is only what the grid needs: `min-width: 0` so a wide
+// table or <pre> scrolls inside the column instead of stretching it, and the
+// gutters that separate the prose from the rail.
+.site-content {
+  min-width: 0;
+  padding: var(--s7) var(--s7) var(--s8);
+
+  // The 48px gutters are affordable once the shell is at its full width; below
+  // that they come straight out of the reading measure, which is the one thing
+  // on this page that must not shrink.
+  @media (max-width: 1399px) {
+    padding: var(--s7) var(--s5) var(--s8);
+  }
+}
+
+// Home has no rail, so at --shell-max its single column would run to 1400px.
+.site-content--home {
+  max-width: 62rem;
+
+  // Centred, because home is the one page with no rail. On every other page the
+  // rail occupies the left of the shell and balances a left-aligned column;
+  // here the same column left-aligned in a 1400px shell strands ~380px of empty
+  // paper on the right, which reads as a layout that lost a pane.
+  margin-inline: auto;
+}
+
+// ============================================================================
+// RAIL
+// ============================================================================
+
+.rail {
+  position: sticky;
+  // The condensed masthead is sticky, so the rail parks beneath it rather than
+  // scrolling under it. Both numbers come from the same token.
+  top: var(--bar-h);
+  align-self: start;
+  z-index: 1;
+
+  max-height: calc(100vh - var(--bar-h));
+  overflow-y: auto;
+  padding: var(--s6) var(--s4) var(--s7);
+
+  background: var(--surface-1);
+  border-right: 1px solid var(--hairline);
+}
+
+// Mobile only — see the <=1024px block.
+.rail-toggle {
+  display: none;
+}
+
+.rail-heading {
+  margin: var(--s5) 0 var(--s2);
+  padding: 0 var(--s2);
+  font-family: var(--sans);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--muted);   // 5.23:1 on --surface-1
+}
+
+// The first heading sits directly under the rail's own top padding.
+.rail-body > nav:first-child .rail-heading {
+  margin-top: 0;
+}
+
+.rail-nav {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  li {
+    border-top: 1px solid var(--hairline);
+  }
+
+  li:first-child {
+    border-top: 0;
+  }
+
+  a {
+    display: grid;
+    grid-template-columns: 1.6em 1fr;
+    align-items: baseline;
+    gap: var(--s2);
+    padding: var(--s3) var(--s2);
+    border-radius: var(--radius);
+    color: var(--ink);   // 13.31:1 on --surface-1
+    line-height: 1.3;
+    text-decoration: none;
+    transition: background 0.14s ease, color 0.14s ease;
+  }
+
+  // The category letter. --signal on --surface-1 measures 4.79:1, which is
+  // marginal for text this small; --signal-dk is the same ramp one step down
+  // at 6.96:1.
+  .num {
+    font-family: var(--mono);
+    font-size: 0.82rem;
+    font-weight: 500;
+    text-align: right;
+    color: var(--signal-dk);
+  }
+
+  .label {
+    font-size: 0.95rem;
+  }
+
+  a:hover {
+    background: var(--surface-hover);
+    color: var(--signal-dk);   // 6.65:1 on --surface-hover
+  }
+
+  // You are here: a row tint AND bold weight AND the letter in full strength.
+  // More than one signal, only one of which is colour.
+  a[aria-current="page"] {
+    background: var(--row-active);
+    color: var(--signal-dk);   // 6.08:1 on --sky
+    font-weight: 700;
+
+    .num {
+      color: var(--signal-dk);
+      font-weight: 700;
+    }
+  }
+}
+
+// The "More" group has no letters, so it drops the letter column rather than
+// leaving 1.6em of hanging indent.
+.rail-meta {
+  a {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+// ============================================================================
+// RESPONSIVE
+// ============================================================================
+
+// Below this the rail stops being a column and becomes a disclosure above the
+// content. It also stops being sticky: a sticky panel that can be a screen tall
+// on a phone is a trap.
+//
+// 1024px, and the reason is measured rather than conventional (ADR-0012): at
+// 900px a 220px rail plus gutters leaves the prose at ~57 characters per line,
+// against the family's 65-75. Handing that band the full width brings it back
+// inside the measure.
+@media (max-width: 1024px) {
+  .layout,
+  .layout--home {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .rail {
+    position: static;
+    max-height: none;
+    overflow: visible;
+    padding: var(--s3) var(--s4);
+    border-right: 0;
+    border-bottom: 1px solid var(--hairline);
+  }
+
+  .site-content {
+    padding: var(--s5) var(--s5) var(--s7);
+  }
+
+  // Both the toggle and the collapse are gated on the `js` class the inline
+  // script in default.html puts on <html>. Without JS the button would be inert
+  // and the nav unreachable, so without JS neither exists: the rail renders open.
+  .js .rail-toggle {
+    display: flex;
+    align-items: center;
+    gap: var(--s3);
+    width: 100%;
+    padding: var(--s3) var(--s4);
+    background: var(--paper);
+    border: 1px solid var(--hairline-2);
+    border-radius: var(--radius);
+    font-family: var(--sans);
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--ink);
+    cursor: pointer;
+
+    // assets/js/script.js reads e.target, not e.currentTarget: without this a
+    // click landing on the label or the chevron would find no data-target and
+    // silently do nothing.
+    > * {
+      pointer-events: none;
+    }
+
+    .chev {
+      margin-left: auto;
+      color: var(--muted);
+      transition: transform 0.2s ease;
+    }
+
+    &.active .chev {
+      transform: rotate(180deg);
+    }
+  }
+
+  // assets/js/script.js toggles `.active` on the button and on #rail-body.
+  // Nothing else in the CSS depends on the JS.
+  .js .rail-body {
+    display: none;
+    padding-top: var(--s4);
+  }
+
+  .js .rail-body.active {
+    display: block;
+  }
+}

@@ -1,49 +1,57 @@
+{%- comment -%}
+  The header of a question — used twice, in two roles, keyed off `link`:
+
+    link=false  a question's own page. The title IS the question, restated for
+                a reader who arrived on a /questions/<QID>/ deep link, so it
+                gets .question-restatement: the family's pinned-note shadow in
+                deep teal (ADR-0002).
+
+    link=true   a row in an index (category pages, /allquestions/, /search/).
+                .question-row: no fill, no shadow — ADR-0002 reserves the
+                treatment for annotations, and a category page carrying 17
+                pinned notes would be seventeen cards at rest.
+
+  The old markup wrapped both in one `.panel` with a `rgba($page-title-color,
+  .2)` fill, so every listing row was a tinted box.
+
+  Dropped: the `<li><i class="fa fa-tags">` marker that led the tag list. It was
+  an icon with no accessible name doing work the pills already do, and it is one
+  fewer FontAwesome usage for WP-D to unpick.
+{%- endcomment -%}
 {% assign page = include.page %}
 
-<header>
-    <div class="panel">
-        <h1>
-            {% if include.link %}
-            <a class="post-link" href="{{ page.url | prepend: site.baseurl }}">{{ page.title }}</a>
-            {% else %}
-            {{ page.title }}
-            {% endif %}
-        </h1>
+<header class="{% if include.link %}question-row{% else %}question-restatement{% endif %}">
+    <h1>
+        {% if include.link %}
+        <a class="post-link" href="{{ page.url | prepend: site.baseurl }}">{{ page.title }}</a>
+        {% else %}
+        {{ page.title }}
+        {% endif %}
+    </h1>
 
-        <ul class="tags">
-            {% assign tags_num = (page.tags | size) %}
-            {% if tags_num > 0 %}
-            <li><i class="fa fa-tags"></i></li>
-            {% endif %}
-            {% for tag in page.tags %}
-            <li>
-                <a class="tag" href="{{ '/search/?t=' | append: tag | prepend: site.baseurl }}">#{{ tag }}</a>
-            </li>
-            {% endfor %}
-        </ul>
+    {% assign tags_num = (page.tags | size) %}
+    {% if tags_num > 0 %}
+    <ul class="tags">
+        {% for tag in page.tags %}
+        <li>
+            <a class="tag" href="{{ '/search/?t=' | append: tag | prepend: site.baseurl }}">#{{ tag }}</a>
+        </li>
+        {% endfor %}
+    </ul>
+    {% endif %}
 
-        <div class="clearfix">
-            <ul class="meta">
-                
-
-                {% if page.author %}
-                <li>
-                    <a href="{{ '/search/?a=' | append: page.author | prepend: site.baseurl }}">
-                        <i class="fa fa-user"></i>
-                        {{ page.author }}
-                    </a>
-                </li>
-                {% if page.icons %}
-                <li>
-                    <ul class="icons">
-                        {% include icons.html icons=page.icons %}
-                    </ul>
-                </li>
-                {% endif %}
-                {% endif %}
+    {% if page.author %}
+    <ul class="meta">
+        <li>
+            <a href="{{ '/search/?a=' | append: page.author | prepend: site.baseurl }}">{{ page.author }}</a>
+        </li>
+        {% if page.icons %}
+        <li>
+            <ul class="icons">
+                {% include icons.html icons=page.icons %}
             </ul>
-        </div>
-    </div>
-
-
+        </li>
+        {% endif %}
+    </ul>
+    {% endif %}
 </header>
