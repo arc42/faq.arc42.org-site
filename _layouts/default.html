@@ -65,9 +65,10 @@
     <aside class="site-aside">
         <div class="inner">
             <div class="block">
-                <form action="{{ site.baseurl }}/search">
-                    <input type="search" id="search" name="q" placeholder="{{ site.str_search }}" />
-                </form>
+                {%- comment -%} Self-contained search widget (markup + JS).
+                  WP-B's masthead has a search slot; when it lands, this one
+                  line moves there and nothing else changes. {%- endcomment -%}
+                {% include search.html %}
             </div>
             <ul>
                 {% assign pages = site.pages | sort: 'order' %}
@@ -115,9 +116,9 @@
 <script src="{{ '/assets/js/header-link.js' | prepend: site.baseurl }}"></script>
 {% endif %}
 
-{% if page.permalink == '/search/' %}
-<script src="{{ '/assets/js/search.js' | prepend: site.baseurl }}"></script>
-{% endif %}
+{%- comment -%} search.js is no longer loaded here: it ships with
+  _includes/search.html so the widget stays droppable, and it is needed on every
+  page now (Cmd-K / "/" work site-wide), not only on /search/. {%- endcomment -%}
 
 
 </body>

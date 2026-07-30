@@ -1,16 +1,32 @@
 ---
 ---
+{%- comment -%}
+  The lunr corpus. One entry per question; assets/js/search.js builds the index
+  from this file in the browser (no build step, no npm).
 
+  FIELD CONTRACT — exactly these six keys, in this order:
+
+      qid       "A-1"                    the externally cited question id
+      title     "Question A-1: …"        front-matter title, verbatim
+      tags      ["42","license"]         always an array
+      category  "general"                front-matter category, a single string
+      url       "/questions/A-1/"        the permalink
+      content   "…"                      answer body, HTML stripped
+
+  WP-E swaps site.posts for the _questions collection here and must not have to
+  rename anything — keep the keys and their types stable.
+
+  qid is derived from the permalink rather than stored, because today the front
+  matter has no qid field. WP-E adds `qid:` and this becomes `q.qid`.
+
+  post.content may arrive rendered or raw depending on Jekyll's render order,
+  so search.js scrubs leftover Liquid/Markdown before indexing (same as docs).
+{%- endcomment -%}
 [
-{% for post in site.posts %}
-{
-"id": {{ post.id | replace: '/', '-' | jsonify }},
-"title": {{ post.title | jsonify }},
-"author": {{ post.author | jsonify }},
-"tags": [{% for tag in post.tags%}{{ tag | jsonify }}{% unless forloop.last %}, {% endunless %}{% endfor %}],
-"url": {{ post.url | jsonify }},
-"date": {{ post.date | date: '%Y-%m-%d' | jsonify }},
-"content": {{ post.content | strip_html | strip_newlines | jsonify }}
-}{% unless forloop.last %}, {% endunless %}
-{% endfor %}
+{%- for post in site.posts -%}
+{%- unless forloop.first -%},{%- endunless -%}
+{%- assign qid_source = post.permalink | default: post.url -%}
+{%- assign qid = qid_source | split: '/' | last -%}
+{"qid":{{ qid | jsonify }},"title":{{ post.title | jsonify }},"tags":{{ post.tags | jsonify }},"category":{{ post.category | default: '' | jsonify }},"url":{{ post.url | jsonify }},"content":{{ post.content | strip_html | strip_newlines | jsonify }}}
+{%- endfor -%}
 ]

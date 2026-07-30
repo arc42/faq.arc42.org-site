@@ -1,0 +1,56 @@
+{%- comment -%}
+  Self-contained search widget: markup + the script that drives it.
+
+  Drop it anywhere with a one-line `{% include search.html %}` — it assumes
+  nothing about its surroundings beyond being inside <body>. The dropdown is
+  positioned against `.faq-search`, which owns its own `position: relative`, so
+  it does not need a positioned ancestor supplied by the host markup.
+
+  WP-B's masthead can host it in the marked search slot; until then it lives in
+  the aside rail. Only the include line moves — nothing here changes.
+
+  Markup contract with assets/js/search.js (do not restructure):
+    [data-faq-search]              the root, carries data-baseurl
+      form.faq-search__form        submits to /search/?q=… when JS is absent
+        input#search[name=q]       role=combobox, the only search input
+        kbd[data-faq-search-hint]  platform-aware ⌘K / / hint, filled by JS
+      #faq-search-panel            role=listbox, filled by JS
+      [data-faq-search-status]     aria-live result count
+  The results page contributes #search-page-results; the same script fills it.
+
+  The script tag ships with the include so the widget stays droppable. It is
+  `defer`, so the DOM is complete when it runs, and the script no-ops if it is
+  ever evaluated twice.
+{%- endcomment -%}
+<div class="faq-search" data-faq-search data-baseurl="{{ site.baseurl }}">
+  <form class="faq-search__form" action="{{ '/search/' | prepend: site.baseurl }}" role="search">
+    <label class="faq-search__field" for="search">
+      <svg class="faq-search__icon" viewBox="0 0 20 20" width="16" height="16" fill="none"
+           stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" focusable="false">
+        <circle cx="8.5" cy="8.5" r="5.5"></circle>
+        <line x1="12.5" y1="12.5" x2="17.5" y2="17.5"></line>
+      </svg>
+      <input type="search"
+             id="search"
+             name="q"
+             class="faq-search__input"
+             placeholder="{{ site.str_search }}"
+             aria-label="{{ site.str_search }} questions"
+             autocomplete="off"
+             autocorrect="off"
+             autocapitalize="off"
+             spellcheck="false"
+             role="combobox"
+             aria-autocomplete="list"
+             aria-expanded="false"
+             aria-haspopup="listbox"
+             aria-controls="faq-search-panel"
+             aria-describedby="faq-search-hint-desc">
+      <kbd class="faq-search__hint" aria-hidden="true" data-faq-search-hint>/</kbd>
+    </label>
+    <span class="faq-search__sr" id="faq-search-hint-desc" data-faq-search-hint-desc>Press slash to focus this search.</span>
+    <div id="faq-search-panel" class="faq-search__panel" role="listbox" aria-label="Search suggestions" hidden></div>
+    <div class="faq-search__sr" aria-live="polite" data-faq-search-status></div>
+  </form>
+</div>
+<script defer src="{{ '/assets/js/search.js' | prepend: site.baseurl }}"></script>
