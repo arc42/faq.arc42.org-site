@@ -1,0 +1,171 @@
+# Check-only CI for faq.arc42.org — builds the site and runs the guards from
+# ADR-0013 (signature-hue registry) and ADR-0014 (CI guards the palette).
+#
+# This workflow NEVER deploys. Deployment is exclusively
+# .github/workflows/build-deploy-gh-pages.yml on `main`; that file is the only
+# place `pages: write` / `id-token: write` may appear. Consequently this
+# workflow does not run on `main` at all — there is nothing to check that the
+# deploy workflow does not already build.
+name: checks
+
+on:
+  pull_request:
+  push:
+    branches-ignore: [ main ]
+  workflow_dispatch:
+
+# Read-only. Do not add `pages:` or `id-token:` here — see header.
+permissions:
+  contents: read
+
+# Deliberately NOT the deploy workflow's "pages" group: cancelling a superseded
+# check run must never interfere with a deployment.
+concurrency:
+  group: checks-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v7
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.3'
+          bundler-cache: true # runs 'bundle install' against Gemfile.lock and caches gems
+          cache-version: 0
+
+      - name: Build the site with Jekyll
+        # Same stack as the deploy workflow. `--baseurl ""` replaces its
+        # configure-pages step (which would need `pages` permission): faq is a
+        # custom-domain site, so its base path is empty. The explicit value is
+        # load-bearing — jekyll-github-metadata overrides `site.baseurl`
+        # whenever it is nil or "/" and JEKYLL_ENV is production, which without
+        # API credentials yields bogus "/pages/<owner>/<repo>" prefixes on every
+        # link and drowns the link check in false positives.
+        run: bundle exec jekyll build --baseurl ""
+        env:
+          JEKYLL_ENV: production
+
+      - name: Permalink guard — the 136 /questions/<QID>/ URLs (D13, ADR-0014)
+        run: |
+          set -euo pipefail
+
+          EXPECTED_COUNT=136
+          expected=$(mktemp)
+          actual=$(mktemp)
+
+          # Manifest list items only; the comment header is skipped.
+          sed -n 's/^- *//p' _data/permalinks.yml | LC_ALL=C sort -u > "$expected"
+          ls _site/questions | LC_ALL=C sort -u > "$actual"
+
+          n=$(wc -l < "$expected" | tr -d ' ')
+          if [ "$n" -ne "$EXPECTED_COUNT" ]; then
+            echo "::error::_data/permalinks.yml lists $n permalinks, expected $EXPECTED_COUNT"
+            exit 1
+          fi
+
+          rc=0
+
+          # (1) every manifest entry must have been built
+          while read -r qid; do
+            if [ ! -f "_site/questions/$qid/index.html" ]; then
+              echo "::error::missing built page _site/questions/$qid/index.html"
+              rc=1
+            fi
+          done < "$expected"
+
+          # (2) nothing may appear under /questions/ that the manifest does not know
+          extras=$(LC_ALL=C comm -13 "$expected" "$actual")
+          if [ -n "$extras" ]; then
+            while read -r qid; do
+              echo "::error::/questions/$qid/ is not listed in _data/permalinks.yml"
+            done <<< "$extras"
+            rc=1
+          fi
+
+          if [ "$rc" -ne 0 ]; then
+            echo "The 136 /questions/<QID>/ permalinks are externally cited and"
+            echo "non-negotiable (ADR-0013/0014). If a question was deliberately"
+            echo "added or removed, update _data/permalinks.yml and EXPECTED_COUNT."
+            exit 1
+          fi
+
+          echo "Permalink guard OK — $EXPECTED_COUNT pages present, no extras."
+
+      - name: Palette guard — retired hexes (ADR-0013, ADR-0014)
+        run: |
+          set -uo pipefail
+
+          # TODO(WP-B): flip to true once WP-B has removed the last retired hex.
+          # This single line turns the step from report-only into a hard gate;
+          # nothing else below needs to change.
+          ENFORCE=false
+
+          DENY='#397ab2|#1675b9|#aee3f8|#5bbad5|#fe5a83|#d7ecf8|#dd354b|#50C878'
+          SCAN='_sass assets _layouts _includes _pages'
+
+          hits=$(grep -rniE --binary-files=without-match "$DENY" $SCAN || true)
+
+          if [ -z "$hits" ]; then
+            echo "Palette guard OK — no retired hexes in $SCAN."
+            exit 0
+          fi
+
+          echo "$hits"
+          {
+            echo "## Palette guard — retired hexes found"
+            echo ""
+            echo '```'
+            echo "$hits"
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+
+          if [ "$ENFORCE" = "true" ]; then
+            echo "::error::retired hexes must not appear outside the token file (ADR-0014)"
+            exit 1
+          fi
+
+          echo "::warning::retired hexes still present — report-only until WP-B lands"
+          exit 0
+
+      - name: Internal link check (html-proofer)
+        run: |
+          set -uo pipefail
+
+          # TODO(WP-F): flip to true once the pre-existing internal link defects
+          # are fixed (5x empty href="" in question bodies, the dead
+          # /imprint-privacy/ link, 4 dangling in-page anchors). Same one-line
+          # flip as the palette guard above.
+          ENFORCE=false
+
+          # Internal links only: external checking is flaky and out of scope.
+          if bundle exec htmlproofer _site \
+               --disable-external \
+               --no-enforce-https \
+               --checks Links \
+               --root-dir _site 2>&1 | tee /tmp/htmlproofer.log; then
+            echo "Internal link check OK."
+            exit 0
+          fi
+
+          {
+            echo "## Internal link check — failures"
+            echo ""
+            echo '```'
+            cat /tmp/htmlproofer.log
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+
+          if [ "$ENFORCE" = "true" ]; then
+            echo "::error::html-proofer found internal link failures"
+            exit 1
+          fi
+
+          echo "::warning::internal link failures are pre-existing — report-only (see WP-F)"
+          exit 0
