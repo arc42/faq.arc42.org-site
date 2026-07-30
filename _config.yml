@@ -10,6 +10,9 @@
 url: https://faq.arc42.org
 imageurl: https://faq.arc42.org
 baseurl:
+# jekyll-github-metadata needs the repo name; CI would infer it from
+# GITHUB_REPOSITORY, local builds have no such env — set it explicitly.
+repository: arc42/faq.arc42.org-site
 #######################################################
 
 ## imageurl set to url + baseurl, easier than the complex
