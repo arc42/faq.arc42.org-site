@@ -1,205 +1,391 @@
+// ============================================================================
+// Content — the prose column: headings, paragraphs, lists, tables, code blocks,
+// and the question furniture.
+//
+// Cloned from docs.arc42.org-site/_sass/_content.scss and retyped onto faq's
+// markup. Everything is scoped to .site-content (the <main> in
+// _layouts/default.html) or .post-content (the <section> page.html wraps
+// {{ content }} in). .post-content always nests inside .site-content, so the
+// shared element defaults are declared once on the outer one.
+//
+// All values come from _tokens.scss. No hex literals live here.
+//
+// Dropped from the old partial, because nothing in the repo emits them
+// (grepped across _pages, _posts, _includes, _layouts, assets/js):
+//   ul.inline / ol.inline, .pagination, .comments, article > footer, and the
+//   float furniture around ul.meta.
+// ============================================================================
+
+// ---- Measure ----------------------------------------------------------------
+// ADR-0012, the family constant. faq's body copy ran the full width of a
+// 70%-wide float — ~100 characters per line on a 1400px screen, against the
+// 65-75 the family standardised on.
+//
+// The cap is applied to the text elements rather than to a wrapper, because the
+// content is Markdown: every block is a direct child of .post-content and there
+// is no per-block wrapper to hang a container query off. Media and tables are
+// deliberately NOT capped — a diagram or a five-column mapping table has no
+// measure to protect and reads worse when squeezed.
+
 .site-content {
-    h1, h2, h3, h4, h5, h6 {
-        line-height: 1.3;
-        margin: 1em 0;
-        a {
-            color: $text-color;
-        }
-        .header-link {
-            margin-left: 0.2em;
-            color: $link-color;
-            opacity: 0;
-        }
-        &:hover .header-link {
-            opacity: 1;
-        }
+  p,
+  li,
+  dt,
+  dd,
+  blockquote,
+  figcaption,
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    max-width: var(--measure);
+  }
+
+  // The category directory on /home/ and the question listings are scannable
+  // indexes, not prose: the reading measure does not apply, but a ceiling must.
+  table {
+    max-width: var(--measure-wide);
+  }
+}
+
+// ---- Headings ---------------------------------------------------------------
+// The Two Voices Rule: editorial serif for h1/h2, sans for h3 and below. h2
+// carries the family's subhead colour, which is what lets a reader scan a long
+// answer's skeleton without reading a word.
+
+.site-content {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    // The masthead bar is sticky and --bar-h tall. Without this, every #anchor
+    // jump parks its target underneath the bar.
+    scroll-margin-top: calc(var(--bar-h) + var(--s5));
+  }
+
+  h1 {
+    font-family: var(--serif);
+    font-weight: 700;
+    // The middle term is wrapped in calc() on purpose: the site builds on
+    // jekyll-sass-converter 1.5.2 (Ruby Sass 3.7), which evaluates a bare
+    // `1.2rem + 1.8vw` as arithmetic and aborts with "Incompatible units".
+    font-size: clamp(1.7rem, calc(1.2rem + 1.8vw), 2.3rem);
+    line-height: 1.15;
+    letter-spacing: 0.2px;
+    color: var(--ink);
+    margin: 0 0 var(--s4);
+  }
+
+  h2 {
+    font-family: var(--serif);
+    font-weight: 700;
+    font-size: 1.5rem;
+    line-height: 1.2;
+    color: var(--signal);   // 5.11:1 on --paper
+    margin: 2.6rem 0 var(--s4);
+  }
+
+  h3 {
+    font-family: var(--sans);
+    font-weight: 700;
+    font-size: 1.12rem;
+    line-height: 1.3;
+    color: var(--ink);
+    margin: var(--s6) 0 var(--s3);
+  }
+
+  // faq's answers use `#### Short answer` / `#### Longer answer` as their
+  // internal structure — h4 is a workhorse on this site, not a leftover.
+  h4 {
+    font-family: var(--sans);
+    font-weight: 700;
+    font-size: 1rem;
+    line-height: 1.35;
+    color: var(--ink);
+    margin: var(--s5) 0 var(--s2);
+  }
+
+  h5,
+  h6 {
+    font-family: var(--sans);
+    font-weight: 700;
+    font-size: 0.95rem;
+    line-height: 1.35;
+    color: var(--muted);   // 5.58:1 on --paper
+    margin: var(--s5) 0 var(--s2);
+  }
+
+  > :first-child,
+  .post-content > :first-child {
+    margin-top: 0;
+  }
+
+  h1 a,
+  h2 a,
+  h3 a,
+  h4 a,
+  h5 a,
+  h6 a {
+    color: inherit;
+  }
+
+  // ---- Anchor link on headings ----------------------------------------------
+  // Appended by assets/js/header-link.js to every heading that has an id.
+  // Hidden until the heading is hovered, but ALSO revealed on focus: it is a
+  // real link in the tab order and a keyboard user must be able to see what
+  // they have landed on. (The old rule had no :focus-visible clause.)
+  .header-link {
+    margin-left: 0.3em;
+    color: var(--signal);
+    opacity: 0;
+    transition: opacity 0.14s ease;
+  }
+
+  h1:hover .header-link,
+  h2:hover .header-link,
+  h3:hover .header-link,
+  h4:hover .header-link,
+  h5:hover .header-link,
+  h6:hover .header-link,
+  .header-link:focus-visible {
+    opacity: 1;
+  }
+}
+
+// ---- Block rhythm -----------------------------------------------------------
+
+.site-content {
+  p {
+    margin: 0 0 var(--s4);
+  }
+
+  dl,
+  figure,
+  pre {
+    margin: var(--s4) 0 var(--s5);
+  }
+
+  ul,
+  ol {
+    margin: 0 0 var(--s4);
+    // The old rule set `list-style-position: inside`, which puts the marker in
+    // the text flow so a wrapped second line starts under the bullet instead of
+    // under the first word. Outside markers with a real indent read as a list.
+    padding-left: 1.4em;
+
+    ul,
+    ol {
+      margin: var(--s2) 0 0;
+    }
+  }
+
+  li {
+    margin-bottom: var(--s2);
+  }
+
+  dt {
+    font-weight: 700;
+  }
+
+  dd {
+    margin: 0 0 var(--s3) var(--s5);
+  }
+
+  // ---- Quotations -----------------------------------------------------------
+  // The thick left rule is the one sanctioned use of --rule: it is a
+  // conventional quotation mark, deliberately grey, never a brand accent
+  // stripe. Several answers quote at length (A-1 quotes Deep Thought).
+  blockquote {
+    margin: var(--s4) 0 var(--s5);
+    padding: var(--s1) 0 var(--s1) var(--s5);
+    border-left: 4px solid var(--rule);
+    color: var(--muted);   // 5.58:1 on --paper
+
+    p:last-child {
+      margin-bottom: 0;
     }
 
-    h1 {
-        font-size: 2.3em;
+    // `<cite>` lines follow the quotation in several answers.
+    cite {
+      display: block;
+      font-size: 0.9rem;
+      font-style: normal;
+      color: var(--muted);
     }
+  }
 
-    h2 {
-        font-size: 1.8em;
-        color: $link-color
-    }
+  // ---- Tables ---------------------------------------------------------------
+  table {
+    width: 100%;
+    margin: var(--s5) 0;
+    border-collapse: collapse;
+    font-size: 0.97rem;
+  }
 
-    blockquote {
-        border-left: 5px solid #ddd;
-        color: $blockquote-color;
-        padding: 0.5em 1em;
-        p:first-child {
-            margin-top: 0;
-        }
-        p:last-child {
-            margin-bottom: 0;
-        }
-    }
+  th,
+  td {
+    padding: var(--s2) var(--s3);
+    text-align: left;
+    vertical-align: top;
+    border-bottom: 1px solid var(--hairline);
+  }
 
-    table {
-        width: 100%;
-        border-collapse: collapse;
-        td, th {
-            padding: 0.5em 1em;
-            border: 1px solid $border-color;
-            text-align: left;
-        }
-    }
+  thead th {
+    background: var(--surface-1);
+    color: var(--ink);   // 13.31:1 on --surface-1
+    border-bottom: 2px solid var(--hairline-2);
+  }
 
-    p, ol, ul, dl, table, blockquote, kbd, pre, samp {
-        margin: 1.5em 0;
-    }
+  tbody tr:hover {
+    background: var(--surface-hover);
+  }
 
-    ul, ol {
-        padding-left: 1em;
-        ul, ol {
-            margin: 0;
-        }
-    }
+  // ---- Code -----------------------------------------------------------------
+  code {
+    font-family: var(--mono);
+    font-size: 0.9em;
+    padding: 0.1em 0.35em;
+    border: 1px solid var(--hairline);
+    background: var(--code-bg);   // --ink on it 13.48:1
+    border-radius: var(--radius);
+  }
 
-    ul, ol {
-        &.inline {
-            @extend .clearfix;
-            list-style: none;
-            padding-left: 0;
-            li {
-                float: left;
-                margin-right: 1em;
-                &:last-child {
-                    margin-right: 0;
-                }
-            }
-        }
-    }
-
-    dt {
-        font-weight: bold;
-    }
-
-    dd {
-        margin-left: 2em;
-    }
-
-    p, ol, ul, dl {
-        line-height: 1.5;
-    }
-
-    ol, ul {
-        list-style-position: inside;
-    }
+  pre {
+    padding: var(--s3) var(--s4);
+    border: 1px solid var(--hairline-2);
+    background: var(--code-bg);
+    border-radius: var(--radius);
+    overflow: auto;
+    // The old rule set `line-height: 1em` on <pre>, which stacked code lines so
+    // tightly that descenders touched the line below.
+    line-height: 1.5;
 
     code {
-        font-family: $code-font-family;
-        font-size: $code-font-size;
-        margin: 0 2px;
-        padding: 0 5px;
-        border: 1px solid #ddd;
-        background-color: rgba(#ddd, .1);
-        border-radius: 3px;
+      margin: 0;
+      padding: 0;
+      border: 0;
+      background: transparent;
+      word-wrap: normal;
+      white-space: pre;
     }
+  }
 
-    pre {
-        border: 1px solid #ccc;
-        background-color: rgba(#ddd, .1);
-        overflow: auto;
-        padding: 10px 15px;
-        line-height: 1em;
-        border-radius: 3px;
-        code {
-            margin: 0;
-            padding: 0;
-            word-wrap: normal;
-            white-space: pre;
-            border: none;
-            background: transparent;
-        }
-    }
+  // ---- Images ---------------------------------------------------------------
+  // assets/js/script.js centres image-bearing paragraphs and wraps each image
+  // in a link to the full-size file; this is what that markup needs from CSS.
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+}
 
-    .article-wrapper {
-        @extend .clearfix;
-        margin: $margin 0;
-    }
+// ============================================================================
+// QUESTION FURNITURE
+// ============================================================================
 
-    article {
-        width: 100%;
-        float: left;
-        header {
-            margin-bottom: $margin;
-            .panel {
-                padding: 1em 1.5em;
-                background-color: rgba($page-title-color, .2);
-                h1 {
-                    margin: 0;
-                    &, a {
-                        color: $page-title-color;
-                    }
-                }
-                ul.meta, ul.tags {
-                    list-style: none;
-                    margin: 0;
-                    padding: 0;
-                    li {
-                        display: inline-block;
-                        color: rgba($text-color, .5);
-                        font-size: 0.95em;
-                        margin-right: 0.5em;
-                        &:last-child {
-                            margin-right: 0;
-                        }
-                    }
-                }
-                ul.meta {
-                    float: right;
-                }
-                ul.icons {
-                    margin: 0;
-                    padding: 0;
-                    li {
-                        margin-right: 0;
-                    }
-                }
-            }
-        }
-        p:last-child {
-            margin-bottom: 0;
-        }
-        footer {
-            margin-top: $margin;
-        }
-        .footnotes {
-            font-size: 0.9em;
-        }
-    }
+.article-wrapper {
+  margin: 0 0 var(--s6);
+}
 
-    .comments {
-        margin-bottom: $margin;
-    }
+// ---- The question restatement (ADR-0002) ------------------------------------
+// On a question page the title IS the question, restated for a reader who
+// arrived on a /questions/<QID>/ deep link from a search engine. That makes it
+// an annotation pinned onto the page rather than a card at rest — which is
+// exactly what the family's hard offset shadow is for: zero blur, zero spread,
+// in the site's deep signature hue.
+//
+// It appears once per page, never in a list: see .question-row below. ADR-0002
+// is explicit that the treatment is not for cards or containers at rest, and a
+// category page carrying 17 pinned notes would be precisely that.
+.question-restatement {
+  margin: 0 0 var(--s6);
+  padding: var(--s4) var(--s5);
+  background: var(--surface-1);
+  border: 1px solid var(--hairline-2);
+  border-radius: var(--radius);
+  box-shadow: 3px 3px 0 0 var(--deep);
 
-    .pagination {
-        margin: $margin 0;
-        padding: 0 10%;
-        text-align: center;
-        .btn:first-child {
-            margin-right: 1em;
-        }
-    }
+  h1 {
+    margin: 0;
+    color: var(--ink);   // 13.31:1 on --surface-1
+  }
+}
 
-    #search-results {
-        .article-wrapper {
-            margin: 1em 0;
-        }
-        article header {
-            margin-bottom: 0;
-            .panel {
-                padding: 0;
-                background-color: $background-color;
-                h1 {
-                    font-size: 1.3em;
-                    a.tag {
-                        font-size: 0.7em;
-                    }
-                }
-            }
-        }
+// ---- The same header in a listing -------------------------------------------
+// Category pages, /allquestions/ and the search results render the identical
+// include with link=true. There it is a row in an index: no fill, no border, no
+// shadow, and the title drops to link size and link colour.
+.question-row {
+  h1 {
+    font-family: var(--serif);
+    font-size: 1.22rem;
+    line-height: 1.3;
+    margin: 0;
+  }
+
+  .post-link {
+    color: var(--signal);   // 5.11:1 on --paper
+    text-decoration: none;
+
+    &:hover {
+      color: var(--signal-dk);
+      text-decoration: underline;
+      text-underline-offset: 3px;
     }
+  }
+}
+
+// ---- Tag list under a question ----------------------------------------------
+.question-restatement .tags,
+.question-row .tags {
+  list-style: none;
+  margin: var(--s2) 0 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s1) var(--s2);
+
+  li {
+    margin: 0;
+    max-width: none;
+  }
+
+  .tag {
+    display: inline-block;
+    padding: 1px var(--s2);
+    border-radius: var(--radius);
+    background: var(--pill-bg);
+    color: var(--pill-ink);   // 5.57:1 on --pill-bg
+    font-size: 0.8rem;
+    text-decoration: none;
+
+    &:hover {
+      background: var(--pill-bg-hover);   // --pill-ink on it 4.92:1
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+  }
+}
+
+// The meta list (author, icons) is empty on every question today — the front
+// matter carries five keys and `author` is not one of them — but the include
+// still emits the <ul>. Zero it out rather than leave a floated empty box.
+.site-content ul.meta {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+// ---- Listing pages ----------------------------------------------------------
+// #search-results wraps the rows on the category pages, /allquestions/ and
+// /search/; the <hr class="with-no-margin"> separators are already in the markup.
+#search-results {
+  .article-wrapper {
+    margin: 0;
+    padding: var(--s3) 0;
+  }
 }

@@ -1,0 +1,27 @@
+{%- comment -%}
+  The Ukraine solidarity statement — docs.arc42.org's include, cloned.
+
+  Rendered by _layouts/default.html directly under the masthead, on /home/ only.
+  It used to be the first block INSIDE home.md's article: a blockquote on a
+  `#e7ddd8` fill, headed "We stand with the people of Ukraine", with two
+  FontAwesome hearts tinted by `.ua-text` / `.ua-size`. As a band between the
+  masthead and the content it belongs to the site's own voice rather than to the
+  content, and it needs no icon font.
+
+  It carries no heading. A heading would put a war notice into the document
+  outline as a structural peer of the category directory, which is not what it
+  is. The flag colours mark it instead, and they are the only place on the site
+  those two colours appear.
+{%- endcomment -%}
+<aside class="solidarity" aria-label="Statement on Ukraine">
+  <div class="solidarity-inner">
+    <span class="solidarity-flag" aria-hidden="true"></span>
+    <p>
+      <strong>We stand with the people of Ukraine.</strong>
+      Please assist humanitarian efforts for the Ukrainian people and those affected by
+      the military invasion of Ukraine by supporting international aid organizations,
+      including the
+      <a target="_blank" rel="noopener noreferrer nofollow" href="https://www.icrc.org/en">International Committee of the Red Cross</a>.
+    </p>
+  </div>
+</aside>

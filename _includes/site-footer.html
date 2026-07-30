@@ -1,0 +1,39 @@
+{%- comment -%}
+  The site footer — docs.arc42.org's site-footer.html, cloned.
+
+  The link list is a real <nav aria-label="Site">. The per-link FontAwesome
+  glyphs were removed family-wide (arc42.org, docs and quality all did the
+  same): at footer size the labels carry all the meaning and the icons only
+  added noise — plus a hard-coded inline green on the Status glyph, which was
+  colour-as-the-only-cue in a hex from no arc42 palette. Links now
+  separate with middots (CSS ::before, skipped by screen readers).
+
+  The sponsor mark is the family-neutral INNOQ asset (ADR-0009); it replaces
+  images/supported-by-innoq--petrol-apricot.svg, which wore the palette of
+  arc42.org's abandoned petrol-apricot branch experiment.
+{%- endcomment -%}
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <p class="footer-icons">
+      <a href="https://www.innoq.com" target="_blank" rel="noopener noreferrer nofollow">
+        <img class="supported-by-innoq" src="{{ '/assets/images/brand/supported-by-innoq.svg' | relative_url }}" alt="Supported by INNOQ" width="110" height="24">
+      </a>
+    </p>
+
+    <nav class="footer-links" aria-label="Site">
+      <a href="https://status.arc42.org">Status</a>
+      <a href="{{ '/imprint/' | relative_url }}">Imprint + Privacy</a>
+      <a href="{{ '/contact/' | relative_url }}">Contact</a>
+      {%- if site.icons.github %}
+      <a href="https://github.com/{{ site.icons.github }}" target="_blank" rel="noopener noreferrer nofollow">GitHub</a>
+      {%- endif %}
+    </nav>
+
+    <p class="footer-maintainer">
+      Maintained by <a target="_blank" rel="noopener noreferrer nofollow" href="https://gernotstarke.de">Gernot Starke</a>,
+      supported by <a target="_blank" rel="noopener noreferrer nofollow" href="https://peterhruschka.eu/">Peter Hruschka</a> and
+      <a target="_blank" rel="noopener noreferrer" href="https://kroener-starke.ch/projekte/">Kröner &amp; Starke Web Development</a>.
+    </p>
+  </div>
+</footer>

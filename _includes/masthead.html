@@ -1,0 +1,73 @@
+{%- comment -%}
+  The masthead, in two variants — docs.arc42.org's pattern, adopted wholesale.
+
+    hero: full   →  .masthead--hero, the deep-teal hero band. Set only on
+                    _pages/home.md. Logo, serif wordmark, tagline and the live
+                    question count.
+    anything else → .masthead--bar, a condensed sticky bar of --bar-h (56px).
+
+  The wordmark is a <p class="masthead-title"> on EVERY page, home included. A
+  linked site title inside <header> is a logo, not a document heading; the
+  page's real <h1> belongs to <main>. The old markup put it in an <h1>, which
+  gave all 136 question pages two competing top-level headings.
+
+  SEARCH lives here rather than in the rail: the rail is suppressed on /home/,
+  and a site whose whole purpose is finding one of 136 answers cannot have its
+  landing page be the one page without a search box.
+{%- endcomment -%}
+
+{%- assign home_url = '/home/' | relative_url -%}
+
+{%- capture search_slot -%}
+<div class="masthead-search">
+  {%- comment -%}
+    ============================================================================
+    SEARCH SLOT — owned by WP-C (lunr search), which merges after WP-B.
+
+    WP-C replaces everything between these two markers with its own
+    {% include search.html %} (input + combobox + Cmd-K hint). Until then this
+    is the site's existing plain GET form, so search keeps working: it posts
+    `q` to /search/, where assets/js/search.js reads it.
+
+    Contract WP-C should keep: the field carries id="search" (assets/js/script.js
+    focuses it on "/") and lives inside .masthead-search, which is the
+    positioned ancestor a dropdown panel can hang from.
+    ============================================================================
+  {%- endcomment -%}
+  <form action="{{ site.baseurl }}/search/" data-baseurl="{{ site.baseurl }}" role="search">
+    <label class="visually-hidden" for="search">{{ site.str_search }}</label>
+    <input type="search" id="search" name="q" placeholder="{{ site.str_search }}" aria-label="{{ site.str_search }}">
+  </form>
+  {%- comment -%} END SEARCH SLOT {%- endcomment -%}
+</div>
+{%- endcapture -%}
+
+{%- if page.hero == 'full' -%}
+
+<header class="masthead masthead--hero">
+  <div class="masthead-inner">
+    <a class="masthead-logo" href="{{ home_url }}" aria-label="{{ site.title }} home">
+      <img src="{{ '/assets/images/brand/arc42-logo-white.svg' | relative_url }}" alt="" width="157" height="44" decoding="async">
+    </a>
+    <div class="masthead-text">
+      <p class="masthead-title"><a href="{{ home_url }}">{{ site.title }}</a></p>
+      <p class="masthead-tagline">{{ site.description }}</p>
+      <p class="masthead-stats"><b>{{ site.posts | size }}</b> questions answered</p>
+    </div>
+    {{ search_slot }}
+  </div>
+</header>
+
+{%- else -%}
+
+<header class="masthead masthead--bar">
+  <div class="masthead-inner">
+    <a class="masthead-logo" href="{{ home_url }}" aria-label="{{ site.title }} home">
+      <img src="{{ '/assets/images/brand/arc42-logo-white.svg' | relative_url }}" alt="" width="93" height="26" decoding="async">
+    </a>
+    <p class="masthead-title"><a href="{{ home_url }}">{{ site.title }}</a></p>
+    {{ search_slot }}
+  </div>
+</header>
+
+{%- endif -%}

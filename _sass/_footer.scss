@@ -1,7 +1,80 @@
+// ============================================================================
+// Footer — the site footer band. Cloned from docs.arc42.org-site/_sass/_footer.scss.
+//
+// Already declared in _utilities.scss, do not re-declare: .supported-by-innoq
+// and p.footer-icons.
+//
+// What this replaces: a 3px top border in docs' Signal Blue — faq closing
+// every page in another site's signature hue (ADR-0013) — over centred 0.9em
+// text in `lighten($text-color, 30%)`.
+//
+// Colour pairs, measured (ADR-0005):
+//   --signal-dk on --surface-1   6.96:1   (links)
+//   --muted     on --surface-1   5.23:1   (maintainer line)
+// ============================================================================
+
 .site-footer {
-    border-top: 3px solid $dark-brand-color;
-    padding: $margin/2 0;
-    color: lighten($text-color, 30%);
-    text-align: center;
-    font-size: 0.9em;
+  background: var(--surface-1);
+  // The one place besides the masthead where --deep appears at full strength:
+  // it closes the page against the band that opened it.
+  border-top: 3px solid var(--deep);
+}
+
+.footer-inner {
+  max-width: var(--shell-max);
+  margin: 0 auto;
+  padding: var(--s6);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--s5) var(--s6);
+  // Mixed case at 0.92rem, per the family footer pattern — not the 0.9em
+  // centred block this replaces.
+  font-size: 0.92rem;
+  text-align: left;
+}
+
+.footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--s3) var(--s3);
+
+  a {
+    color: var(--signal-dk);   // 6.96:1 on --surface-1
+    text-decoration: none;
+  }
+
+  // Middot separators between links (matches arc42.org's .footer-links and
+  // quality's footer-colophon) — they replaced the per-link icons. Pseudo
+  // content, so screen readers only hear the nav links themselves.
+  a + a::before {
+    content: "\00B7";
+    margin-right: var(--s3);
+    color: var(--muted);
+  }
+
+  a:hover {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+}
+
+.footer-maintainer {
+  flex-basis: 100%;
+  margin: 0;
+  padding-top: var(--s4);
+  border-top: 1px solid var(--hairline);
+  color: var(--muted);   // 5.23:1 on --surface-1
+
+  a {
+    color: var(--signal-dk);
+  }
+}
+
+@media (max-width: 800px) {
+  .footer-inner {
+    padding: var(--s5) var(--s4);
+    gap: var(--s4);
+  }
 }

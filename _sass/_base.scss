@@ -1,0 +1,165 @@
+// ============================================================================
+// Base — element defaults and the accessibility floor.
+//
+// Cloned from docs.arc42.org-site/_sass/_base.scss. Everything a page gets
+// before a single component has been styled: body type, link colour, the focus
+// ring, the reduced-motion escape hatch, the skip link, the screen-reader-only
+// helper.
+//
+// All values come from _tokens.scss. No hex literals live here.
+// ============================================================================
+
+body {
+  font-family: var(--sans);
+  font-size: 1.0625rem; // 17px — the family long-read base
+  line-height: 1.65;
+  color: var(--ink);          // 14.19:1 on --paper
+  background: var(--paper);
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  word-wrap: break-word;
+}
+
+// On a phone the 17px base is one step too generous for the narrow measure.
+@media (max-width: 420px) {
+  body {
+    font-size: 1rem;
+  }
+}
+
+// ---- Links ------------------------------------------------------------------
+// Underlines are left to the browser here; components that suppress them
+// (rail, masthead, footer) opt out locally rather than opting in.
+//
+// The old rule paired `text-decoration: none` with `opacity: .8` on hover —
+// which dimmed the link INCLUDING its background, and removed the only
+// non-colour cue a link had.
+
+a {
+  color: var(--signal);   // 5.11:1 on --paper
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+}
+
+a:hover {
+  color: var(--signal-dk);   // 7.42:1 on --paper
+}
+
+// ---- Focus ------------------------------------------------------------------
+// One ring, everywhere, on keyboard focus only. Non-text contrast floor is
+// 3:1; --signal on --paper measures 5.11:1 and --tint on --deep 7.67:1.
+//
+// No `border-radius` here: an outline already follows the element's own radius,
+// and setting one on the focused element only ever deforms pills.
+
+:focus-visible {
+  outline: 2px solid var(--signal);
+  outline-offset: 2px;
+}
+
+// Signal teal on the deep-teal masthead band is far too low contrast to serve
+// as a focus indicator. Brighten it to the tint that band is designed around.
+.masthead :focus-visible {
+  outline-color: var(--tint);
+}
+
+// ---- Motion -----------------------------------------------------------------
+// Universal selector plus !important on purpose: component transitions declared
+// inside later media queries would otherwise out-specify a plain
+// reduced-motion block.
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    transition-delay: 0ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+// ---- Rules ------------------------------------------------------------------
+// The category and listing pages separate every question with
+// `<hr class="with-no-margin">`; the plain and with-margin variants are kept so
+// the three read as one family.
+
+hr {
+  border: 0;
+  border-top: 1px solid var(--hairline);
+  margin: 1em 0;
+
+  &.with-margin {
+    margin: var(--s7) 0;
+  }
+
+  &.with-no-margin {
+    margin: 0;
+  }
+}
+
+// ---- Form controls ----------------------------------------------------------
+// The boundary of a text field is "visual information required to identify a
+// user interface component" and carries WCAG's 3:1 non-text floor. Measured
+// first: the obvious choice, the wash ladder's edge-hover step, comes to
+// 1.51:1 against --paper — a border you cannot see is not a field. --muted is
+// the ramp member that clears it.
+
+input,
+select,
+textarea {
+  border-radius: var(--radius);
+  border: 1px solid var(--muted);   // 5.58:1 on --paper (non-text floor 3:1)
+  padding: var(--s2) var(--s3);
+  background: var(--paper);
+  color: var(--ink);
+}
+
+// ---- Media ------------------------------------------------------------------
+
+iframe,
+embed,
+object,
+video {
+  max-width: 100%;
+}
+
+// ---- Skip link --------------------------------------------------------------
+// Parked above the viewport, slides down on focus. It is the first focusable
+// thing in the document, so it must be visible the instant it is reached.
+
+.skip-link {
+  position: absolute;
+  left: var(--s4);
+  top: -60px;
+  z-index: 100;
+  padding: var(--s2) var(--s4);
+  background: var(--paper);
+  color: var(--signal-dk);   // 7.42:1 on --paper
+  font-weight: 700;
+  text-decoration: none;
+  border: 2px solid var(--signal);
+  border-radius: var(--radius);
+  transition: top 0.15s ease;
+}
+
+.skip-link:focus {
+  top: var(--s3);
+}
+
+// ---- Screen-reader only -----------------------------------------------------
+
+.visually-hidden {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}

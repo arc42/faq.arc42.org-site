@@ -2,7 +2,7 @@
 <html lang="{{ site.language }}">
 <head>
     {% capture title %}{% if page.title %}{{ page.title }} | {% endif %}{{ site.title }}{% endcapture %}
- 
+
     {% include page-url-resolver.html page=page %}
 
     {% if page.excerpt %}
@@ -20,9 +20,11 @@
     <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
     <link rel="manifest" href="/manifest.json">
     {%- comment -%} No mask-icon: Safari >=12 pins tabs with the standard
-      favicon (ADR-0008). theme-color wears the masthead fill — currently the
-      legacy blue; becomes deep teal in the family-token commit. {%- endcomment %}
-    <meta name="theme-color" content="#397ab2">
+      favicon (ADR-0008). theme-color wears the masthead fill: --deep, faq's
+      measured deep teal, replacing the interim old-faq-blue value. Keep this in sync with
+      _sass/_tokens.scss and manifest.json — a <meta> cannot read a custom
+      property. {%- endcomment %}
+    <meta name="theme-color" content="#1b5648">
 
     <title>{{ title }}</title>
 
@@ -30,12 +32,21 @@
 
     <link rel="canonical" href="{{ url }}">
 
+    {%- comment -%}
+      The two latin subsets carry every glyph above the fold on every page. They
+      are discovered otherwise only after the stylesheet has parsed, which costs
+      a full round trip of fallback text. The latin-ext siblings are deliberately
+      NOT preloaded: most readers never hit a codepoint in them.
+    {%- endcomment -%}
+    <link rel="preload" as="font" type="font/woff2" crossorigin href="{{ '/assets/fonts/atkinson-hyperlegible-next-latin.woff2' | relative_url }}">
+    <link rel="preload" as="font" type="font/woff2" crossorigin href="{{ '/assets/fonts/libre-caslon-text-400-latin.woff2' | relative_url }}">
+
     <script>
       try { document.getElementsByTagName('html')[0].className += ' js'; } catch(e) { /* NO-JS */ }
     </script>
 
     <link href="{{ '/assets/css/style.css' | prepend: site.baseurl }}" rel="stylesheet">
-    
+
      {%- comment -%}
        Legacy Plausible script on purpose: the comma-separated data-domain
        feeds this site's own dashboard AND the rollup.arc42.com journey
@@ -46,68 +57,50 @@
 </head>
 <body>
 
-<header class="site-header">
-    <div class="inner clearfix">
-        <button class="fa fa-fw fa-bars nav-toggle" data-target=".site-aside"></button>
-        {% if site.avatar %}
-        <a href="{{ '/' | prepend: site.baseurl }}">
-            <img class="avatar" src="{{ site.avatar | prepend: site.baseurl }}" alt=""/>
-        </a>
-        {% endif %}
-        <h1 class="clearfix">
-            <a class="title {% if site.avatar == null %}slim{% endif %}" href="{{ '/' | prepend: site.baseurl }}">{{ site.title }}</a>
-            <br><span class="description"><font color=#fe5a83>{{ site.posts | size }}</font> {{ site.description }}</span>
-        </h1>
-    </div>
-</header>
+<a class="skip-link" href="#main-content">Skip to content</a>
 
-<div class="site-container">
-    <aside class="site-aside">
-        <div class="inner">
-            <div class="block">
-                <form action="{{ site.baseurl }}/search">
-                    <input type="search" id="search" name="q" placeholder="{{ site.str_search }}" />
-                </form>
-            </div>
-            <ul>
-                {% assign pages = site.pages | sort: 'order' %}
-                {% for page in pages %}
-                {% if page.title and page.hide != true %}
-                <li><a class="page-link" href="{{ page.url | prepend: site.baseurl }}">{{ page.title }}</a></li>
-                {% endif %}
-                {% endfor %}
-            </ul>
-        </div>
-    </aside>
+{% include masthead.html %}
 
-    <div class="site-content">
+{%- comment -%}
+  Home only. See _includes/solidarity.html for why it sits here rather than
+  inside the article.
+{%- endcomment -%}
+{% if page.hero == 'full' %}{% include solidarity.html %}{% endif %}
+
+{%- comment -%}
+  The shell.
+
+    /home/           single content column, no rail. Home carries its own
+                     category directory with a live count per category, so a
+                     rail beside it would be the same ten links, worse.
+    everything else  rail + content
+
+  The rail is the A..K category nav. Before this commit the nav was a 30%-wide
+  float on the RIGHT of the content, below a full-width header band.
+{%- endcomment -%}
+{%- assign is_home = false -%}
+{%- if page.hero == 'full' -%}{%- assign is_home = true -%}{%- endif -%}
+
+<div class="layout{% if is_home %} layout--home{% endif %}">
+    {% unless is_home %}{% include rail.html %}{% endunless %}
+
+    {%- comment -%}
+      tabindex="-1" is load-bearing: without it the skip link moves the browser's
+      scroll position but not focus in Safari, so the next Tab returns to the top
+      of the page.
+    {%- endcomment -%}
+    <main class="site-content{% if is_home %} site-content--home{% endif %}" id="main-content" tabindex="-1">
         {{ content }}
-    </div>
+    </main>
 </div>
 
-<footer class="site-footer">
-    <div class="inner">
-        <p class="footer-icons"><a href="https://www.innoq.com" target="_blank" rel="noopener noreferrer nofollow"><img class="supported-by-innoq" src="/images/supported-by-innoq--petrol-apricot.svg"></a><br>
-        <a href="https://status.arc42.org">
-            <i class="fa fa-chart-bar fa-fw" style="color:#50C878;" ></i>Status</a><i>&nbsp;&nbsp;</i>
-        <i class="fa fa-user-secret" aria-hidden="true"></i>
-        <a href="{{ site.baseurl }}/imprint">
-            Imprint + Privacy</a><i>&nbsp;&nbsp;</i>
-        <i class="fa fa-fw fa-envelope" aria-hidden="true"></i>
-        <a href="{{ site.baseurl }}/contact">Contact</a>{% if site.icons.github %}<i>&nbsp;&nbsp;</i>
-        <i class="fab fa-fw fa-github" aria-hidden="true"></i>
-        <a href="https://github.com/{{ site.icons.github }}" target="_blank" rel="noopener noreferrer nofollow">GitHub</a>{% endif %}</p>
-        <span>Maintained by <a target="_blank" rel="noopener noreferrer nofollow" href="https://gernotstarke.de">Gernot Starke</a>,
-          supported by <a target="_blank" rel="noopener noreferrer nofollow" href="http://www.peterhruschka.eu/">Peter Hruschka</a> and
-            <a target="_blank" rel="noopener noreferrer" href="https://kroener-starke.ch/projekte/">Kröner & Starke Web Development</a>
+{% include site-footer.html %}
 
-
-
-        </span>
-    </div>
-</footer>
-
-
+{%- comment -%}
+  jQuery 3.7.1 and the FontAwesome webfonts are still here on purpose: their
+  removal is WP-D's package. assets/js/script.js owns the rail toggle, whose
+  contract with _includes/rail.html is `.nav-toggle[data-target]` ⇄ `.active`.
+{%- endcomment -%}
 <script src="/assets/jquery/jquery-3.7.1-min.js"></script>
 <script src="{{ '/assets/js/script.js' | prepend: site.baseurl }}"></script>
 

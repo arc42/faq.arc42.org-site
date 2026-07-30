@@ -1,0 +1,130 @@
+// ============================================================================
+// Callouts — .arc42-help, the family's guidance box.
+//
+// ADR-0004: a class named `arc42-*` is a FAMILY COMPONENT. Same name ⇒ same
+// design on every site, and the canonical spec is docs.arc42.org's
+// implementation. What arrived here from the deleted assets/css/arc42-doc.css
+// was the same name wearing different clothes: `#002080` ink on a `#dcf0ff`
+// fill, a *blurred* `3px 3px 4px rgba(11,82,185,1)` shadow, a floated icon, and
+// a `url("./help42.svg")` that was relative to the compiled stylesheet and
+// 404'd. All four are corrected below against docs' spec.
+//
+// Hue substitution is limited to what the spec says is site-owned: the pinned
+// note shadow (ADR-0002) takes --deep and is therefore TEAL here. The fill and
+// ink stay docs' Help Blue, because the temperature pairing — cool guidance,
+// warm example — is what a reader separates advice from illustration by, and it
+// belongs to the family, not to the site's signature hue.
+//
+// Two things carried over verbatim in spirit from the original rules:
+//
+//  1. line-height is set EXPLICITLY, not inherited, so the box does not read as
+//     cramped against the prose around it;
+//  2. the icon is absolutely positioned, never floated, so it cannot nudge the
+//     body text into a ragged first line. The right padding reserves its lane.
+//
+// The icon moved in this commit: assets/css/help42.svg → assets/icons/help42.svg.
+// The URL below is absolute for the reason the old one broke.
+//
+// NOT shipped here: .arc42-example. No page in this repository uses it
+// (grepped across _posts, _pages, _includes, _layouts), and shipping a family
+// component nothing renders is the same offence ADR-0003 names for tokens. If
+// faq grows worked examples, the spec to copy is docs' _sass/_callouts.scss.
+// ============================================================================
+
+.arc42-help {
+  position: relative;
+  margin: var(--s5) 0;
+
+  // 16px 48px 16px 24px. The wide right inset is the icon's lane.
+  padding: var(--s4) var(--s7) var(--s4) var(--s5);
+  border-radius: var(--radius);
+
+  // Not inherited — see note 1 in the header.
+  line-height: 1.5;
+
+  background: var(--help-bg);
+  color: var(--help-ink);   // 9.81:1 on --help-bg
+  border: 1px solid var(--hairline-2);
+
+  // The family's tactile signature (ADR-0002): zero blur, zero spread, in this
+  // site's deep signature hue.
+  box-shadow: 3px 3px 0 0 var(--deep);
+
+  // The box, not its paragraphs, carries the measure. _content.scss caps prose
+  // elements at --measure; if the box were left to run the full column its text
+  // would stop 68ch in and leave a ragged right edge inside a much wider frame.
+  // The padding has to be added back, or the box's own horizontal padding is
+  // taken OUT of the reading measure.
+  max-width: calc(var(--measure) + var(--s7) + var(--s5));
+
+  p {
+    margin: 0 0 var(--s3);
+    max-width: none;
+  }
+
+  li,
+  dt,
+  dd {
+    max-width: none;
+  }
+
+  > :last-child {
+    margin-bottom: 0;
+  }
+
+  // The icon sits in the reserved lane at the top right.
+  &::before {
+    content: "";
+    position: absolute;
+    top: var(--s4);
+    right: var(--s5);
+    width: 24px;
+    height: 26px;
+    background: url("/assets/icons/help42.svg") no-repeat;
+    background-size: 24px 26px;
+  }
+
+  // Links inside the box sit on a tinted surface of another hue. --signal on
+  // --help-bg measures 4.57:1 — over the line, but the box's own ink is the
+  // stronger and more coherent choice at 9.81:1.
+  a {
+    color: var(--help-ink);
+    text-decoration-thickness: 1px;
+
+    &:hover {
+      color: var(--help-ink);
+      text-decoration-thickness: 2px;
+    }
+  }
+}
+
+// ---- Sub-labels -------------------------------------------------------------
+// `<span class="callout-label">Content</span>:` — the inline variant of a
+// heading, for boxes written as running prose.
+
+.callout-label {
+  font-family: var(--sans);
+  font-weight: 700;
+}
+
+.arc42-help .callout-label {
+  color: var(--help-ink);
+}
+
+// ---- Narrow viewports -------------------------------------------------------
+// Below the icon's lane the padding is not worth 48px of a 390px screen; the
+// icon shrinks with it rather than colliding with the first line.
+
+@media (max-width: 640px) {
+  .arc42-help {
+    padding: var(--s4) var(--s6) var(--s4) var(--s4);
+
+    &::before {
+      top: var(--s3);
+      right: var(--s3);
+      width: 18px;
+      height: 20px;
+      background-size: 18px 20px;
+    }
+  }
+}

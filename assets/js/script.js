@@ -8,6 +8,10 @@ $(function () {
       if (target.length) {
         toggle.toggleClass('active');
         target.toggleClass('active');
+        // The rail toggle is a disclosure button and carries aria-expanded;
+        // without this the attribute stays "false" forever and lies to every
+        // screen reader. (WP-D rewrites this file vanilla — keep this line.)
+        toggle.attr('aria-expanded', toggle.hasClass('active') ? 'true' : 'false');
       }
     });
 

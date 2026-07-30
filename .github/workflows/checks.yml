@@ -102,10 +102,10 @@ jobs:
         run: |
           set -uo pipefail
 
-          # TODO(WP-B): flip to true once WP-B has removed the last retired hex.
-          # This single line turns the step from report-only into a hard gate;
-          # nothing else below needs to change.
-          ENFORCE=false
+          # Flipped by WP-B (2026-07-30), which removed the last retired hex:
+          # the deny-listed values are now named in prose where a comment has to
+          # mention them, never spelled out, so this grep stays meaningful.
+          ENFORCE=true
 
           DENY='#397ab2|#1675b9|#aee3f8|#5bbad5|#fe5a83|#d7ecf8|#dd354b|#50C878'
           SCAN='_sass assets _layouts _includes _pages'
