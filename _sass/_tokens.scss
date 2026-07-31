@@ -33,8 +33,9 @@
   // ink #4a3a0a, 7.24:1) is the colour it wears. See the WP-B report.
   //
   // Deliberately NOT declared: --coral / --coral-deep. The coral family is
-  // trainings.arc42.org's signature hue (ADR-0013) and docs' masthead spark;
-  // faq's band carries no spark.
+  // trainings.arc42.org's signature hue (ADR-0013) and docs' masthead spark.
+  // faq's masthead spark (_masthead.scss .spark) reuses --arc42-teal instead —
+  // same mark, faq's own hue, no signature-hue collision.
 
   // ---- Surfaces & text -----------------------------------------------------
   --paper: #fbfdfc;   // near-white with the faintest teal tint, never #fff

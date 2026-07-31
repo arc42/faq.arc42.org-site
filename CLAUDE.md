@@ -22,14 +22,25 @@ GitHub Pages (Actions deploy). The Gemfile/Gemfile.lock pair is copied from
 
 ## Local build — no native Ruby
 
-The github-pages stack does **not** install on Ruby ≥ 4 (commonmarker).
-Build in a container:
+The github-pages stack does **not** install on Ruby ≥ 4 (commonmarker), so
+local dev runs in a self-built Docker image (Ruby 3.2, gems pinned via
+`Gemfile.lock`) — same pattern as `docs.arc42.org-site` and
+`quality.arc42.org-site`, not a third-party image. Native (arm64) on Apple
+Silicon; no Rosetta emulation.
 
 ```bash
-docker run --rm -v $PWD:/faq -w /faq \
-  -e BUNDLE_PATH=/tmp/bundle -e BUNDLE_FROZEN=true -e JEKYLL_ENV=production \
-  ruby:3.3 bash -lc "bundle install --quiet && bundle exec jekyll build"
+make dev        # Start local dev server via Docker (port 4000)
+make build      # (Re)build the dev image from the Gemfile-pinned gems
+make install    # Refresh gems into the dev image after editing the Gemfile
+make shell      # Open a shell inside the dev container for debugging
+make help       # List all available targets
 ```
+
+Once the image is built, `make dev` needs no network access — it's fully
+usable offline (e.g. on a plane). Only `make build`/`install`/`update` need
+network, since they resolve/install gems.
+
+Alternative without Make: `docker compose up --build`.
 
 Sanity after building: `ls _site/questions | wc -l` → **136**.
 

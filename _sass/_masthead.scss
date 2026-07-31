@@ -139,6 +139,9 @@
 // The live count. It is the one number on the page a reader actually reads, so
 // it stays in --tint rather than in any accent.
 .masthead-stats {
+  display: flex;
+  align-items: center;
+  gap: var(--s2);
   margin: var(--s3) 0 0;
   color: var(--tint);   // 7.67:1 on --deep
   font-size: 0.95rem;
@@ -147,6 +150,19 @@
   b {
     font-weight: 700;
   }
+}
+
+// The one mark on the band, echoing docs' masthead spark — but in faq's own
+// signature hue (ADR-0013 reserves coral for trainings.arc42.org; no
+// satellite may borrow another site's signature hue). A rotated square
+// rather than a dot, so it still reads as deliberate at 9px.
+.masthead .spark {
+  flex: 0 0 auto;
+  width: 9px;
+  height: 9px;
+  background: var(--arc42-teal);
+  border-radius: 2px;
+  transform: rotate(45deg);
 }
 
 // ---- Condensed bar variant --------------------------------------------------
