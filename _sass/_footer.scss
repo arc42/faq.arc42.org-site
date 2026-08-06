@@ -63,8 +63,8 @@
 .footer-maintainer {
   flex-basis: 100%;
   margin: 0;
-  padding-top: var(--s4);
-  border-top: 1px solid var(--hairline);
+  padding-top: var(--s2);
+  font-size: 0.82rem;
   color: var(--muted);   // 5.23:1 on --surface-1
 
   a {
