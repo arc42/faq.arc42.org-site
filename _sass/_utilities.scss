@@ -105,16 +105,15 @@
 // in `#032f7f`, an 80px exclamation-mark icon floated into the text, and
 // Palatino — six colours from no arc42 palette and a seventh typeface.
 //
-// The markup is _layouts/page.html's: a `.subtle-ads` <section> holding a
-// `#subtle-ads` fallback block, which htmx swaps for whatever the backend
-// returns. Both the fallback and a returned `.subtle-ad` get the same box.
+// The markup is _layouts/page.html's: a `.subtle-ads` <section> holding the
+// build-time `.subtle-ad` block from _includes/training-dates.html — rendered
+// from _data/trainings.json, no runtime fetch.
 // ============================================================================
 
 .subtle-ads {
   margin-top: var(--s7);
 }
 
-.subtle-ads > div,
 .subtle-ad {
   max-width: 34em;
   padding: 1em 1.25em;
@@ -167,12 +166,6 @@
       text-underline-offset: 3px;
     }
   }
-}
-
-// htmx's placeholder div is empty until the request lands; an empty maroon box
-// with a kicker and nothing under it is worse than nothing.
-.subtle-ads > div:empty {
-  display: none;
 }
 
 // ---- Sponsor mark in the footer ---------------------------------------------
@@ -281,4 +274,93 @@ p.footer-icons {
   fill: currentColor;
   vertical-align: -0.125em;
   flex: none;
+}
+
+// ---- Training dates strip ---------------------------------------------------
+// The mini-timeline inside the full .subtle-ad, rendered at build time by
+// _includes/training-dates.html from _data/trainings.json. A quiet echo of
+// trainings.arc42.org's timeline — one rail, a node per date, chronological —
+// but in this site's own tokens: the feed carries facts, never markup
+// (docs/superpowers/specs/2026-08-04-docs-faq-training-dates-design.md).
+
+// Same voice as .subtle-ad's own "from the arc42 team" kicker.
+.training-dates__label {
+  margin: 0.9em 0 0.35em;
+  font-size: 0.72em;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--maroon);
+}
+
+.training-dates {
+  margin: 0 0 0.6em 0.2em;
+  padding: 0.1em 0 0.1em 1em;
+  list-style: none;
+  border-left: 1px solid var(--maroon);
+}
+
+.training-dates__row {
+  position: relative;
+  margin: 0.4em 0;
+
+  // The node, centred on the rail: 1em list padding + half the 1px rail +
+  // half the 7px dot.
+  &::before {
+    content: "";
+    position: absolute;
+    left: calc(-1em - 4px);
+    top: 0.4em;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--maroon);
+  }
+}
+
+.training-dates__when {
+  font-family: var(--mono);
+  font-size: 0.88em;
+  white-space: nowrap;
+}
+
+// The chip inherited from the retired .subtle-ad-lang note.
+.training-dates__lang {
+  display: inline-block;
+  margin: 0 0.1em;
+  padding: 0 5px;
+  border: 1px solid var(--maroon);
+  border-radius: var(--radius);
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: var(--maroon);
+}
+
+.training-dates__where {
+  color: var(--muted);
+}
+
+// The gloss under a row, derived from the feed title's "LABEL: explanation"
+// form — what Req4Arc, IMPROVE or ADOC actually mean. Downcased in the
+// template so it reads as an aside, not a second title.
+.training-dates__slug {
+  display: block;
+  margin-top: 1px;
+  font-size: 0.9em;
+  color: var(--muted);
+}
+
+.training-dates__waitlist {
+  font-size: 0.75em;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--maroon);
+}
+
+.training-dates__asof {
+  font-size: 0.82em;
+  color: var(--muted);
 }

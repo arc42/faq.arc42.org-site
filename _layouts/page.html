@@ -13,25 +13,12 @@ layout: default
 
 {% if site.show-subtle-ads %}
 <section class="subtle-ads">
-    <script src="https://unpkg.com/htmx.org@1.9.6"
-            integrity="sha384-FhXw7b6AlE/jyjlZH5iHa/tTe9EpJ1Y55RjcgPbjeWMskSxZt1v9qkxLJWNJaGni"
-            crossorigin="anonymous"></script>
-
-    <div hx-get="https://arc42-subtle-ads-backend.vercel.app/api"
-         hx-trigger="load delay"
-         hx-swap="outerHTML"
-         hx-target="#subtle-ads">
-    </div>
-
-    <div id="subtle-ads">
-        <h4>arc42 offers architecture training.</h4>
-        <p>
-            The data is currently loaded from the backend and should display here shortly.
-            If not, you can see the next dates at
-            <a rel="noopener noreferrer nofollow" target="_blank" href="https://trainings.arc42.org">
-                trainings.arc42.org
-            </a>.
-        </p>
-    </div>
+    {%- comment -%}
+      Rendered at build time from _data/trainings.json — the expiry-filtered
+      copy of https://trainings.arc42.org/api/trainings.json that
+      .github/workflows/refresh-trainings.yml commits weekly. No htmx, no
+      runtime fetch, no third-party request: the dates are in the HTML.
+    {%- endcomment -%}
+    {% include training-dates.html %}
 </section>
 {% endif %}
