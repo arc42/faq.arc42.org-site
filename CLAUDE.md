@@ -29,7 +29,7 @@ local dev runs in a self-built Docker image (Ruby 3.2, gems pinned via
 Silicon; no Rosetta emulation.
 
 ```bash
-make dev        # Start local dev server via Docker (port 4000)
+make dev        # Start local dev server via Docker (port 4041)
 make build      # (Re)build the dev image from the Gemfile-pinned gems
 make install    # Refresh gems into the dev image after editing the Gemfile
 make shell      # Open a shell inside the dev container for debugging

@@ -9,6 +9,21 @@ might contain fewer questions or fixes as this site.
 
 It's powered by Jekyll and a modified TTSCK theme (see below).
 
+## Local development
+
+```
+make dev     # start the dev server with live reload
+make down    # stop it
+```
+
+`make dev` serves this site at <http://localhost:4041> (not `0.0.0.0:4041` —
+Firefox refuses to connect to `0.0.0.0`). The port is fixed at **4041**, not
+Jekyll's default 4000, so this dev server can run alongside the other arc42
+sites' dev servers without a clash — see `raw/port-assignment.md` in
+meta.arc42.org for the full assignment. The number appears in three places
+that must stay in step: `SITE_PORT` in the `Makefile`, the mapping and
+`--port` flag in `docker-compose.yml`, and `EXPOSE`/`CMD` in the `Dockerfile`.
+
 ## License
 As all of the arc42 content, this FAQ is free to use under a liberal Creative-Commons
 license:

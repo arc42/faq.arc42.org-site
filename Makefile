@@ -3,13 +3,26 @@
 COMPOSE ?= docker compose
 SITE_DIR ?= _site
 
+# This site's fixed local dev port. Every arc42 site has its own so their dev
+# servers can run side by side; see raw/port-assignment.md in meta.arc42.org.
+# Changing it here is not enough: docker-compose.yml and the Dockerfile pass
+# the same number to Jekyll so its startup banner names the real port.
+SITE_PORT ?= 4041
+
 .PHONY: help dev build down clean check install update shell logs
 
 help: ## Show available targets
 	@awk 'BEGIN {FS = ":.*## "; printf "Usage: make <target>\n\nTargets:\n"} /^[a-zA-Z0-9_.-]+:.*## / {printf "  %-10s %s\n", $$1, $$2}' $(MAKEFILE_LIST)
 
-dev: ## Start the local Jekyll dev server with live reload (http://localhost:4000)
-	@echo "==> Open http://localhost:4000  (NOT http://0.0.0.0:4000 — Firefox refuses to connect to 0.0.0.0)"
+dev: ## Start the local Jekyll dev server with live reload (http://localhost:4041)
+	@echo "==> Open http://localhost:$(SITE_PORT)  (NOT http://0.0.0.0:$(SITE_PORT) — Firefox refuses to connect to 0.0.0.0)"
+	@holder=$$(docker ps --filter "publish=$(SITE_PORT)" --format '{{.Names}}'); \
+	if [ -n "$$holder" ]; then \
+		echo "==> Port $(SITE_PORT) is already in use by another container: $$holder"; \
+		echo "==> That's likely a dev server from a sibling arc42 site repo. Stop it first, e.g.:"; \
+		echo "==>   docker stop $$holder"; \
+		exit 1; \
+	fi
 	$(COMPOSE) up --build
 
 build: ## Build the Docker dev image (faq-arc42-site:latest) from the Gemfile-pinned gems
