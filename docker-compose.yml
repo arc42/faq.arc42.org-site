@@ -10,13 +10,13 @@ services:
       - .:/site
       - jekyll_cache:/site/.jekyll-cache
       - sass_cache:/site/.sass-cache
-    # 4041 is this site's fixed dev port (see raw/port-assignment.md in
+    # 4220 is this site's fixed dev port (see raw/port-assignment.md in
     # meta.arc42.org). --port is passed to Jekyll as well as mapped, so the
     # "Server address:" banner it prints on startup names the real port.
     ports:
-      - '4041:4041'
+      - '4220:4220'
     command: >
-      sh -c "bundle exec jekyll serve --host 0.0.0.0 --port 4041 --watch $${POLLING}"
+      sh -c "bundle exec jekyll serve --host 0.0.0.0 --port 4220 --watch $${POLLING}"
 
 volumes:
   jekyll_cache:

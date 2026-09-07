@@ -22,7 +22,7 @@ RUN chmod +x /usr/local/bin/jekyll-entrypoint
 
 WORKDIR /site
 
-EXPOSE 4041
+EXPOSE 4220
 
 ENTRYPOINT ["jekyll-entrypoint"]
-CMD ["bundle", "exec", "jekyll", "serve", "--host", "0.0.0.0", "--port", "4041", "--watch"]
+CMD ["bundle", "exec", "jekyll", "serve", "--host", "0.0.0.0", "--port", "4220", "--watch"]

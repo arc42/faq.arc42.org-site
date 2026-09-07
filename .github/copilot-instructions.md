@@ -98,19 +98,19 @@ Use `<!--more-->` to define the excerpt boundary if the post is long.
 make dev          # or: docker compose up --build
 ```
 
-The site will be served at `http://localhost:4041` — this site's fixed dev port
+The site will be served at `http://localhost:4220` — this site's fixed dev port
 (see `raw/port-assignment.md` in meta.arc42.org), not Jekyll's default 4000.
 
 ### Using Ruby/Bundler directly
 
 ```bash
 bundle install
-bundle exec jekyll serve --port 4041
+bundle exec jekyll serve --port 4220
 ```
 
-The site will be served at `http://localhost:4041`. Pass `--port 4041` so a
-native run matches the Docker one; bare `jekyll serve` would use 4000, which
-belongs to arc42.org.
+The site will be served at `http://localhost:4220`. Pass `--port 4220` so a
+native run matches the Docker one; bare `jekyll serve` would use 4000, which is
+outside the arc42 42xx block and belongs to no site in the family.
 
 ## Configuration Notes
 
