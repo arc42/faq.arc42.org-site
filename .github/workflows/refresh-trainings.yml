@@ -12,6 +12,7 @@ on:
     types: [trainings-updated]   # pushed by trainings.arc42.org-site right after the feed republishes
 permissions:
   contents: write
+  actions: write   # to start the Pages deploy below; the commit alone does not
 jobs:
   refresh:
     if: github.repository == 'arc42/faq.arc42.org-site'
@@ -29,6 +30,7 @@ jobs:
           jq -e '[.courses[].dates[]? | select(.language == null or .start == null or .end == null or .code == null)] | length == 0' /tmp/trainings.json
           jq -e '.generated | type == "string"' /tmp/trainings.json
       - name: Update _data/trainings.json when courses changed
+        id: update
         run: |
           # Store the EXPIRY-FILTERED payload, not the raw fetch. The stored file is
           # what we diff against next run, so a date that merely expires between runs
@@ -42,6 +44,7 @@ jobs:
           jq -S 'del(.generated)' _data/trainings.json > /tmp/old.json || echo '{}' > /tmp/old.json
           if cmp -s /tmp/new.json /tmp/old.json; then
             echo "No content change (ignoring 'generated' timestamp)"
+            echo "changed=false" >> "$GITHUB_OUTPUT"
             exit 0
           fi
           jq . /tmp/filtered.json > _data/trainings.json
@@ -50,3 +53,17 @@ jobs:
           git add _data/trainings.json
           git commit -m "chore: refresh training dates from trainings.arc42.org"
           git push
+          echo "changed=true" >> "$GITHUB_OUTPUT"
+      - name: Trigger the Pages deploy
+        # This site is built by a workflow (Pages build_type: workflow), and the
+        # push above is made with GITHUB_TOKEN, which by GitHub's design fires no
+        # `on: push` trigger. Without this step the refreshed data sits committed
+        # on main but unpublished: that is how faq.arc42.org kept advertising a
+        # withdrawn Req4Arc date for a week in September 2026 while its
+        # _data/trainings.json was already correct. The three sibling consumers
+        # use the legacy Pages builder, which does rebuild on a bot push, so they
+        # need no equivalent step.
+        if: steps.update.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: gh workflow run build-deploy-gh-pages.yml --ref main
