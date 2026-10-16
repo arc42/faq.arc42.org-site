@@ -101,13 +101,21 @@ include:
   - _pages 
   - robots.txt
 
+# Everything that is tooling, not site content. Note that the github-pages gem
+# ships jekyll-optional-front-matter, which renders *any* top-level .md file as
+# a page (no front matter needed) — so a forgotten CLAUDE.md becomes /CLAUDE/
+# and lands in the sitemap and search engines.
 exclude:
   - Gemfile
   - Gemfile.lock
   - README.md
+  - CLAUDE.md
   - LICENSE
   - originals/
   - vendor/bundle
+  - Makefile
+  - Dockerfile
+  - docker/
   - docker-compose.yml
   - faq.arc42.org-site.code-workspace
   - .vscode/
