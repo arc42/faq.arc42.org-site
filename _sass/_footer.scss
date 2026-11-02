@@ -60,6 +60,13 @@
   }
 }
 
+// The sibling sites, from _data/family.yml (docs' footer line, verbatim). Same
+// middots as the site links; the label is plain muted text (5.23:1 on
+// --surface-1), so the first link needs no separator.
+.footer-family-label {
+  color: var(--muted);
+}
+
 .footer-maintainer {
   flex-basis: 100%;
   margin: 0;

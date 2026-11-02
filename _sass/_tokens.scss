@@ -154,6 +154,15 @@
                           // 8.19:1 on --paper, 7.46:1 on --maroon-bg
   --maroon-bg: #fcefef;
 
+  // ---- Family identifiers --------------------------------------------------
+  // The dots in the "42" family menu (_family.scss), and nothing else. They name
+  // the sibling sites, so they are docs' and systems42's values verbatim and
+  // must match on every family site. Decorative: each dot sits next to the
+  // site's name in text. The one sanctioned use of another site's hue here;
+  // see meta.arc42.org, wiki/concepts/family-menu.md ("Open": pending ADR).
+  --family-arc: #1d7fe0;
+  --family-req: #17b59d;
+
   // ---- Type ----------------------------------------------------------------
   // Family constant #1, the Two Voices Rule: Libre Caslon Text for headings,
   // Atkinson Hyperlegible Next for body and UI. Self-hosted, see _fonts.scss.
@@ -190,7 +199,8 @@
   // their scroll-margin from this, and the rail takes its sticky `top`.
   --bar-h: 56px;
 
-  // No --radius-pill: docs needs one for its keyword chips; nothing on faq is
-  // pill-shaped, and an unused metric is one more thing to keep in sync.
   --radius: 4px;
+  // The "You are here" marker in the family menu (_family.scss) — the first
+  // pill-shaped thing on faq, so the metric now has a job. docs' value.
+  --radius-pill: 999px;
 }
