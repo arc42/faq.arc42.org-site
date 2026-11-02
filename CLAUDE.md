@@ -1,6 +1,7 @@
 # CLAUDE.md — arc42 FAQ
 
-Jekyll site answering 136 questions about arc42. Live at https://faq.arc42.org.
+Jekyll site answering questions about arc42 (one markdown file per
+question in `_posts/`). Live at https://faq.arc42.org.
 
 **Stack**: Jekyll 3.10 via the pinned `github-pages` gem (232) · no Node ·
 GitHub Pages (Actions deploy). The Gemfile/Gemfile.lock pair is copied from
@@ -42,7 +43,10 @@ network, since they resolve/install gems.
 
 Alternative without Make: `docker compose up --build`.
 
-Sanity after building: `ls _site/questions | wc -l` → **136**.
+Sanity after building: `ls _site/questions | wc -l` must equal the number
+of question files, `grep -rl '^permalink: /questions/' _posts | wc -l`.
+**Always count — never take the question count from this file or any other
+doc.** CI's permalink guard counts the same way (since PR #70).
 
 ---
 
@@ -57,8 +61,8 @@ Sanity after building: `ls _site/questions | wc -l` → **136**.
 
 ## Critical gotchas
 
-- **The 136 `/questions/<QID>/` permalinks are externally cited and
-  non-negotiable.** Never rename, never redirect, never "clean up". Any
+- **The `/questions/<QID>/` permalinks (listed in `_data/permalinks.yml`)
+  are externally cited and non-negotiable.** Never rename, never redirect, never "clean up". Any
   content-model change must keep them byte-identical (ADR-0013/0014).
 - `robots.txt` disallows `/search/` on purpose.
 - `_layouts/post.html` is a passthrough to `page.html` — edit `page.html`.
