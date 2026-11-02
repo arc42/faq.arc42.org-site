@@ -52,11 +52,15 @@ jobs:
         env:
           JEKYLL_ENV: production
 
-      - name: Permalink guard — the 136 /questions/<QID>/ URLs (D13, ADR-0014)
+      - name: Permalink guard — the /questions/<QID>/ URLs (D13, ADR-0014)
         run: |
           set -euo pipefail
 
-          EXPECTED_COUNT=136
+          # The count comes from the question files themselves, never from a
+          # number written down somewhere: every markdown file in _posts/ that
+          # declares a /questions/ permalink is one question. A hard-coded 136
+          # went stale the day F-13 was merged and kept every PR red.
+          EXPECTED_COUNT=$(grep -rl --include='*.md' '^permalink: /questions/' _posts | wc -l | tr -d ' ')
           expected=$(mktemp)
           actual=$(mktemp)
 
@@ -66,7 +70,7 @@ jobs:
 
           n=$(wc -l < "$expected" | tr -d ' ')
           if [ "$n" -ne "$EXPECTED_COUNT" ]; then
-            echo "::error::_data/permalinks.yml lists $n permalinks, expected $EXPECTED_COUNT"
+            echo "::error::_data/permalinks.yml lists $n permalinks, _posts/ holds $EXPECTED_COUNT questions"
             exit 1
           fi
 
@@ -90,9 +94,9 @@ jobs:
           fi
 
           if [ "$rc" -ne 0 ]; then
-            echo "The 136 /questions/<QID>/ permalinks are externally cited and"
+            echo "The /questions/<QID>/ permalinks are externally cited and"
             echo "non-negotiable (ADR-0013/0014). If a question was deliberately"
-            echo "added or removed, update _data/permalinks.yml and EXPECTED_COUNT."
+            echo "added or removed, update _data/permalinks.yml to match."
             exit 1
           fi
 

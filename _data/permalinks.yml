@@ -1,9 +1,10 @@
-# Permalink manifest — the 136 question URLs that must never change.
+# Permalink manifest — the question URLs that must never change.
 #
 # ADR-0013/0014 (D13): https://faq.arc42.org/questions/<QID>/ is externally
 # cited. Renaming, redirecting or dropping any of these breaks inbound links.
 # `.github/workflows/checks.yml` asserts, on every pull request, that the
-# built _site contains exactly these 136 pages — no fewer, no extras.
+# built _site contains exactly these pages — no fewer, no extras — and that
+# their number equals the question files in _posts/ (counted, not hard-coded).
 #
 # This file is Jekyll data (`site.data.permalinks`), so the list is also
 # available to templates if ever needed.
@@ -11,7 +12,6 @@
 # Regenerate only when a question is deliberately added or removed (which
 # needs a conscious decision, not a refactor):
 #   ls _site/questions | LC_ALL=C sort | sed 's/^/- /'
-# and update EXPECTED_COUNT in the workflow to match.
 - A-1
 - A-10
 - A-11
@@ -125,6 +125,7 @@
 - F-10
 - F-11
 - F-12
+- F-13
 - F-2
 - F-3
 - F-4
